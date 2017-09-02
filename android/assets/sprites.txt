@@ -1,0 +1,82 @@
+sprites.png
+size: 1012, 928
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dashButton
+  rotate: false
+  xy: 548, 235
+  size: 417, 296
+  orig: 418, 304
+  offset: 1, 4
+  index: -1
+greenBug
+  rotate: false
+  xy: 1, 428
+  size: 502, 392
+  orig: 529, 401
+  offset: 16, 0
+  index: -1
+greenBugCrying
+  rotate: false
+  xy: 505, 533
+  size: 506, 394
+  orig: 529, 401
+  offset: 14, 0
+  index: -1
+jumpButton
+  rotate: false
+  xy: 157, 150
+  size: 389, 276
+  orig: 393, 276
+  offset: 2, 0
+  index: -1
+rainbow1
+  rotate: false
+  xy: 78, 1
+  size: 280, 147
+  orig: 280, 210
+  offset: 0, 30
+  index: -1
+rainbow2
+  rotate: false
+  xy: 360, 1
+  size: 280, 147
+  orig: 280, 210
+  offset: 0, 28
+  index: -1
+run1
+  rotate: false
+  xy: 642, 1
+  size: 154, 232
+  orig: 180, 251
+  offset: 11, 10
+  index: -1
+run2
+  rotate: false
+  xy: 1, 150
+  size: 154, 248
+  orig: 180, 251
+  offset: 12, 0
+  index: -1
+run3
+  rotate: false
+  xy: 798, 1
+  size: 167, 232
+  orig: 180, 251
+  offset: 12, 4
+  index: -1
+star
+  rotate: false
+  xy: 6, 1
+  size: 70, 68
+  orig: 70, 70
+  offset: 0, 1
+  index: -1
+void
+  rotate: false
+  xy: 1, 1
+  size: 3, 3
+  orig: 30, 30
+  offset: 0, 27
+  index: -1
