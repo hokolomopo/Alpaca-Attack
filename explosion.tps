@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.4.0</string>
         <key>fileName</key>
-        <string>C:/Users/Adrien/OneDrive/AndroidStudio/Alpaca-Attack/spriteSheetProject.tps</string>
+        <string>C:/Users/Adrien/OneDrive/AndroidStudio/Alpaca-Attack/explosion.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -28,7 +28,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>android/assets/sprites.txt</filename>
+                <filename>android/assets/explosion.txt</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -187,7 +187,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -199,135 +199,99 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../Downloads/dashButton.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion1.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>105,76,209,152</rect>
+                <rect>89,83,178,166</rect>
                 <key>scale9Paddings</key>
-                <rect>105,76,209,152</rect>
+                <rect>89,83,178,166</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../Downloads/greenBug.png</key>
-            <key type="filename">../../../Downloads/greenBugCrying.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion2.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion3.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>132,100,265,201</rect>
+                <rect>88,83,175,165</rect>
                 <key>scale9Paddings</key>
-                <rect>132,100,265,201</rect>
+                <rect>88,83,175,165</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../Downloads/jumpButton.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion4.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>98,69,197,138</rect>
+                <rect>90,83,180,165</rect>
                 <key>scale9Paddings</key>
-                <rect>98,69,197,138</rect>
+                <rect>90,83,180,165</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../../Downloads/void.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion5.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>8,8,15,15</rect>
+                <rect>87,81,174,163</rect>
                 <key>scale9Paddings</key>
-                <rect>8,8,15,15</rect>
+                <rect>87,81,174,163</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../Alpaca Pics/run1_black.png</key>
-            <key type="filename">../Alpaca Pics/run1_blue.png</key>
-            <key type="filename">../Alpaca Pics/run1_brown.png</key>
-            <key type="filename">../Alpaca Pics/run1_pink.png</key>
-            <key type="filename">../Alpaca Pics/run1_red.png</key>
-            <key type="filename">../Alpaca Pics/run1_white.png</key>
-            <key type="filename">../Alpaca Pics/run1_yellow.png</key>
-            <key type="filename">../Alpaca Pics/run2_black.png</key>
-            <key type="filename">../Alpaca Pics/run2_blue.png</key>
-            <key type="filename">../Alpaca Pics/run2_brown.png</key>
-            <key type="filename">../Alpaca Pics/run2_pink.png</key>
-            <key type="filename">../Alpaca Pics/run2_red.png</key>
-            <key type="filename">../Alpaca Pics/run2_white.png</key>
-            <key type="filename">../Alpaca Pics/run2_yellow.png</key>
-            <key type="filename">../Alpaca Pics/run3_black.png</key>
-            <key type="filename">../Alpaca Pics/run3_blue.png</key>
-            <key type="filename">../Alpaca Pics/run3_brown.png</key>
-            <key type="filename">../Alpaca Pics/run3_pink.png</key>
-            <key type="filename">../Alpaca Pics/run3_red.png</key>
-            <key type="filename">../Alpaca Pics/run3_white.png</key>
-            <key type="filename">../Alpaca Pics/run3_yellow.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion7.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>45,63,90,126</rect>
+                <rect>89,83,179,166</rect>
                 <key>scale9Paddings</key>
-                <rect>45,63,90,126</rect>
+                <rect>89,83,179,166</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">android/assets/star.png</key>
+            <key type="filename">../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>18,18,35,35</rect>
+                <rect>88,83,175,166</rect>
                 <key>scale9Paddings</key>
-                <rect>18,18,35,35</rect>
+                <rect>88,83,175,166</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../Downloads/greenBug.png</filename>
-            <filename>../../../Downloads/greenBugCrying.png</filename>
-            <filename>../../../Downloads/void.png</filename>
-            <filename>android/assets/star.png</filename>
-            <filename>../../../Downloads/dashButton.png</filename>
-            <filename>../../../Downloads/jumpButton.png</filename>
-            <filename>../Alpaca Pics/run1_pink.png</filename>
-            <filename>../Alpaca Pics/run1_red.png</filename>
-            <filename>../Alpaca Pics/run1_white.png</filename>
-            <filename>../Alpaca Pics/run1_yellow.png</filename>
-            <filename>../Alpaca Pics/run2_black.png</filename>
-            <filename>../Alpaca Pics/run2_blue.png</filename>
-            <filename>../Alpaca Pics/run2_brown.png</filename>
-            <filename>../Alpaca Pics/run2_pink.png</filename>
-            <filename>../Alpaca Pics/run2_red.png</filename>
-            <filename>../Alpaca Pics/run2_white.png</filename>
-            <filename>../Alpaca Pics/run2_yellow.png</filename>
-            <filename>../Alpaca Pics/run3_black.png</filename>
-            <filename>../Alpaca Pics/run3_blue.png</filename>
-            <filename>../Alpaca Pics/run3_brown.png</filename>
-            <filename>../Alpaca Pics/run3_pink.png</filename>
-            <filename>../Alpaca Pics/run3_red.png</filename>
-            <filename>../Alpaca Pics/run3_white.png</filename>
-            <filename>../Alpaca Pics/run3_yellow.png</filename>
-            <filename>../Alpaca Pics/run1_blue.png</filename>
-            <filename>../Alpaca Pics/run1_brown.png</filename>
-            <filename>../Alpaca Pics/run1_black.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion1.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion2.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion3.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion4.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion5.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion6.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion7.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion8.png</filename>
+            <filename>../../../Downloads/tumblr_n83r69X6HY1qfwm02o1_500/explosion9.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

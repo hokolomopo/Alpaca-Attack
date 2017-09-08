@@ -1,22 +1,23 @@
-package com.mygdx.game;
+package com.mygdx.game.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.entities.Platform;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.WallEnemy;
 import com.mygdx.game.entities.Bonus;
-
-
-import java.util.Iterator;
 
 /**
  * Created by Adrien on 31-08-17.
@@ -32,18 +33,19 @@ public class TiledMapProcessor {
 
     private World world;
 
-    TiledMapProcessor(World w){
+    public TiledMapProcessor(World w){
         world = w;
 
-        tiledMap = new TmxMapLoader().load("hey.tmx");
+
+        tiledMap = new TmxMapLoader().load("ok.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, GameScreen.PIXEL_TO_METER);
 
         loadPlatforms();
         loadEnemies();
         loadBonuses();
 
-        MAP_WIDHT = tiledMap.getProperties().get("width", Integer.class) * tiledMap.getProperties().get("tilewidth", Integer.class) *GameScreen.PIXEL_TO_METER;
-        MAP_HEIGHT = tiledMap.getProperties().get("height", Integer.class) * tiledMap.getProperties().get("tileheight", Integer.class) *GameScreen.PIXEL_TO_METER;
+        MAP_WIDHT = tiledMap.getProperties().get("width", Integer.class) * tiledMap.getProperties().get("tilewidth", Integer.class) * GameScreen.PIXEL_TO_METER;
+        MAP_HEIGHT = tiledMap.getProperties().get("height", Integer.class) * tiledMap.getProperties().get("tileheight", Integer.class) * GameScreen.PIXEL_TO_METER;
 
         world.setSize(new Vector2(MAP_WIDHT, MAP_HEIGHT));
 
@@ -52,12 +54,14 @@ public class TiledMapProcessor {
     public void render(OrthographicCamera camera, Player player){
 
         //Dont move the camera at the very start
-        if(player.getX() + player.getHitbox().getWidth()/2 >= camera.viewportWidth/2)
-            camera.position.set(player.getX() + player.getHitbox().getWidth()/2, camera.position.y, 0);
+        if(player.getX()  >= camera.viewportWidth/4)
+            camera.position.set(player.getX() + camera.viewportWidth/4, camera.position.y, 0);
+        /*if(player.getX() + player.getHitbox().getWidth()/2 >= camera.viewportWidth/2)
+            camera.position.set(player.getX() + player.getHitbox().getWidth()/2, camera.position.y, 0);*/
 
         //Teleport back when you are at half of the map to give the impression of infinite scrolling
         if(camera.position.x > MAP_WIDHT/2 + camera.viewportWidth/2 ){
-            world.reset();
+            world.reset(false);
             camera.translate(-MAP_WIDHT/2 , 0);
             player.setPosition(player.getX()- MAP_WIDHT/2, player.getY());
         }
@@ -68,7 +72,6 @@ public class TiledMapProcessor {
         }
 
         camera.update();
-
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
     }
@@ -77,8 +80,8 @@ public class TiledMapProcessor {
         MapObjects plats = tiledMap.getLayers().get("Objects_Platforms").getObjects();
         for(MapObject o : plats) {
             Rectangle rect = ((RectangleMapObject)o).getRectangle();
-            rect.set(rect.getX()*GameScreen.PIXEL_TO_METER, rect.getY()*GameScreen.PIXEL_TO_METER,
-                    rect.getWidth()*GameScreen.PIXEL_TO_METER, rect.getHeight()*GameScreen.PIXEL_TO_METER);
+            rect.set(rect.getX()* GameScreen.PIXEL_TO_METER, rect.getY()* GameScreen.PIXEL_TO_METER,
+                    rect.getWidth()* GameScreen.PIXEL_TO_METER, rect.getHeight()* GameScreen.PIXEL_TO_METER);
             world.addStaticEntity(new Platform(rect));
         }
     }
@@ -87,17 +90,19 @@ public class TiledMapProcessor {
         MapObjects enemies = tiledMap.getLayers().get("Enemies").getObjects();
         for(MapObject o : enemies) {
             Rectangle rect = ((RectangleMapObject)o).getRectangle();
-            rect.set(rect.getX()*GameScreen.PIXEL_TO_METER, rect.getY()*GameScreen.PIXEL_TO_METER,
-                    rect.getWidth()*GameScreen.PIXEL_TO_METER, rect.getHeight()*GameScreen.PIXEL_TO_METER);
-            world.addMovableEntity(new WallEnemy(rect));
+            rect.set(rect.getX()* GameScreen.PIXEL_TO_METER, rect.getY()* GameScreen.PIXEL_TO_METER,
+                    rect.getWidth()* GameScreen.PIXEL_TO_METER, rect.getHeight()* GameScreen.PIXEL_TO_METER);
+            WallEnemy tmp = new WallEnemy(rect);
+            world.addMovableEntity(tmp);
         }
+        world.sortEnemies();
     }
 
     public void loadBonuses(){
         MapObjects bonuses = tiledMap.getLayers().get("Bonuses").getObjects();
         for(MapObject o : bonuses) {
             Rectangle rect = ((RectangleMapObject)o).getRectangle();
-            rect.setPosition(rect.getX()*GameScreen.PIXEL_TO_METER, rect.getY()*GameScreen.PIXEL_TO_METER);
+            rect.setPosition(rect.getX()* GameScreen.PIXEL_TO_METER, rect.getY()* GameScreen.PIXEL_TO_METER);
             world.addMovableEntity(new Bonus(rect.getX(), rect.getY()));
         }
 

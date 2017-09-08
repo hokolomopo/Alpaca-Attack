@@ -17,15 +17,12 @@ public abstract class Entity {
 
     protected Sprite sprite;
     protected Rectangle hitbox;
-    protected TextureAtlas textureAtlas;
+    protected static final TextureAtlas textureAtlas = new TextureAtlas("sprites.txt");
 
     public Entity(){
-        textureAtlas = new TextureAtlas("sprites.txt");
     }
 
     public Entity(Rectangle rect, String atlasRegion){
-        this();
-
         Vector2 size = new Vector2(textureAtlas.findRegion(atlasRegion).getRegionWidth(), textureAtlas.findRegion(atlasRegion).getRegionHeight());
 
         hitbox = new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getWidth() * (size.y/size.x));

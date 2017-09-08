@@ -11,9 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 public abstract class MovableEntity extends Entity implements Destroyable{
     protected Vector2 speed =  new Vector2(0,0);
 
-    boolean isDead = false;
+    public boolean isDead = false;
 
     protected float weight = 0;
+    protected static int killScore = 1000;
 
     public MovableEntity(){
     }
@@ -26,6 +27,7 @@ public abstract class MovableEntity extends Entity implements Destroyable{
         return weight;
     }
 
+    public int getKillScore(){return killScore;}
 
     public void move(float x, float y){
         sprite.translate(x,y);
@@ -34,7 +36,7 @@ public abstract class MovableEntity extends Entity implements Destroyable{
 
     public void move(){
         sprite.translate(speed.x, speed.y);
-        hitbox.setPosition(sprite.getX(),sprite.getY());
+        hitbox.setPosition(hitbox.getX() + speed.x, hitbox.getY() + speed.y);
     }
 
     public void setSpeed(float x, float y){

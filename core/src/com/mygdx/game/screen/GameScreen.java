@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -7,6 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mygdx.game.*;
+import com.mygdx.game.screen.MenuScreen;
+import com.mygdx.game.game.TiledMapProcessor;
+import com.mygdx.game.game.UserInterface;
+import com.mygdx.game.game.World;
 import com.mygdx.game.entities.Player;
 
 /**
@@ -23,17 +28,16 @@ public class GameScreen implements Screen, InputProcessor{
     private TiledMapProcessor background;
     private UserInterface ui;
 
-    public static final int WORLD_HEIGHT = 30;
-    public static final int WORLD_WIDHT = 100;
-
-    public static final float PIXEL_TO_METER = 1/35f;
+    public static final float PIXEL_TO_METER = 0.5f;
+    private static final float PLAYER_INITIAL_LOC = 600 * PIXEL_TO_METER;
 
     private float elapsedTime = 0;
     private Game game;
+    private MenuScreen menuScreen;
 
-    public GameScreen(Game g){
+    public GameScreen(Game g, MenuScreen mScreen){
         game = g;
-        Gdx.input.setInputProcessor(this);
+        menuScreen = mScreen;
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -41,16 +45,16 @@ public class GameScreen implements Screen, InputProcessor{
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
-        player = new Player(0,16);
-
-        camera = new OrthographicCamera(40, 40 * (h / w));
-        camera.position.set(camera.viewportWidth/2 , player.getY() + player.getHitbox().getHeight()/2, 0);
+        player = new Player(0,PLAYER_INITIAL_LOC);
+        camera = new OrthographicCamera(700*PIXEL_TO_METER*(w/h), 700*PIXEL_TO_METER);
+        //camera.position.set(camera.viewportWidth/2 , player.getY() + player.getHitbox().getHeight()/2, 0);
+        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2,0);
         camera.update();
 
 
-        ui = new UserInterface(camera);
+        ui = new UserInterface(camera, player, world);
 
-        world = new World(player, 0.5f);
+        world = new World(player, 10 * PIXEL_TO_METER);
 
         /*RectangleMapObject rectO = (RectangleMapObject)plats.get(0);
         Rectangle rect = rectO.getRectangle();
@@ -60,7 +64,13 @@ public class GameScreen implements Screen, InputProcessor{
 
         background = new TiledMapProcessor(world);
 
+    }
 
+    public void reset(){
+        player.reset();
+        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2,0);
+        camera.update();
+        world.reset(true);
     }
     @Override
     public void show() {
@@ -69,23 +79,27 @@ public class GameScreen implements Screen, InputProcessor{
 
     @Override
     public void render(float delta) {
+
+        if(player.getY() + player.getHitbox().height < 0)
+            player.kill();
+
+        if(player.isDead){
+            this.reset();
+            game.setScreen(menuScreen);
+        }
+
         background.render(camera, player);
 
         world.update();
-        ui.update(camera);
 
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        world.render(batch);
-        ui.render(batch);
-        batch.end();
+        world.render(batch, camera);
 
+        ui.render();
 
         /*shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         world.renderHitboxes(shapeRenderer);
-        shapeRenderer.rect(ui.getDashHitbox().x,ui.getDashHitbox().y,ui.getDashHitbox().width,ui.getDashHitbox().height);
-        shapeRenderer.rect(ui.getJumpHitbox().x,ui.getJumpHitbox().y,ui.getJumpHitbox().width,ui.getJumpHitbox().height);
         shapeRenderer.end();*/
 
     }
@@ -135,15 +149,18 @@ public class GameScreen implements Screen, InputProcessor{
         float x = screenX;
         float y = (Gdx.graphics.getHeight() - screenY );
 
-        if(x < Gdx.graphics.getWidth()/3 && y < Gdx.graphics.getHeight()/3)
+        if(x < Gdx.graphics.getWidth()/3 && y < Gdx.graphics.getHeight()/3) {
             player.jump();
-        else if(x > Gdx.graphics.getWidth()*(2/3) && y < Gdx.graphics.getHeight()/3)
+            world.reduceGravity();
+        }
+        else if(x > ((float)Gdx.graphics.getWidth())*(2/3f) && y < Gdx.graphics.getHeight()/3)
             player.dash();
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        world.resetGravity();
         return false;
     }
 

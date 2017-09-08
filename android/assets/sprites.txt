@@ -1,81 +1,193 @@
 sprites.png
-size: 1012, 928
+size: 1701, 1023
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 dashButton
   rotate: false
-  xy: 548, 235
-  size: 417, 296
-  orig: 418, 304
-  offset: 1, 4
+  xy: 505, 397
+  size: 521, 341
+  orig: 525, 346
+  offset: 3, 0
   index: -1
 greenBug
   rotate: false
-  xy: 1, 428
+  xy: 1, 397
   size: 502, 392
   orig: 529, 401
   offset: 16, 0
   index: -1
 greenBugCrying
   rotate: false
-  xy: 505, 533
+  xy: 1, 1
   size: 506, 394
   orig: 529, 401
   offset: 14, 0
   index: -1
 jumpButton
   rotate: false
-  xy: 157, 150
-  size: 389, 276
-  orig: 393, 276
-  offset: 2, 0
+  xy: 509, 1
+  size: 521, 341
+  orig: 523, 345
+  offset: 1, 1
   index: -1
-rainbow1
+run1_black
   rotate: false
-  xy: 78, 1
-  size: 280, 147
-  orig: 280, 210
-  offset: 0, 30
+  xy: 1, 791
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
   index: -1
-rainbow2
+run1_blue
   rotate: false
-  xy: 360, 1
-  size: 280, 147
-  orig: 280, 210
-  offset: 0, 28
+  xy: 155, 791
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
   index: -1
-run1
+run1_brown
   rotate: false
-  xy: 642, 1
+  xy: 309, 791
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
+  index: -1
+run1_pink
+  rotate: false
+  xy: 463, 791
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
+  index: -1
+run1_red
+  rotate: false
+  xy: 1394, 688
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
+  index: -1
+run1_white
+  rotate: false
+  xy: 1238, 688
   size: 154, 232
   orig: 180, 251
   offset: 11, 10
   index: -1
-run2
+run1_yellow
   rotate: false
-  xy: 1, 150
+  xy: 1548, 688
+  size: 152, 231
+  orig: 180, 251
+  offset: 12, 11
+  index: -1
+run2_black
+  rotate: false
+  xy: 773, 740
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run2_blue
+  rotate: false
+  xy: 928, 740
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run2_brown
+  rotate: false
+  xy: 1028, 344
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run2_pink
+  rotate: false
+  xy: 1032, 1
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run2_red
+  rotate: false
+  xy: 1083, 664
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run2_white
+  rotate: false
+  xy: 617, 740
   size: 154, 248
   orig: 180, 251
   offset: 12, 0
   index: -1
-run3
+run2_yellow
   rotate: false
-  xy: 798, 1
+  xy: 1183, 251
+  size: 153, 248
+  orig: 180, 251
+  offset: 13, 0
+  index: -1
+run3_black
+  rotate: false
+  xy: 1356, 1
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
+run3_blue
+  rotate: false
+  xy: 1524, 1
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
+run3_brown
+  rotate: false
+  xy: 1356, 230
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
+run3_pink
+  rotate: false
+  xy: 1524, 230
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
+run3_red
+  rotate: false
+  xy: 1338, 459
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
+run3_white
+  rotate: false
+  xy: 1187, 1
   size: 167, 232
   orig: 180, 251
   offset: 12, 4
   index: -1
+run3_yellow
+  rotate: false
+  xy: 1506, 459
+  size: 166, 227
+  orig: 180, 251
+  offset: 13, 9
+  index: -1
 star
   rotate: false
-  xy: 6, 1
+  xy: 1028, 594
   size: 70, 68
   orig: 70, 70
   offset: 0, 1
   index: -1
 void
   rotate: false
-  xy: 1, 1
+  xy: 617, 990
   size: 3, 3
   orig: 30, 30
   offset: 0, 27
