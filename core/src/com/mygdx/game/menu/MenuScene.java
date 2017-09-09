@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.screen.MenuScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.LoadingScreen;
 
@@ -18,22 +19,11 @@ import com.mygdx.game.screen.LoadingScreen;
  */
 
 public abstract class MenuScene{
-    protected static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
-    protected static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/8;
-    protected static final float TEXT_SCALE = 3.5f;
+    public final static Skin skin = new Skin(Gdx.files.internal("menu/flat-earth-ui.json"));
 
-    protected Table table;
     protected Stage stage = new Stage(new ScreenViewport());
-    protected Skin skin = new Skin(Gdx.files.internal("menu/flat-earth-ui.json"));
 
-    protected Game game;
-    protected GameScreen gameScreen;
+    protected MenuScreen menuScreen;
 
-
-    public void render(){
-        //Make sure the inputProcessor is the stage
-        if(Gdx.input.getInputProcessor() != stage)
-            Gdx.input.setInputProcessor(stage);
-        stage.draw();
-    }
+    public abstract void render(SpriteBatch batch);
 }

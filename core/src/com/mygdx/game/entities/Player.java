@@ -31,7 +31,7 @@ public class Player extends AnimatedMovableEntity {
     private float dashTimer = 0;
     private float deadTimer = 0;
     private int jumpLeft = 2;
-    private float score = 0;
+    private int score = 0;
 
     private float initialX;
     private float initialY;
@@ -127,11 +127,11 @@ public class Player extends AnimatedMovableEntity {
         }
     }
 
-    public float getScore(){
+    public int getScore(){
         return score;
     }
 
-    public void addScore(float a){
+    public void addScore(int a){
         score += a;
     }
 

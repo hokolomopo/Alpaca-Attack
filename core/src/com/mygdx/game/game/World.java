@@ -119,7 +119,7 @@ public class World {
     private void playerMove() {
 
         if(player.getSpeed().x != 0){
-            player.addScore(player.getSpeed().x);
+            player.addScore((int)player.getSpeed().x);
             player.move(player.getSpeed().x, 0);
             for(Entity e : staticEntities){
                 if(e.getHitbox().overlaps(player.getHitbox())){

@@ -33,11 +33,9 @@ public class GameScreen implements Screen, InputProcessor{
 
     private float elapsedTime = 0;
     private Game game;
-    private MenuScreen menuScreen;
 
-    public GameScreen(Game g, MenuScreen mScreen){
+    public GameScreen(Game g){
         game = g;
-        menuScreen = mScreen;
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -47,7 +45,6 @@ public class GameScreen implements Screen, InputProcessor{
 
         player = new Player(0,PLAYER_INITIAL_LOC);
         camera = new OrthographicCamera(700*PIXEL_TO_METER*(w/h), 700*PIXEL_TO_METER);
-        //camera.position.set(camera.viewportWidth/2 , player.getY() + player.getHitbox().getHeight()/2, 0);
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2,0);
         camera.update();
 
@@ -55,12 +52,6 @@ public class GameScreen implements Screen, InputProcessor{
         ui = new UserInterface(camera, player, world);
 
         world = new World(player, 10 * PIXEL_TO_METER);
-
-        /*RectangleMapObject rectO = (RectangleMapObject)plats.get(0);
-        Rectangle rect = rectO.getRectangle();
-        System.out.println(rect.getX()*PIXEL_TO_METER+ " "+rect.getHeight()*PIXEL_TO_METER+ " "+ rect.getY()*PIXEL_TO_METER);*/
-
-
 
         background = new TiledMapProcessor(world);
 
@@ -84,8 +75,9 @@ public class GameScreen implements Screen, InputProcessor{
             player.kill();
 
         if(player.isDead){
+            int score = (player.getScore());
             this.reset();
-            game.setScreen(menuScreen);
+            game.setScreen(new EndScreen(game, this, score));
         }
 
         background.render(camera, player);
