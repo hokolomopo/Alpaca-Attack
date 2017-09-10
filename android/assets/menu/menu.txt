@@ -1,18 +1,25 @@
 menu.png
-size: 1760, 891
+size: 1996, 891
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 cell
   rotate: false
-  xy: 0, 251
+  xy: 290, 251
   size: 170, 434
   orig: 170, 434
   offset: 0, 0
   index: -1
+coin
+  rotate: false
+  xy: 0, 251
+  size: 290, 291
+  orig: 290, 291
+  offset: 0, 0
+  index: -1
 frame
   rotate: false
-  xy: 170, 251
+  xy: 460, 251
   size: 400, 600
   orig: 400, 600
   offset: 0, 0
@@ -33,14 +40,14 @@ run2_blue
   index: -1
 run2_brown
   rotate: false
-  xy: 1220, 0
+  xy: 1040, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_pink
   rotate: false
-  xy: 1040, 0
+  xy: 1220, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
@@ -68,7 +75,7 @@ run2_yellow
   index: -1
 shopBackground
   rotate: false
-  xy: 570, 251
+  xy: 860, 251
   size: 1136, 640
   orig: 1136, 640
   offset: 0, 0

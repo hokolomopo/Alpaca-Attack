@@ -8,9 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.menu.MainMenuScene;
-import com.mygdx.game.menu.MainMenuBackground;
 import com.mygdx.game.menu.MenuScene;
-import com.mygdx.game.menu.ShopScene;
+import com.mygdx.game.menu.shop.ShopScene;
 
 
 /**
@@ -33,9 +32,9 @@ public class MenuScreen implements Screen {
     private MenuScene shop;
     private MainMenuScene mainMenu;
 
-    public  MenuScreen(Game g){
+    public  MenuScreen(Game g, GameScreen gmScreen){
         game = g;
-        gameScreen = new GameScreen(game);
+        gameScreen = gmScreen;
 
         mainMenu = new MainMenuScene(game, gameScreen, this);
 

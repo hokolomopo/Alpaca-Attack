@@ -35,7 +35,7 @@ public class World {
     private float g;
     private float normalG;
 
-    private int lastKilled = -1;
+    private int lastKilled = -2;
 
     public World(Player p, float gravity){
         player = p;
@@ -187,7 +187,7 @@ public class World {
     public void reset(boolean quitGame){
         if(quitGame) {
             enemies.get(0).resetKillScore();
-            lastKilled = -1;
+            lastKilled = -2;
         }
         else{
             //Find the closest enemy behind the player
@@ -200,7 +200,7 @@ public class World {
             if(lastKilled == tmp.number)
                 lastKilled = -1;
             else
-                lastKilled = 0;
+                lastKilled = -2;
         }
         for(MovableEntity e : movableEntities)
             e.revive();
