@@ -3,13 +3,16 @@ package com.mygdx.game.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.menu.MainMenuScene;
-import com.mygdx.game.menu.MenuScene;
-import com.mygdx.game.menu.shop.ShopScene;
+import com.mygdx.game.AlpacaAttack;
+import com.mygdx.game.assets.MenuAssets;
+import com.mygdx.game.menu.scenes.MainMenuScene;
+import com.mygdx.game.menu.scenes.MenuScene;
+import com.mygdx.game.menu.scenes.ShopScene;
 
 
 /**
@@ -17,46 +20,54 @@ import com.mygdx.game.menu.shop.ShopScene;
  */
 
 public class MenuScreen implements Screen {
-
-    public static final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/menu.txt"));
-    public static final BitmapFont font = new BitmapFont(Gdx.files.internal("UI/rdmFont.fnt"));
-    public static final Skin ARCADE_SKIN = new Skin(Gdx.files.internal("UI/arcade-ui.json"));
     private Game game;
-    private GameScreen gameScreen;
+
+    public MenuAssets assets;
+
+    //public final static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/menu.txt"));
+    //public final BitmapFont font = new BitmapFont(Gdx.files.internal("UI/rdmFont.fnt"));
     private SpriteBatch batch = new SpriteBatch();
 
     public static final int MAIN_MENU = 0;
     public static final int SHOP = 1;
+    public static final int GAME = 2;
 
     private MenuScene scene;
-    private MenuScene shop;
-    private MainMenuScene mainMenu;
 
-    public  MenuScreen(Game g, GameScreen gmScreen){
-        game = g;
-        gameScreen = gmScreen;
-
-        mainMenu = new MainMenuScene(game, gameScreen, this);
-
-        shop = new ShopScene(this);
-        scene = shop;
-
+    public  MenuScreen(Game g){
+        this(g, new MenuAssets());
     }
 
-    public void setScene(int a){
+    public MenuScreen(Game g, MenuAssets a){
+        game = g;
+        assets = a;
+        assets.load();
+
+        scene = new MainMenuScene(this);
+    }
+
+    public void setScene(MenuScene old, int a){
+        old.dispose();
         switch(a){
             case MAIN_MENU :
-                scene = mainMenu;
+                scene = new MainMenuScene(this);
+                Gdx.input.setInputProcessor(scene.getStage());
                 break;
             case SHOP :
-                scene = shop;
+                scene = new ShopScene(this);
+                Gdx.input.setInputProcessor(scene.getStage());
+                break;
+            case GAME :
+                this.dispose();
+                GameScreen gmScreen = new GameScreen(game);
+                Gdx.input.setInputProcessor(gmScreen);
+                game.setScreen(gmScreen);
                 break;
         }
     }
     @Override
     public void render(float delta) {
 
-        //background.render(batch);
         scene.render(batch);
 
     }
@@ -83,7 +94,8 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        assets.dispose();
+        batch.dispose();
     }
 
     @Override

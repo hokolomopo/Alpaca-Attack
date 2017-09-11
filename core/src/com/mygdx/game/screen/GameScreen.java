@@ -7,12 +7,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.*;
-import com.mygdx.game.screen.MenuScreen;
-import com.mygdx.game.game.TiledMapProcessor;
-import com.mygdx.game.game.UserInterface;
-import com.mygdx.game.game.World;
-import com.mygdx.game.entities.Player;
+import com.mygdx.game.assets.GameAssets;
+import com.mygdx.game.game.util.TiledMapProcessor;
+import com.mygdx.game.game.util.UserInterface;
+import com.mygdx.game.game.util.World;
+import com.mygdx.game.game.entities.Player;
 
 /**
  * Created by Adrien on 02-09-17.
@@ -33,9 +32,12 @@ public class GameScreen implements Screen, InputProcessor{
 
     private float elapsedTime = 0;
     private Game game;
+    private GameAssets assets;
 
     public GameScreen(Game g){
         game = g;
+        assets = new GameAssets();
+        assets.load();
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -43,17 +45,17 @@ public class GameScreen implements Screen, InputProcessor{
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
-        player = new Player(0,PLAYER_INITIAL_LOC);
+        player = new Player(0,PLAYER_INITIAL_LOC, assets);
         camera = new OrthographicCamera(700*PIXEL_TO_METER*(w/h), 700*PIXEL_TO_METER);
         camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2,0);
         camera.update();
 
 
-        ui = new UserInterface(camera, player, world);
+        ui = new UserInterface(camera, player, assets);
 
-        world = new World(player, 10 * PIXEL_TO_METER);
+        world = new World(player, 10 * PIXEL_TO_METER, assets);
 
-        background = new TiledMapProcessor(world);
+        background = new TiledMapProcessor(world, assets);
 
     }
 
@@ -77,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor{
         if(player.isDead){
             int score = (player.getScore());
             this.reset();
-            game.setScreen(new EndScreen(game, this, score));
+            game.setScreen(new EndScreen(game, score, this));
         }
 
         background.render(camera, player);
@@ -118,7 +120,12 @@ public class GameScreen implements Screen, InputProcessor{
 
     @Override
     public void dispose() {
-
+        ui.dispose();
+        background.dispose();
+        world.dispose();
+        assets.dispose();
+        batch.dispose();
+        shapeRenderer.dispose();
     }
 
     @Override

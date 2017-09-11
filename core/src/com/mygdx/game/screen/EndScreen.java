@@ -6,17 +6,18 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.AlpacaAttack;
-import com.mygdx.game.menu.MainMenuScene;
-import com.mygdx.game.menu.MenuScene;
-import com.mygdx.game.menu.MoneyTextBox;
+import com.mygdx.game.assets.MenuAssets;
+import com.mygdx.game.menu.background.EndScreenBackground;
+import com.mygdx.game.menu.ui.MoneyTextBox;
 
 /**
  * Created by Adrien on 09-09-17.
@@ -30,11 +31,11 @@ public class EndScreen implements Screen {
     private final float TIME_FOR_ANIMATION_SPEEDUP = 2; //Time to wait before teh animation score => money speed up
     private final float POINT_TO_MONEY_RATIO = 1/50f; //Ratio to convert points to money
     private final float MARGIN = Gdx.graphics.getHeight()/12;
-
+    private float BUTTON_HEIGHT = Gdx.graphics.getHeight()/8;
+    private float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
     private Stage stage;
     private Game game;
-    private GameScreen gameScreen;
-    private BitmapFont font = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(MainMenuScene.BUTTON_HEIGHT - MainMenuScene.BUTTON_HEIGHT/8));
+    private BitmapFont font;// = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(BUTTON_HEIGHT - BUTTON_HEIGHT/8));
     private int finalScore;
     private int highScore;
     private int moneyAmount;
@@ -43,16 +44,29 @@ public class EndScreen implements Screen {
     private float animationTimer = 0; //Duration since the animation score => money started
     private boolean animationStart = false; //True = start animation score => money
     private boolean endAnimationNow = false; //True = force animation end and convert everything
+    private boolean animationEnded = false;//True when animation is ended
 
     private Label score;
     private MoneyTextBox money;
 
+    private MenuAssets assets;
+    private Skin skin;
+    private GameScreen gameScreen;
+    private EndScreen thisScreen;
 
-    public EndScreen(Game g, final GameScreen gmScreen, int argScore){
+    private EndScreenBackground background;
+    private SpriteBatch batch = new SpriteBatch();
+
+    public EndScreen(Game g, int argScore, GameScreen gmScreen){
+        thisScreen = this;
         game = g;
-        gameScreen = gmScreen;
         finalScore = argScore;
+        gameScreen = gmScreen;
         highScore = prefs.getInteger("highScore", 0);
+
+        this.loadAssets();
+
+        background = new EndScreenBackground(assets);
 
         //Update the highScore
         if(highScore < finalScore){
@@ -73,12 +87,25 @@ public class EndScreen implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
 
-        moneyAmount = prefs.getInteger("money", 0);
+        this.initializeMoneyBox();
+        this.initializeLabels();
 
-        money= new MoneyTextBox(moneyAmount);
-        money.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
-        money.setPosition(Gdx.graphics.getWidth() - money.getTotalWidth() - MARGIN, Gdx.graphics.getHeight() - money.getHeight() - MARGIN);
-        stage.addActor(money);
+        this.createButtons();
+
+
+
+    }
+
+    private void loadAssets(){
+        assets = new MenuAssets();
+        assets.load();
+
+        font = assets.manager.get("mainMenuButtonFont.ttf");
+        skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
+
+    }
+
+    private void initializeLabels(){
 
         Label HScore = new Label("Highscore: \n" +Integer.toString(highScore), new Label.LabelStyle(font, Color.BLACK));
         HScore.setSize(500, 200);
@@ -92,10 +119,22 @@ public class EndScreen implements Screen {
         score.setAlignment(Align.center);
         stage.addActor(score);
 
-        TextButton play = new TextButton("Retry", MenuScene.skin);
+    }
+
+    private void initializeMoneyBox(){
+        moneyAmount = prefs.getInteger("money", 0);
+
+        money= new MoneyTextBox(moneyAmount, assets);
+        money.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
+        money.setPosition(Gdx.graphics.getWidth() - money.getTotalWidth() - MARGIN, Gdx.graphics.getHeight() - money.getHeight() - MARGIN);
+        stage.addActor(money);
+    }
+
+    private void createButtons(){
+        TextButton play = new TextButton("Retry", skin);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
-        play.setSize(MainMenuScene.BUTTON_WIDTH, MainMenuScene.BUTTON_HEIGHT);
-        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - MainMenuScene.BUTTON_HEIGHT -10);
+        play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - BUTTON_HEIGHT - 150);
         play.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -111,16 +150,17 @@ public class EndScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.input.setInputProcessor(gameScreen);
                 prefs.putInteger("money", moneyAmount).flush();
+                thisScreen.dispose();
                 game.setScreen(gameScreen);
             }
         });
+
         stage.addActor(play);
 
-
-        TextButton quit = new TextButton("Quit", MenuScene.skin);
+        TextButton quit = new TextButton("Quit", skin);
         quit.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
-        quit.setSize(MainMenuScene.BUTTON_WIDTH, MainMenuScene.BUTTON_HEIGHT);
-        quit.setPosition(Gdx.graphics.getWidth()/2 - quit.getWidth()/2, play.getY() - MainMenuScene.BUTTON_HEIGHT -10);
+        quit.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        quit.setPosition(Gdx.graphics.getWidth()/2 - quit.getWidth()/2, play.getY() - BUTTON_HEIGHT -10);
         quit.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -135,11 +175,12 @@ public class EndScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 prefs.putInteger("money", moneyAmount).flush();
-                game.setScreen(new MenuScreen(game, gameScreen));
+                gameScreen.dispose();
+                thisScreen.disposeWithoutAssets();
+                game.setScreen(new MenuScreen(game, assets));
             }
         });
         stage.addActor(quit);
-
 
     }
 
@@ -162,10 +203,11 @@ public class EndScreen implements Screen {
             endAnimationNow = true;
         }
 
-        if(endAnimationNow){
+        if(endAnimationNow && !animationEnded){
             moneyAmount += finalScore * POINT_TO_MONEY_RATIO;
             finalScore = 0;
             updateTexts();
+            animationEnded = true;
         }
     }
 
@@ -187,6 +229,9 @@ public class EndScreen implements Screen {
             animationTimer += Gdx.graphics.getDeltaTime();
             scoreToMoneyAnim();
         }
+        batch.begin();
+        background.draw(batch);
+        batch.end();
         stage.draw();
     }
 
@@ -212,6 +257,14 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
+        assets.dispose();
+        this.disposeWithoutAssets();
+    }
 
+    //Dispose everything but teh assets, use it wehn giving the assets to another screen instead of reloading everything
+    public void disposeWithoutAssets(){
+        money.dispose();
+        stage.dispose();
+        batch.dispose();
     }
 }

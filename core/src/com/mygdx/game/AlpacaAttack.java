@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,8 +15,13 @@ import com.mygdx.game.screen.EndScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MenuScreen;
 
+/*
+TODO : assetmanager on skin(MEuScene), mainMenuBackground, Game and EndScreen
+ */
+
 public class AlpacaAttack extends Game {
 
+	public AssetManager manager = new AssetManager();
 
 	@Override
 	public void create () {
@@ -23,7 +29,7 @@ public class AlpacaAttack extends Game {
 		prefs.putBoolean("own"+ ShopItem.ALPACA_WHITE.getName(), true).flush();
 
 		//this.setScreen(new MenuScreen(this));
-		this.setScreen(new MenuScreen(this, new GameScreen(this)));
+		this.setScreen(new MenuScreen(this));
 	}
 
 	@Override
