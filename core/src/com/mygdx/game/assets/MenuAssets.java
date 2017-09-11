@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -57,6 +58,10 @@ public class MenuAssets implements Assets {
     private static final AssetDescriptor<Skin> skin =
             new AssetDescriptor<Skin>("menu/flat-earth-ui.json", Skin.class);
 
+    private static final AssetDescriptor<Music> music =
+            new AssetDescriptor<Music>("sound/music/Intro Theme.mp3", Music.class);
+
+
     FreeTypeFontLoaderParameter bigButtonFontParameter;
     FreeTypeFontLoaderParameter shopCellFontParameter;
     FreeTypeFontLoaderParameter shopButtonFontParameter;
@@ -85,15 +90,21 @@ public class MenuAssets implements Assets {
         manager.load(spritesAtlas);
         manager.load(mainMenuBackground);
         manager.load(skin);
+        manager.load(music);
         manager.load("mainMenuButtonFont.ttf", BitmapFont.class, bigButtonFontParameter);
         manager.load("shopButtonFont.ttf", BitmapFont.class, shopButtonFontParameter);
         manager.load("shopCellFont.ttf", BitmapFont.class, shopCellFontParameter);
-        manager.finishLoading();
-
+        //manager.finishLoading();
     }
 
     @Override
     public void dispose() {
         manager.dispose();
+    }
+
+    @Override
+    public float update() {
+        manager.update();
+        return manager.getProgress();
     }
 }

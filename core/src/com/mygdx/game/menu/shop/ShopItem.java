@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Color;
+import com.mygdx.game.assets.MenuAssets;
 
 /**
  * Created by Adrien on 10-09-17.
@@ -12,7 +13,6 @@ import com.badlogic.gdx.graphics.Color;
 public enum ShopItem {
     ALPACA_RED, ALPACA_BLUE, ALPACA_WHITE, ALPACA_YELLOW, ALPACA_PINK, ALPACA_BROWN, ALPACA_BLACK;
 
-    private static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/menu.txt"));
 
     public int getPrice(){
         switch(this){
@@ -75,7 +75,8 @@ public enum ShopItem {
     }
 
 
-    public TextureRegion getTextureRegion(){
+    public TextureRegion getTextureRegion(MenuAssets assets){
+         TextureAtlas atlas = assets.manager.get("menu/menu.txt", TextureAtlas.class);
         switch(this){
             case ALPACA_RED :
                 return  atlas.findRegion("run2_red");
@@ -92,6 +93,7 @@ public enum ShopItem {
             case ALPACA_BLACK :
                 return atlas.findRegion("run2_black");
         }
+
         return atlas.findRegion("run2_white");
     }
 }

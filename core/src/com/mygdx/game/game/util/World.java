@@ -1,12 +1,14 @@
 package com.mygdx.game.game.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.assets.GameAssets;
+import com.mygdx.game.game.entities.Bonus;
 import com.mygdx.game.game.entities.Enemy;
 import com.mygdx.game.game.entities.Entity;
 import com.mygdx.game.game.entities.MovableEntity;
@@ -32,6 +34,7 @@ public class World {
     private ArrayList<Explosion> explosions;
 
     private SpriteBatch textBatch;
+    private Sound pickup;
 
     private float g;
     private float normalG;
@@ -58,6 +61,7 @@ public class World {
         enemies = new ArrayList<Enemy>();
         explosions = new ArrayList<Explosion>();
         worldSize = new Vector2(1000,1000);
+        pickup = assets.manager.get("sound/sfx/pickup.wav", Sound.class);
 
         textBatch = new SpriteBatch();
 
@@ -119,6 +123,8 @@ public class World {
                             ((Enemy)e).resetKillScore();
                         lastKilled = ((Enemy)e).number;
                     }
+                    else if(e instanceof Bonus)
+                        pickup.setVolume(pickup.play(), 0.2f);
                     scorePopUps.add(new ScorePopUp(e.getKillScore(), player.getHitbox().getX(), player.getHitbox().getY() + player.getHitbox().getHeight() / 3 * 2, assets));
                     player.addScore(e.getKillScore());
                     e.kill();
@@ -252,5 +258,11 @@ public class World {
             enemies.get(i).number = i;
     }
 
-    public void dispose(){textBatch.dispose();}
+    public void dispose(){
+        enemies.clear();
+        explosions.clear();
+        staticEntities.clear();
+        scorePopUps.clear();
+        movableEntities.clear();
+        textBatch.dispose();}
 }

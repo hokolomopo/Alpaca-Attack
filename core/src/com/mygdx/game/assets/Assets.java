@@ -9,4 +9,5 @@ import com.badlogic.gdx.assets.AssetManager;
 public interface Assets {
     void load();
     void dispose();
+    float update();
 }

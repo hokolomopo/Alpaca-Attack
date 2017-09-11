@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.mygdx.game.menu.shop.ShopItem;
 import com.mygdx.game.screen.EndScreen;
 import com.mygdx.game.screen.GameScreen;
+import com.mygdx.game.screen.LoadingScreen;
 import com.mygdx.game.screen.MenuScreen;
 
 /*
@@ -29,13 +30,13 @@ public class AlpacaAttack extends Game {
 		prefs.putBoolean("own"+ ShopItem.ALPACA_WHITE.getName(), true).flush();
 
 		//this.setScreen(new MenuScreen(this));
-		this.setScreen(new MenuScreen(this));
+		this.setScreen(new LoadingScreen(this, LoadingScreen.MENU_SCREEN));
 	}
 
 	@Override
 	public void render () {
 		//Gdx.gl.glClearColor(0.63137f, 00.94901f, 0.92549f, 1);
-		Gdx.gl.glClearColor(1,1,1,1);
+		Gdx.gl.glClearColor(0,0,0,1);
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

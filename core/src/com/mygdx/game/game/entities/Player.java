@@ -1,6 +1,7 @@
 package com.mygdx.game.game.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class Player extends AnimatedMovableEntity {
     private final static  float DEAD_ANIMATION_DURATION = 2f;
 
     private Explosion explosion;
+    private Sound jump;
 
     public boolean isDashing = false;
     public boolean isJumping = false;
@@ -50,6 +52,9 @@ public class Player extends AnimatedMovableEntity {
         super(a);
         assets = a;
 
+        //Load sounds
+        jump = assets.manager.get("sound/sfx/jump.wav", Sound.class);
+
         color = getEquippedColor();
 
         weight = 1;
@@ -64,8 +69,6 @@ public class Player extends AnimatedMovableEntity {
         sprite = new Sprite(textureAtlas.findRegion("run1"+"_"+color));
         sprite.setPosition(hitbox.x, hitbox.y);
         sprite.setSize(textureAtlas.findRegion("run1"+"_"+color).getRegionWidth()* GameScreen.PIXEL_TO_METER* SIZE_MULTIPLIER,textureAtlas.findRegion("run1"+"_"+color).getRegionHeight()* GameScreen.PIXEL_TO_METER* SIZE_MULTIPLIER);
-
-
     }
 
     public void reset(){
@@ -139,6 +142,9 @@ public class Player extends AnimatedMovableEntity {
     }
 
     public void jump(){
+        //gallop.pause(gallopID);
+        if(!isDying)
+            jump.setVolume(jump.play(), 0.2f);
         if(jumpLeft > 0) {
             speed.y = JUMP_SPEED;
             isJumping = true;

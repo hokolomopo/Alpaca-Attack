@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.AlpacaAttack;
 import com.mygdx.game.menu.background.MainMenuBackground;
+import com.mygdx.game.screen.EndScreen;
+import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MenuScreen;
 
 /**
@@ -32,15 +34,19 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
     public MainMenuScene(MenuScreen mScreen){
         super(mScreen.assets);
         scene = this;
+        menuScreen = mScreen;
 
         Gdx.input.setInputProcessor(stage);
 
-        menuScreen = mScreen;
 
         font = menuScreen.assets.manager.get("mainMenuButtonFont.ttf", BitmapFont.class);
-
         background = new MainMenuBackground(mScreen.assets);
 
+        this.createButtons();
+
+    }
+
+    private void createButtons(){
         TextButton play = new TextButton("Play", skin);
         play.setSize(menuScreen.assets.MAIN_MENU_BUTTON_WIDTH, menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT);
         play.setPosition(Gdx.graphics.getWidth()/2 - menuScreen.assets.MAIN_MENU_BUTTON_WIDTH/2, Gdx.graphics.getHeight()/2);

@@ -63,13 +63,13 @@ public class ShopCell extends Actor {
     public ShopCell(ShopItem i, MenuAssets a){
         item = i;
         assets = a;
-        skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
 
+        skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
         font = assets.manager.get("shopCellFont.ttf", BitmapFont.class);
         frame = assets.manager.get("menu/menu.txt", TextureAtlas.class).findRegion("frame");
         card = assets.manager.get("menu/menu.txt", TextureAtlas.class).findRegion("cell");
 
-        itemTexture = item.getTextureRegion();
+        itemTexture = item.getTextureRegion(assets);
 
         //Size = clickable size, so we take the size of the button
         this.setWidth(BUTTON_WIDTH + 2* MARGIN);
@@ -206,6 +206,7 @@ public class ShopCell extends Actor {
     }
 
     public void dispose(){
+
         b.dispose();
     }
 

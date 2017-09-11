@@ -35,7 +35,7 @@ public class EndScreen implements Screen {
     private float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
     private Stage stage;
     private Game game;
-    private BitmapFont font;// = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(BUTTON_HEIGHT - BUTTON_HEIGHT/8));
+    private BitmapFont font;
     private int finalScore;
     private int highScore;
     private int moneyAmount;
@@ -55,14 +55,24 @@ public class EndScreen implements Screen {
     private EndScreen thisScreen;
 
     private EndScreenBackground background;
-    private SpriteBatch batch = new SpriteBatch();
+    private SpriteBatch batch;
 
-    public EndScreen(Game g, int argScore, GameScreen gmScreen){
+    /*public EndScreen(Game g, int argScore, GameScreen gmScreen) {
+        this(g, argScore, gmScreen, new MenuAssets());
+    }*/
+
+    public EndScreen(Game g, int argScore, GameScreen gmScreen, MenuAssets a){
+
         thisScreen = this;
         game = g;
         finalScore = argScore;
         gameScreen = gmScreen;
         highScore = prefs.getInteger("highScore", 0);
+        batch = new SpriteBatch();
+
+        assets = a;
+        //assets.load();
+
 
         this.loadAssets();
 
@@ -92,14 +102,10 @@ public class EndScreen implements Screen {
 
         this.createButtons();
 
-
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     private void loadAssets(){
-        assets = new MenuAssets();
-        assets.load();
-
         font = assets.manager.get("mainMenuButtonFont.ttf");
         skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
 

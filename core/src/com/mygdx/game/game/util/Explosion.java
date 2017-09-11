@@ -1,6 +1,7 @@
 package com.mygdx.game.game.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,7 +16,7 @@ public class Explosion {
     private TextureAtlas atlas;// = new TextureAtlas("explosion.txt");
     private static final float FRAME_DURATION = 1/10f;
     private Animation explosion;
-
+    private Sound sound;
 
     private float x = 0;
     private float y = 0;
@@ -30,6 +31,8 @@ public class Explosion {
         explosion = new Animation(FRAME_DURATION, atlas.findRegion("explosion1"), atlas.findRegion("explosion2"), atlas.findRegion("explosion3"), atlas.findRegion("explosion4"),
                 atlas.findRegion("explosion5"), atlas.findRegion("explosion6"), atlas.findRegion("explosion7"), atlas.findRegion("explosion8"), atlas.findRegion("explosion9"));
 
+        sound = assets.manager.get("sound/sfx/explosion.wav");
+        sound.setVolume(sound.play(), 0.4f);
     }
 
     public Explosion(float argX, float argY, GameAssets assets){

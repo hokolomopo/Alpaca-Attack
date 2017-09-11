@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,6 +27,7 @@ public class GameScreen implements Screen, InputProcessor{
     private World world;
     private TiledMapProcessor background;
     private UserInterface ui;
+    private Music music;
 
     public static final float PIXEL_TO_METER = 0.5f;
     private static final float PLAYER_INITIAL_LOC = 600 * PIXEL_TO_METER;
@@ -34,10 +36,18 @@ public class GameScreen implements Screen, InputProcessor{
     private Game game;
     private GameAssets assets;
 
-    public GameScreen(Game g){
+    /*public GameScreen(Game g){
+        this(g, new GameAssets());
+    }*/
+
+    public GameScreen(Game g, GameAssets a){
+        Gdx.input.setInputProcessor(this);
+
         game = g;
-        assets = new GameAssets();
-        assets.load();
+        assets = a;
+        //assets.load();
+
+        music = assets.manager.get("sound/music/Funky-Chiptune.mp3", Music.class);
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -73,13 +83,17 @@ public class GameScreen implements Screen, InputProcessor{
     @Override
     public void render(float delta) {
 
+        if(!music.isPlaying())
+            music.play();
+
         if(player.getY() + player.getHitbox().height < 0)
             player.kill();
 
         if(player.isDead){
             int score = (player.getScore());
             this.reset();
-            game.setScreen(new EndScreen(game, score, this));
+            music.stop();
+            game.setScreen(new LoadingScreen(game, score, this));
         }
 
         background.render(camera, player);

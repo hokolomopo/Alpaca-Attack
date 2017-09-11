@@ -3,6 +3,7 @@ package com.mygdx.game.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,6 +22,7 @@ import com.mygdx.game.menu.scenes.ShopScene;
 
 public class MenuScreen implements Screen {
     private Game game;
+    public Music music;
 
     public MenuAssets assets;
 
@@ -34,16 +36,23 @@ public class MenuScreen implements Screen {
 
     private MenuScene scene;
 
-    public  MenuScreen(Game g){
+    /*public  MenuScreen(Game g){
         this(g, new MenuAssets());
-    }
+    }*/
 
     public MenuScreen(Game g, MenuAssets a){
+
         game = g;
         assets = a;
-        assets.load();
+        //assets.load();
+        music = assets.manager.get("sound/music/Intro Theme.mp3", Music.class);
+        music.setLooping(true);
+        music.play();
+
 
         scene = new MainMenuScene(this);
+        Gdx.input.setInputProcessor(scene.getStage());
+
     }
 
     public void setScene(MenuScene old, int a){
@@ -59,9 +68,7 @@ public class MenuScreen implements Screen {
                 break;
             case GAME :
                 this.dispose();
-                GameScreen gmScreen = new GameScreen(game);
-                Gdx.input.setInputProcessor(gmScreen);
-                game.setScreen(gmScreen);
+                game.setScreen(new LoadingScreen(game, LoadingScreen.GAME_SCREEN));
                 break;
         }
     }

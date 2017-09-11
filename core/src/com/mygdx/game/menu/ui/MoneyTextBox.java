@@ -27,7 +27,7 @@ public class MoneyTextBox extends Actor {
     private final TextureRegion box;// = MenuScreen.atlas.findRegion("textBox");
     private final TextureRegion coin;// = MenuScreen.atlas.findRegion("coin");
 
-    private SpriteBatch b = new SpriteBatch();
+    private SpriteBatch b;
     private BitmapFont font;// = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), box.getRegionHeight()*8/10);
 
     private Label text;
@@ -36,6 +36,7 @@ public class MoneyTextBox extends Actor {
     private MenuAssets assets;
 
     public MoneyTextBox(int money, MenuAssets a){
+        b = new SpriteBatch();
         assets = a;
         amount = money;
         font = assets.manager.get("shopCellFont.ttf", BitmapFont.class);

@@ -45,7 +45,6 @@ public class TiledMapProcessor {
         MAP_WIDHT = tiledMap.getProperties().get("width", Integer.class) * tiledMap.getProperties().get("tilewidth", Integer.class) * GameScreen.PIXEL_TO_METER;
         MAP_HEIGHT = tiledMap.getProperties().get("height", Integer.class) * tiledMap.getProperties().get("tileheight", Integer.class) * GameScreen.PIXEL_TO_METER;
 
-        System.out.println(MAP_WIDHT);
         world.setSize(new Vector2(MAP_WIDHT, MAP_HEIGHT));
 
     }

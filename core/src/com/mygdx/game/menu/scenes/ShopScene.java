@@ -163,6 +163,7 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
     public void dispose(){
         for(ShopCell cell : shopCells)
             cell.dispose();
+        shopCells.clear();
         moneyCell.dispose();
         super.dispose();
     }
