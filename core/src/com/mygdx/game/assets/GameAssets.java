@@ -21,6 +21,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.menu.shop.ShopItem;
+import com.mygdx.game.screen.GameScreen;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,7 @@ public class GameAssets implements  Assets {
 
         floatingTextFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         floatingTextFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
-        floatingTextFontParameter.fontParameters.size = (Gdx.graphics.getHeight()/10);
+        floatingTextFontParameter.fontParameters.size = ((int)(180 * GameScreen.PIXEL_TO_METER));
         floatingTextFontParameter.fontParameters.color = Color.BLACK;
 
         uiScoreTextParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
@@ -117,6 +118,8 @@ public class GameAssets implements  Assets {
             return  manager.get("particles/dash_pink", ParticleEffect.class);
         else if(drag.equals(ShopItem.DASH_YELLOW.getName()))
             return  manager.get("particles/dash_yellow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_WHITE.getName()))
+            return  manager.get("particles/dash_white", ParticleEffect.class);
 
         return null;
     }
@@ -126,8 +129,8 @@ public class GameAssets implements  Assets {
         String drag = prefs.getString("equippedDash", "");
         if(drag.equals(ShopItem.DASH_RAINBOW.getName()))
             manager.load("particles/dash_rainbow", ParticleEffect.class);
-        if(drag.equals(ShopItem.DASH_RAINBOW.getName()))
-            manager.load("particles/dash_rainbow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_WHITE.getName()))
+            manager.load("particles/dash_white", ParticleEffect.class);
         else if(drag.equals(ShopItem.DASH_BLUE.getName()))
             manager.load("particles/dash_blue", ParticleEffect.class);
         else if(drag.equals(ShopItem.DASH_RED.getName()))

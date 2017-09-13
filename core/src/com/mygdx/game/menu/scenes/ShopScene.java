@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.menu.shop.ShopItem;
 import com.mygdx.game.menu.ui.MoneyTextBox;
@@ -32,7 +33,7 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     private Preferences prefs = Gdx.app.getPreferences("prefs");
 
-    public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/6;
+    public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/4;
     public static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/10;
 
     private static final float MONEYBOX_WIDTH = Gdx.graphics.getWidth()/4;
@@ -59,8 +60,8 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
         menuScreen = mScreen;
 
-        font = menuScreen.assets.manager.get("shopButtonFont.ttf", BitmapFont.class);
-        atlas = menuScreen.assets.manager.get("menu/menu.txt", TextureAtlas.class);
+        font = menuScreen.assets.manager.get(MenuAssets.mainMenuButtonFont, BitmapFont.class);
+        atlas = menuScreen.assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class);
         background = atlas.findRegion("shopBackground");
 
         createBackButton();
@@ -98,7 +99,7 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
     }
 
     private void createBackButton(){
-        TextButton back = new TextButton("Back", skin);
+        TextButton back = new TextButton(menuScreen.bundle.get("back"), skin);
         back.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         back.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         back.setPosition(BACK_BUTTON_PADDING

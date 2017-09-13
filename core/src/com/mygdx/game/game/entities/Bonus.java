@@ -30,7 +30,6 @@ public class Bonus extends MovableEntity{
     private ParticleEffect effect;
     private Array<ParticleEmitter> emiters;
 
-
     public Bonus(float x, float y, GameAssets assets){
         super(new Rectangle(x,y,BONUS_SIZE,BONUS_SIZE), "star", assets);
 

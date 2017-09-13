@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.resizable = false;
 		config.height = 720;
-		config.width = 1280;
+		config.width = 1080;
 		new LwjglApplication(new AlpacaAttack(), config);
 	}
 }

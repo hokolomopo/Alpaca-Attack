@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.background.EndScreenBackground;
@@ -58,6 +59,8 @@ public class EndScreen implements Screen {
     private MenuAssets assets;
     private Skin skin;
     private Music music;
+    private I18NBundle bundle;
+
     private GameScreen gameScreen;
     private EndScreen thisScreen;
 
@@ -123,7 +126,7 @@ public class EndScreen implements Screen {
         music = assets.manager.get(MenuAssets.endScreenMusicPath, Music.class);
         gold = assets.manager.get(MenuAssets.goldSoundPath, Sound.class);
         validateSound = assets.manager.get(MenuAssets.validateSoundPath, Sound.class);
-
+        bundle = assets.manager.get(MenuAssets.bundlePath, I18NBundle.class);
     }
 
     private void initializeLabels(){
@@ -152,7 +155,7 @@ public class EndScreen implements Screen {
     }
 
     private void createButtons(){
-        TextButton play = new TextButton("Retry", skin);
+        TextButton play = new TextButton(bundle.get("replay"), skin);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - BUTTON_HEIGHT*2);
@@ -179,7 +182,7 @@ public class EndScreen implements Screen {
 
         stage.addActor(play);
 
-        TextButton quit = new TextButton("Quit", skin);
+        TextButton quit = new TextButton(bundle.get("quit"), skin);
         quit.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         quit.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         quit.setPosition(Gdx.graphics.getWidth()/2 - quit.getWidth()/2, play.getY() - BUTTON_HEIGHT -10);

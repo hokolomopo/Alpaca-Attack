@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.Assets;
 import com.mygdx.game.assets.GameAssets;
 import com.mygdx.game.assets.MenuAssets;
@@ -30,6 +31,7 @@ public class LoadingScreen implements Screen {
     private SpriteBatch batch = new SpriteBatch();
     private Skin skin = new Skin(Gdx.files.internal("menu/flat-earth-ui.json"));
     private Stage stage = new Stage();
+    private I18NBundle bundle;
 
     private ProgressBar loadingBar;
     private float progress;
@@ -47,6 +49,7 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(Game g, int screenType){
         this.createLoadingBar();
         this.createText();
+        this.loadBundle();
 
         this.screenType = screenType;
         game = g;
@@ -64,6 +67,7 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(Game g, int argScore, GameScreen gmScreen){
         this.createLoadingBar();
         this.createText();
+        this.loadBundle();
 
         this.screenType = END_SCREEN;
         game = g;
@@ -74,6 +78,9 @@ public class LoadingScreen implements Screen {
         assets.load();
     }
 
+    private void loadBundle(){
+        bundle = I18NBundle.createBundle(Gdx.files.internal("properties/Loading"));
+    }
     private void createText(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -102,7 +109,7 @@ public class LoadingScreen implements Screen {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         batch.begin();
-        font.draw(batch, "Loading ...", 0, loadingBar.getY()+ loadingBar.getHeight() +40, Gdx.graphics.getWidth(), Align.center, true);
+        font.draw(batch, bundle.get("loading"), 0, loadingBar.getY()+ loadingBar.getHeight() +40, Gdx.graphics.getWidth(), Align.center, true);
         batch.end();
         if(progress == 1){
             this.dispose();

@@ -98,5 +98,6 @@ public class MoneyTextBox extends Actor {
 
     public void dispose(){
         b.dispose();
+        font.dispose();
     }
 }

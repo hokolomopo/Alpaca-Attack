@@ -34,6 +34,7 @@ public class World {
     private ArrayList<Explosion> explosions;
 
     private SpriteBatch textBatch;
+    private OrthographicCamera textCam;
     private Sound pickup;
 
     private float g;
@@ -103,6 +104,7 @@ public class World {
         }
         player.update();
 
+        textCam = new OrthographicCamera();
 
         //for(Entity e: staticEntities) System.out.println("Hitbox" + e.getHitbox().getX()+ " "+ e.getHitbox().getHeight() +"  "+ e.getHitbox().getWidth());
     }
@@ -192,15 +194,18 @@ public class World {
         for(Explosion e : explosions)
             e.render(batch);
         player.draw(batch);
+        for(ScorePopUp s : scorePopUps)
+            s.draw(batch);
         batch.end();
 
-        //textCam.position.set(camera.position.x, camera.position.y,0);
-        textBatch.setProjectionMatrix(camera.combined);
-        textBatch.begin();
-        for(ScorePopUp s : scorePopUps)
-            s.draw(textBatch);
-        textBatch.end();
 
+        /*textCam.position.set(camera.position.x, camera.position.y,0);
+        textCam.viewportHeight = camera.viewportHeight/2;
+        textCam.viewportWidth = camera.viewportWidth;
+        textCam.update();
+        textBatch.setProjectionMatrix(camera.combined);
+        textBatch.begin();*/
+        //textBatch.end();
     }
 
     public void renderHitboxes(ShapeRenderer r){

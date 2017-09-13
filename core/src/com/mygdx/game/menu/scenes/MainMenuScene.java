@@ -60,7 +60,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
     }
 
     private void createButtons(){
-        TextButton play = new TextButton("Play", skin);
+        TextButton play = new TextButton(menuScreen.bundle.get("play"), skin);
         play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         play.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2, Gdx.graphics.getHeight()/2);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
@@ -77,7 +77,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
         });
         stage.addActor(play);
 
-        TextButton shop = new TextButton("Shop", skin);
+        TextButton shop = new TextButton(menuScreen.bundle.get("shop"), skin);
         shop.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
         shop.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2
                 , play.getY() - BUTTON_HEIGHT - BUTTON_PADDING);
@@ -95,7 +95,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
         stage.addActor(shop);
 
 
-        TextButton close = new TextButton("Exit", skin);
+        TextButton close = new TextButton(menuScreen.bundle.get("exit"), skin);
         close.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         close.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2
                 , shop.getY() - BUTTON_HEIGHT - BUTTON_PADDING);

@@ -15,8 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.shop.ShopItem;
+
+import java.awt.Menu;
 
 /**
  * Created by Adrien on 08-09-17.
@@ -60,10 +63,12 @@ public class ShopCell extends Actor {
     private boolean owned = false;
 
     private MenuAssets assets;
+    private I18NBundle bundle;
 
     public ShopCell(ShopItem i, MenuAssets a){
         item = i;
         assets = a;
+        bundle = assets.manager.get(MenuAssets.bundlePath, I18NBundle.class);
 
         skin = assets.manager.get(MenuAssets.menuSkinPath, Skin.class);
         font = assets.manager.get(MenuAssets.shopCellFont, BitmapFont.class);
@@ -214,7 +219,7 @@ public class ShopCell extends Actor {
     }
 
     private void setUpCellTitle(){
-        title = new Label(item.getName(), new Label.LabelStyle(font, item.getTextColor()));
+        title = new Label(item.getShopName(assets.manager.get(MenuAssets.bundlePath, I18NBundle.class)), new Label.LabelStyle(font, item.getTextColor()));
         title.setSize(CELL_WIDTH - 2*MARGIN, 0);
         title.setAlignment(Align.center);
         title.setPosition(this.getX() + MARGIN, this.getY() +CELL_HEIGHT - TITLE_FONT_SIZE*2 -200);
@@ -225,19 +230,21 @@ public class ShopCell extends Actor {
         String buttonStyle;
 
         if(owned)
-            buttonString = "Use";
+            buttonString = bundle.get("use");
         else
-            buttonString = "Buy";
+            buttonString = bundle.get("buy");
 
         if(equipped)
             buttonStyle = "pushed";
         else
             buttonStyle = "default";
 
+
         button = new TextButton(buttonString, skin, buttonStyle);
         button.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        button.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         button.setPosition(this.getX(), this.getY());
+
+        button.getLabel().setStyle(new Label.LabelStyle(assets.manager.get(MenuAssets.shopCellButtonFont, BitmapFont.class), Color.WHITE));
 
         //Add a empty listener jut to have the button animation
         button.addListener(new InputListener());
@@ -249,7 +256,7 @@ public class ShopCell extends Actor {
 
         String labelString;
         if(owned)
-            labelString = "Owned";
+            labelString = bundle.get("owned");
         else
             labelString = item.getPrice()+"G";
 

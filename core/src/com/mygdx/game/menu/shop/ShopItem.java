@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.MenuAssets;
 
 /**
@@ -13,7 +14,7 @@ import com.mygdx.game.assets.MenuAssets;
 public enum ShopItem {
     ALPACA_WHITE, ALPACA_RED, ALPACA_BLUE, ALPACA_YELLOW, ALPACA_PINK, ALPACA_BROWN, ALPACA_BLACK,
     DRAG_WHITE, DRAG_PINK, DRAG_YELLOW, DRAG_RED, DRAG_BLUE,
-    DASH_RED, DASH_WHITE, DASH_YELLOW, DASH_BLUE, DASH_PINK, DASH_RAINBOW;
+    DASH_WHITE, DASH_RED, DASH_YELLOW, DASH_BLUE, DASH_PINK, DASH_RAINBOW;
 
     public static final int SKIN = 1, DRAG = 2, DASH = 3;
 
@@ -63,7 +64,7 @@ public enum ShopItem {
     public String getName(){
         switch(this){
             case ALPACA_RED :
-                return "Alpaca \nRed";
+                return "Alpaca\nRed";
             case ALPACA_BLUE :
                 return "Alpaca\nBlue";
             case ALPACA_WHITE :
@@ -98,6 +99,49 @@ public enum ShopItem {
                 return "dash\nwhite";
             case DASH_YELLOW:
                 return "dash\nyellow";
+
+        }
+        return "what";
+    }
+
+    public String getShopName(I18NBundle bundle){
+        switch(this){
+            case ALPACA_RED :
+                return bundle.get("alpacaRed");
+            case ALPACA_BLUE :
+                return bundle.get("alpacaBlue");
+            case ALPACA_WHITE :
+                return bundle.get("alpacaWhite");
+            case ALPACA_YELLOW :
+                return bundle.get("alpacaYellow");
+            case ALPACA_PINK :
+                return bundle.get("alpacaPink");
+            case ALPACA_BROWN :
+                return bundle.get("alpacaBrown");
+            case ALPACA_BLACK :
+                return bundle.get("alpacaBlack");
+            case DRAG_BLUE:
+                return bundle.get("dustBlue");
+            case DRAG_RED:
+                return bundle.get("dustRed");
+            case DRAG_PINK:
+                return bundle.get("dustPink");
+            case DRAG_WHITE:
+                return bundle.get("dustWhite");
+            case DRAG_YELLOW:
+                return bundle.get("dustYellow");
+            case DASH_RAINBOW:
+                return bundle.get("dashRainbow");
+            case DASH_BLUE:
+                return bundle.get("dashBlue");
+            case DASH_RED:
+                return bundle.get("dashRed");
+            case DASH_PINK:
+                return bundle.get("dashPink");
+            case DASH_WHITE:
+                return bundle.get("dashWhite");
+            case DASH_YELLOW:
+                return bundle.get("dashYellow");
 
         }
         return "what";

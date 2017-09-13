@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.AlpacaAttack;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.scenes.MainMenuScene;
@@ -26,6 +27,8 @@ public class MenuScreen implements Screen {
     public Music music;
 
     public MenuAssets assets;
+    public I18NBundle bundle;
+
     private Sound validateSound;
 
     //public final static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/menu.txt"));
@@ -53,6 +56,7 @@ public class MenuScreen implements Screen {
         music.setVolume(assets.getMusicVolume());
 
         validateSound = assets.manager.get(MenuAssets.validateSoundPath, Sound.class);
+        bundle = assets.manager.get(MenuAssets.bundlePath, I18NBundle.class);
 
         scene = new MainMenuScene(this);
         Gdx.input.setInputProcessor(scene.getStage());

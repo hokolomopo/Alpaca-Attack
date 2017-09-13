@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.mygdx.game.menu.shop.ShopItem;
 import com.mygdx.game.screen.LoadingScreen;
 
+import java.util.Locale;
+
 public class AlpacaAttack extends Game {
 
 	public AssetManager manager = new AssetManager();
@@ -21,10 +23,7 @@ public class AlpacaAttack extends Game {
 	@Override
 	public void create () {
 		Preferences prefs = Gdx.app.getPreferences("prefs");
-		prefs.putBoolean("own"+ ShopItem.ALPACA_WHITE.getName(), true).flush();
-		Gdx.app.getPreferences("prefs").putFloat("soundVolume", 0f).flush();
-		Gdx.app.getPreferences("prefs").putFloat("musicVolume", 0f).flush();
-		//this.setScreen(new MenuScreen(this))
+		prefs.putBoolean("own"+ ShopItem.ALPACA_WHITE.getName(), true).flush();prefs.putInteger("money", 99999).flush();
 		this.setScreen(new LoadingScreen(this, LoadingScreen.MENU_SCREEN));
 	}
 

@@ -17,10 +17,13 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.menu.scenes.MainMenuScene;
 import com.mygdx.game.menu.scenes.ShopScene;
 import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.screen.MenuScreen;
+
+import java.util.Locale;
 
 /**
  * Created by Adrien on 11-09-17.
@@ -41,13 +44,15 @@ public class MenuAssets implements Assets {
     public static final String validateSoundPath = "sound/menu/validate.wav";
 
     public static final String mainMenuButtonFont = "mainMenuButtonFont.ttf";
-    public static final String shopButtonFont = "shopButtonFont.ttf";
+    public static final String shopCellButtonFont = "shopCellButtonFont.ttf";
     public static final String shopCellFont = "shopCellFont.ttf";
+
+    public static final String bundlePath = "properties/Menu";
 
 
     FreeTypeFontLoaderParameter bigButtonFontParameter;
     FreeTypeFontLoaderParameter shopCellFontParameter;
-    FreeTypeFontLoaderParameter shopButtonFontParameter;
+    FreeTypeFontLoaderParameter shopCellButtonFontParameter;
 
 
     public MenuAssets(){
@@ -59,9 +64,9 @@ public class MenuAssets implements Assets {
         bigButtonFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
         bigButtonFontParameter.fontParameters.size = (int)(MainMenuScene.BUTTON_HEIGHT*7/8);
 
-        shopButtonFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
-        shopButtonFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
-        shopButtonFontParameter.fontParameters.size = (int)(ShopScene.BUTTON_HEIGHT*7/8);
+        shopCellButtonFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        shopCellButtonFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
+        shopCellButtonFontParameter.fontParameters.size = (int)(ShopCell.TITLE_FONT_SIZE*0.8f);
 
         shopCellFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         shopCellFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
@@ -81,8 +86,10 @@ public class MenuAssets implements Assets {
         manager.load(goldSoundPath, Sound.class);
         manager.load(validateSoundPath, Sound.class);
         manager.load(mainMenuButtonFont, BitmapFont.class, bigButtonFontParameter);
-        manager.load(shopButtonFont, BitmapFont.class, shopButtonFontParameter);
+        manager.load(shopCellButtonFont, BitmapFont.class, shopCellButtonFontParameter);
         manager.load(shopCellFont, BitmapFont.class, shopCellFontParameter);
+        manager.load(bundlePath, I18NBundle.class);
+
 
         //manager.finishLoading();
     }
