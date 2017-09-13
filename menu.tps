@@ -277,6 +277,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../../../Downloads/music_off.png</key>
+            <key type="filename">../../../Downloads/music_on.png</key>
+            <key type="filename">../../../Downloads/sound_off.png</key>
+            <key type="filename">../../../Downloads/sound_on.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9Paddings</key>
+                <rect>50,50,100,100</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../../../Downloads/rainbow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -404,6 +420,10 @@
             <filename>../../../Downloads/dash_red.png</filename>
             <filename>../../../Downloads/dash_white.png</filename>
             <filename>../../../Downloads/dash_blue.png</filename>
+            <filename>../../../Downloads/music_off.png</filename>
+            <filename>../../../Downloads/music_on.png</filename>
+            <filename>../../../Downloads/sound_off.png</filename>
+            <filename>../../../Downloads/sound_on.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

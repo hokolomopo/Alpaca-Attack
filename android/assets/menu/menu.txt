@@ -1,165 +1,193 @@
 menu.png
-size: 1820, 1582
+size: 2015, 1639
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 cell
   rotate: false
-  xy: 0, 942
+  xy: 1775, 251
   size: 170, 434
   orig: 170, 434
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 1385, 251
+  xy: 305, 685
   size: 290, 291
   orig: 290, 291
   offset: 0, 0
   index: -1
 dash_blue
   rotate: false
-  xy: 500, 0
+  xy: 180, 251
   size: 267, 185
   orig: 267, 185
   offset: 0, 0
   index: -1
 dash_pink
   rotate: false
-  xy: 1321, 0
+  xy: 719, 251
   size: 274, 204
   orig: 274, 204
   offset: 0, 0
   index: -1
 dash_red
   rotate: false
-  xy: 1039, 0
+  xy: 993, 251
   size: 282, 201
   orig: 282, 201
   offset: 0, 0
   index: -1
 dash_white
   rotate: false
-  xy: 1080, 251
+  xy: 0, 685
   size: 305, 258
   orig: 305, 258
   offset: 0, 0
   index: -1
 dash_yellow
   rotate: false
-  xy: 767, 0
+  xy: 447, 251
   size: 272, 199
   orig: 272, 199
   offset: 0, 0
   index: -1
 frame
   rotate: false
-  xy: 170, 942
+  xy: 400, 999
   size: 400, 600
   orig: 400, 600
   offset: 0, 0
   index: -1
+music_off
+  rotate: false
+  xy: 400, 0
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+music_on
+  rotate: false
+  xy: 200, 0
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
 rainbow
   rotate: false
-  xy: 1420, 542
+  xy: 0, 999
   size: 400, 400
   orig: 400, 400
   offset: 0, 0
   index: -1
 run2_black
   rotate: false
-  xy: 900, 251
+  xy: 980, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_blue
   rotate: false
-  xy: 540, 251
+  xy: 1160, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_brown
   rotate: false
-  xy: 720, 251
+  xy: 0, 251
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_pink
   rotate: false
-  xy: 0, 251
+  xy: 1700, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_red
   rotate: false
-  xy: 1595, 0
+  xy: 1340, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_white
   rotate: false
-  xy: 180, 251
+  xy: 800, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_yellow
   rotate: false
-  xy: 360, 251
+  xy: 1520, 0
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 shopBackground
   rotate: false
-  xy: 570, 942
+  xy: 800, 999
   size: 1136, 640
   orig: 1136, 640
   offset: 0, 0
   index: -1
+sound_off
+  rotate: false
+  xy: 0, 0
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+sound_on
+  rotate: false
+  xy: 600, 0
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
 stars_blue
   rotate: false
-  xy: 1136, 542
+  xy: 1447, 685
   size: 284, 314
   orig: 284, 314
   offset: 0, 0
   index: -1
 stars_pink
   rotate: false
-  xy: 568, 542
+  xy: 1731, 685
   size: 284, 314
   orig: 284, 314
   offset: 0, 0
   index: -1
 stars_red
   rotate: false
-  xy: 0, 542
+  xy: 1163, 685
   size: 284, 314
   orig: 284, 314
   offset: 0, 0
   index: -1
 stars_white
   rotate: false
-  xy: 284, 542
+  xy: 879, 685
   size: 284, 314
   orig: 284, 314
   offset: 0, 0
   index: -1
 stars_yellow
   rotate: false
-  xy: 852, 542
+  xy: 595, 685
   size: 284, 314
   orig: 284, 314
   offset: 0, 0
   index: -1
 textBox
   rotate: false
-  xy: 0, 0
+  xy: 1275, 251
   size: 500, 127
   orig: 500, 127
   offset: 0, 0
