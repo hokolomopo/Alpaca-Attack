@@ -10,4 +10,6 @@ public interface Assets {
     void load();
     void dispose();
     float update();
+    float getSoundVolume();
+    float getMusicVolume();
 }

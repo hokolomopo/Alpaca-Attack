@@ -39,8 +39,8 @@ public class MoneyTextBox extends Actor {
         b = new SpriteBatch();
         assets = a;
         amount = money;
-        font = assets.manager.get("shopCellFont.ttf", BitmapFont.class);
-        atlas = assets.manager.get("menu/menu.txt", TextureAtlas.class);
+        font = assets.manager.get(MenuAssets.shopCellFont, BitmapFont.class);
+        atlas = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class);
         box = atlas.findRegion("textBox");
         coin = atlas.findRegion("coin");
 

@@ -1,24 +1,18 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.mygdx.game.menu.shop.ShopItem;
-import com.mygdx.game.screen.EndScreen;
-import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.LoadingScreen;
-import com.mygdx.game.screen.MenuScreen;
-
-/*
-TODO : assetmanager on skin(MEuScene), mainMenuBackground, Game and EndScreen
- */
 
 public class AlpacaAttack extends Game {
 
@@ -28,8 +22,9 @@ public class AlpacaAttack extends Game {
 	public void create () {
 		Preferences prefs = Gdx.app.getPreferences("prefs");
 		prefs.putBoolean("own"+ ShopItem.ALPACA_WHITE.getName(), true).flush();
-
-		//this.setScreen(new MenuScreen(this));
+		Gdx.app.getPreferences("prefs").putFloat("soundVolume", 0f).flush();
+		Gdx.app.getPreferences("prefs").putFloat("musicVolume", 0f).flush();
+		//this.setScreen(new MenuScreen(this))
 		this.setScreen(new LoadingScreen(this, LoadingScreen.MENU_SCREEN));
 	}
 
@@ -49,7 +44,7 @@ public class AlpacaAttack extends Game {
 
 	public static BitmapFont generateFont(FileHandle file , int size){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(file);
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.size = size;
 		BitmapFont font = generator.generateFont(parameter);
 		generator.dispose();
@@ -57,3 +52,4 @@ public class AlpacaAttack extends Game {
 		return font;
 	}
 }
+

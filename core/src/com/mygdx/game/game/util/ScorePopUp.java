@@ -28,7 +28,7 @@ public class ScorePopUp {
     private static final float FONT_SCALE = 0.5f * GameScreen.PIXEL_TO_METER;
 
     public ScorePopUp(int score, float argX, float argY, GameAssets assets){
-        text = assets.manager.get("floatingTextFont.ttf", BitmapFont.class);
+        text = assets.manager.get(GameAssets.floatingTextFont, BitmapFont.class);
         text.getData().setScale(FONT_SCALE);
         x = argX;
         y = argY;

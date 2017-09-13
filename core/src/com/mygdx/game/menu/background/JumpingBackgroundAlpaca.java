@@ -1,11 +1,13 @@
 package com.mygdx.game.menu.background;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
+import com.mygdx.game.assets.MenuAssets;
 
 import java.util.Random;
 
@@ -16,6 +18,7 @@ import java.util.Random;
 public class JumpingBackgroundAlpaca {
     private Sprite onLand;
     private Sprite inAir;
+    private Sound sound;
 
     private float initialY;
 
@@ -30,16 +33,19 @@ public class JumpingBackgroundAlpaca {
     private float elapsedTime = 0;
     private Random random = new Random();
     private float waitTime = 0;//Time to wait for the next jump
+    private float volume;
 
     private static final float ALPACA_WIDTH = Gdx.graphics.getWidth() / 8f;
     private static final float MAXIMAL_WAIT_TIME = 1f;//Maximal time to wait between 2 jumps
-    private static final float JUMP_SPEED = 20f;
-    private static final float GRAVITY = 1f;
+    private static final float JUMP_SPEED = Gdx.graphics.getHeight()/54f;
+    private static final float GRAVITY = Gdx.graphics.getHeight()/1080f;
 
 
-    JumpingBackgroundAlpaca(float argX, float argY, TextureRegion land, TextureRegion air, boolean flip){
+    JumpingBackgroundAlpaca(float argX, float argY, TextureRegion land, TextureRegion air, boolean flip, Sound jump, float soundVolume){
         inAir = new Sprite(air);
         onLand = new Sprite(land);
+        sound  = jump;
+        volume = soundVolume;
 
         this.x = argX;
         this.y = initialY = argY;
@@ -72,6 +78,7 @@ public class JumpingBackgroundAlpaca {
         if(elapsedTime > waitTime){
             //Jump if he's not already
             if(!jumping){
+                sound.play(0.2f * volume);
                 speedY = JUMP_SPEED;
                 jumping = true;
             }

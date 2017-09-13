@@ -1,6 +1,7 @@
 package com.mygdx.game.menu.background;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,17 +24,18 @@ public class EndScreenBackground {
     public EndScreenBackground(MenuAssets mAssets){
         String equippedColor = getEquippedColor();
 
-        TextureAtlas lookRightAtlas = mAssets.manager.get("sprites.txt", TextureAtlas.class);
+        TextureAtlas lookRightAtlas = mAssets.manager.get(MenuAssets.spriteAtlasPath, TextureAtlas.class);
         TextureRegion landRegion = lookRightAtlas.findRegion("run2_"+equippedColor);
         TextureRegion airRegion = lookRightAtlas.findRegion("run1_"+equippedColor);
+        Sound jumpingSound = mAssets.manager.get(MenuAssets.jumpSoundPath, Sound.class);
 
         leftAlpace = new JumpingBackgroundAlpaca(Gdx.graphics.getWidth() / 4 - JumpingBackgroundAlpaca.getWidth(), ALPACAS_HEIGHT
-                , landRegion, airRegion, false);
+                , landRegion, airRegion, false, jumpingSound, mAssets.getSoundVolume());
 
         rightAlpaca = new JumpingBackgroundAlpaca(Gdx.graphics.getWidth() *3/ 4, ALPACAS_HEIGHT
-                , landRegion, airRegion, true);
+                , landRegion, airRegion, true, jumpingSound, mAssets.getSoundVolume());
 
-        background = mAssets.manager.get("background.png", Texture.class);
+        background = mAssets.manager.get(MenuAssets.menuBackgroundPath, Texture.class);
     }
 
     public String getEquippedColor(){

@@ -27,12 +27,12 @@ public class Explosion {
     private boolean isDead = false;
 
     public Explosion(GameAssets assets){
-        atlas = assets.manager.get("explosion.txt", TextureAtlas.class);
+        atlas = assets.manager.get(GameAssets.explosionAtlasPath, TextureAtlas.class);
         explosion = new Animation(FRAME_DURATION, atlas.findRegion("explosion1"), atlas.findRegion("explosion2"), atlas.findRegion("explosion3"), atlas.findRegion("explosion4"),
                 atlas.findRegion("explosion5"), atlas.findRegion("explosion6"), atlas.findRegion("explosion7"), atlas.findRegion("explosion8"), atlas.findRegion("explosion9"));
 
-        sound = assets.manager.get("sound/sfx/explosion.wav");
-        sound.setVolume(sound.play(), 0.4f);
+        sound = assets.manager.get(GameAssets.explosionPath, Sound.class);
+        sound.play(0.4f * assets.getSoundVolume());
     }
 
     public Explosion(float argX, float argY, GameAssets assets){

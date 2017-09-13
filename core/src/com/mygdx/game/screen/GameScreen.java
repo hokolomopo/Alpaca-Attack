@@ -6,9 +6,11 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.assets.GameAssets;
+import com.mygdx.game.game.entities.Bonus;
 import com.mygdx.game.game.util.TiledMapProcessor;
 import com.mygdx.game.game.util.UserInterface;
 import com.mygdx.game.game.util.World;
@@ -47,7 +49,9 @@ public class GameScreen implements Screen, InputProcessor{
         assets = a;
         //assets.load();
 
-        music = assets.manager.get("sound/music/Funky-Chiptune.mp3", Music.class);
+            music = assets.manager.get(GameAssets.gameMusicPath, Music.class);
+        music.setLooping(true);
+        music.setVolume(assets.getMusicVolume());
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -82,6 +86,7 @@ public class GameScreen implements Screen, InputProcessor{
 
     @Override
     public void render(float delta) {
+
 
         if(!music.isPlaying())
             music.play();

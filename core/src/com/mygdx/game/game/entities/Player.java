@@ -3,6 +3,8 @@ package com.mygdx.game.game.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -26,7 +28,8 @@ public class Player extends AnimatedMovableEntity {
     private final static  float DEAD_ANIMATION_DURATION = 2f;
 
     private Explosion explosion;
-    private Sound jump;
+    private Sound jumpSound;
+    private Sound dashSound;
 
     public boolean isDashing = false;
     public boolean isJumping = false;
@@ -45,6 +48,9 @@ public class Player extends AnimatedMovableEntity {
     private String color = "white";
 
     private GameAssets assets;
+    private ParticleEffect boostEffect;
+    private ParticleEffect dragEffect;
+
 
     private final static float SIZE_MULTIPLIER = 0.5f;
 
@@ -53,7 +59,11 @@ public class Player extends AnimatedMovableEntity {
         assets = a;
 
         //Load sounds
-        jump = assets.manager.get("sound/sfx/jump.wav", Sound.class);
+        jumpSound = assets.manager.get(GameAssets.jumpPath, Sound.class);
+        dashSound = assets.manager.get(GameAssets.dashPath, Sound.class);
+        boostEffect = assets.getPlayerDash();
+        dragEffect = assets.getPlayerDrag();
+
 
         color = getEquippedColor();
 
@@ -120,12 +130,38 @@ public class Player extends AnimatedMovableEntity {
     @Override
     public void draw(SpriteBatch batch){
         elapsedTime += Gdx.graphics.getDeltaTime();
+
+
+        if(dragEffect != null) {
+            dragEffect.update(Gdx.graphics.getDeltaTime());
+            for (ParticleEmitter e : dragEffect.getEmitters()) {
+                if(isJumping)
+                     e.setPosition(hitbox.getX(), hitbox.getY());
+                else
+                    e.setPosition(0,0);
+            }
+            dragEffect.draw(batch);
+        }
+
+        if(boostEffect != null) {
+            boostEffect.update(Gdx.graphics.getDeltaTime());
+            for (ParticleEmitter e : boostEffect.getEmitters())
+                e.setPosition(hitbox.getX() + hitbox.getWidth(), hitbox.getY());
+            boostEffect.draw(batch);
+        }
+
         if(!isJumping)
             batch.draw(animation.getKeyFrame(elapsedTime, true), hitbox.getX(), hitbox.getY(), sprite.getWidth(), sprite.getHeight());
         else
             batch.draw(textureAtlas.findRegion("run1"+"_"+color), hitbox.getX(), hitbox.getY(), sprite.getWidth(), sprite.getHeight());
+
         if(explosion !=  null)
             explosion.render(batch);
+
+
+
+
+
 
     }
 
@@ -134,6 +170,10 @@ public class Player extends AnimatedMovableEntity {
             if (jumpLeft == 0)
                 jumpLeft++;
 
+            if(boostEffect != null)
+                boostEffect.start();
+
+            dashSound.play(0.2f * assets.getSoundVolume());
             isDashing = true;
             speed.x = currentXSpeed*PLAYER_DASH_SPEED_MULTIPLICATOR;
             speed.y = 0;
@@ -144,7 +184,7 @@ public class Player extends AnimatedMovableEntity {
     public void jump(){
         //gallop.pause(gallopID);
         if(!isDying)
-            jump.setVolume(jump.play(), 0.2f);
+            jumpSound.play(0.2f * assets.getSoundVolume());
         if(jumpLeft > 0) {
             speed.y = JUMP_SPEED;
             isJumping = true;
@@ -181,7 +221,7 @@ public class Player extends AnimatedMovableEntity {
 
     }
 
-    public String getEquippedColor(){
+    private String getEquippedColor(){
         String equipped = Gdx.app.getPreferences("prefs").getString("equippedSkin", ShopItem.ALPACA_WHITE.getName());
         if(equipped.equals(ShopItem.ALPACA_WHITE.getName()))
             return "white";

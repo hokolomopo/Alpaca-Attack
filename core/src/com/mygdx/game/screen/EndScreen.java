@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.background.EndScreenBackground;
+import com.mygdx.game.menu.scenes.MainMenuScene;
 import com.mygdx.game.menu.ui.MoneyTextBox;
 
 /**
@@ -45,12 +48,16 @@ public class EndScreen implements Screen {
     private boolean animationStart = false; //True = start animation score => money
     private boolean endAnimationNow = false; //True = force animation end and convert everything
     private boolean animationEnded = false;//True when animation is ended
+    private boolean animationJustStarted = false;
 
     private Label score;
     private MoneyTextBox money;
+    private Sound gold;
+    private Sound validateSound;
 
     private MenuAssets assets;
     private Skin skin;
+    private Music music;
     private GameScreen gameScreen;
     private EndScreen thisScreen;
 
@@ -88,8 +95,9 @@ public class EndScreen implements Screen {
         stage.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(!animationStart)
+                if(!animationStart) {
                     animationStart = true;
+                }
                 else
                     endAnimationNow = true;
                 return true;
@@ -103,25 +111,32 @@ public class EndScreen implements Screen {
         this.createButtons();
 
         Gdx.input.setInputProcessor(stage);
+
+        music.setLooping(true);
+        music.play();
+        music.setVolume(assets.getMusicVolume());
     }
 
     private void loadAssets(){
-        font = assets.manager.get("mainMenuButtonFont.ttf");
-        skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
+        font = assets.manager.get(MenuAssets.mainMenuButtonFont);
+        skin = assets.manager.get(MenuAssets.menuSkinPath, Skin.class);
+        music = assets.manager.get(MenuAssets.endScreenMusicPath, Music.class);
+        gold = assets.manager.get(MenuAssets.goldSoundPath, Sound.class);
+        validateSound = assets.manager.get(MenuAssets.validateSoundPath, Sound.class);
 
     }
 
     private void initializeLabels(){
 
         Label HScore = new Label("Highscore: \n" +Integer.toString(highScore), new Label.LabelStyle(font, Color.BLACK));
-        HScore.setSize(500, 200);
-        HScore.setPosition(Gdx.graphics.getWidth()/2 - HScore.getWidth()/2, Gdx.graphics.getHeight()*3/4);
+        HScore.setSize(0,0);
+        HScore.setPosition(Gdx.graphics.getWidth()/2 - HScore.getWidth()/2, Gdx.graphics.getHeight() - MainMenuScene.BUTTON_HEIGHT);
         HScore.setAlignment(Align.center);
         stage.addActor(HScore);
 
         score = new Label("Score: \n" +Integer.toString(finalScore), new Label.LabelStyle(font, Color.BLACK));
-        score.setSize(500, 200);
-        score.setPosition(Gdx.graphics.getWidth()/2 - score.getWidth()/2, Gdx.graphics.getHeight()/2);
+        score.setSize(0, 0);
+        score.setPosition(Gdx.graphics.getWidth()/2 - score.getWidth()/2, HScore.getY() - MainMenuScene.BUTTON_HEIGHT*2);
         score.setAlignment(Align.center);
         stage.addActor(score);
 
@@ -140,7 +155,7 @@ public class EndScreen implements Screen {
         TextButton play = new TextButton("Retry", skin);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - BUTTON_HEIGHT - 150);
+        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - BUTTON_HEIGHT*2);
         play.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -149,6 +164,7 @@ public class EndScreen implements Screen {
                     endAnimationNow = true;
                     return false;
                 }
+                validateSound.play(assets.getSoundVolume());
                 return true;
             }
 
@@ -192,6 +208,7 @@ public class EndScreen implements Screen {
 
     public void scoreToMoneyAnim(){
 
+
         //Initialize the points to deduct this frame
         int deductedPoints = 50;
         if (animationTimer > TIME_FOR_ANIMATION_SPEEDUP)
@@ -231,9 +248,16 @@ public class EndScreen implements Screen {
     @Override
     public void render(float delta) {
         screenTimer += Gdx.graphics.getDeltaTime();
-        if(animationStart ||screenTimer > TIME_FOR_ANIMATION) {
+        if((animationStart ||screenTimer > TIME_FOR_ANIMATION) && !animationEnded) {
+            if(animationJustStarted == false){
+                animationJustStarted = true;
+                gold.loop(0.5f * assets.getSoundVolume());
+            }
             animationTimer += Gdx.graphics.getDeltaTime();
             scoreToMoneyAnim();
+        }
+        else if(animationEnded){
+            gold.stop();
         }
         batch.begin();
         background.draw(batch);
@@ -272,5 +296,6 @@ public class EndScreen implements Screen {
         money.dispose();
         stage.dispose();
         batch.dispose();
+        music.stop();
     }
 }

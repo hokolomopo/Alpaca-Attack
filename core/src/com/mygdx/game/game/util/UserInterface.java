@@ -1,5 +1,6 @@
 package com.mygdx.game.game.util;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
@@ -42,8 +43,8 @@ public class UserInterface implements InputProcessor{
         float h = Gdx.graphics.getHeight();
 
         batch = new SpriteBatch();
-        textureAtlas = a.manager.get("sprites.txt", TextureAtlas.class);
-        font = a.manager.get("uiScoreFont.ttf", BitmapFont.class);
+        textureAtlas = a.manager.get(GameAssets.spriteAtlasPath, TextureAtlas.class);
+        font = a.manager.get(GameAssets.uiScoreFont, BitmapFont.class);
 
         player = p;
 

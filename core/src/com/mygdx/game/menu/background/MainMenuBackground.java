@@ -29,8 +29,8 @@ public class MainMenuBackground {
     private String color = "red";
 
     public MainMenuBackground(MenuAssets assets) {
-        textureAtlas = assets.manager.get("sprites.txt", TextureAtlas.class);
-        background = assets.manager.get("background.png", Texture.class);
+        textureAtlas = assets.manager.get(MenuAssets.spriteAtlasPath, TextureAtlas.class);
+        background = assets.manager.get(MenuAssets.menuBackgroundPath, Texture.class);
 
         animation = new Animation(1 / 7f, textureAtlas.findRegion("run1" + "_" + color), textureAtlas.findRegion("run2" + "_" + color), textureAtlas.findRegion("run3" + "_" + color), textureAtlas.findRegion("run2" + "_" + color));
         TextureRegion region = textureAtlas.findRegion("run1" + "_" + color);
@@ -49,10 +49,8 @@ public class MainMenuBackground {
 
         elapsedTime += Gdx.graphics.getDeltaTime();
 
-        batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(animation.getKeyFrame(elapsedTime, true), alpacaX, 0, alpacaWidth, alpacaHeight);
-        batch.end();
     }
 
     public void changeColor() {

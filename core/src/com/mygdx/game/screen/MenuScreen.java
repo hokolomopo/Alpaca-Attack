@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class MenuScreen implements Screen {
     public Music music;
 
     public MenuAssets assets;
+    private Sound validateSound;
 
     //public final static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("menu/menu.txt"));
     //public final BitmapFont font = new BitmapFont(Gdx.files.internal("UI/rdmFont.fnt"));
@@ -44,11 +46,13 @@ public class MenuScreen implements Screen {
 
         game = g;
         assets = a;
-        //assets.load();
-        music = assets.manager.get("sound/music/Intro Theme.mp3", Music.class);
+
+        music = assets.manager.get(MenuAssets.menuScreenMusicPath, Music.class);
         music.setLooping(true);
         music.play();
+        music.setVolume(assets.getMusicVolume());
 
+        validateSound = assets.manager.get(MenuAssets.validateSoundPath, Sound.class);
 
         scene = new MainMenuScene(this);
         Gdx.input.setInputProcessor(scene.getStage());
@@ -109,5 +113,10 @@ public class MenuScreen implements Screen {
     public void show() {
 
     }
+
+    public Sound getValidateSound(){
+        return validateSound;
+    }
+
 
 }

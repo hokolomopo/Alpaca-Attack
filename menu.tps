@@ -199,6 +199,71 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../../../Downloads/dash_blue.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>67,46,134,93</rect>
+                <key>scale9Paddings</key>
+                <rect>67,46,134,93</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/dash_pink.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>69,51,137,102</rect>
+                <key>scale9Paddings</key>
+                <rect>69,51,137,102</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/dash_red.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>71,50,141,101</rect>
+                <key>scale9Paddings</key>
+                <rect>71,50,141,101</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/dash_white.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>76,65,153,129</rect>
+                <key>scale9Paddings</key>
+                <rect>76,65,153,129</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/dash_yellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>68,50,136,100</rect>
+                <key>scale9Paddings</key>
+                <rect>68,50,136,100</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../../../Downloads/frame.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -209,6 +274,19 @@
                 <rect>100,150,200,300</rect>
                 <key>scale9Paddings</key>
                 <rect>100,150,200,300</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/rainbow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>100,100,200,200</rect>
+                <key>scale9Paddings</key>
+                <rect>100,100,200,200</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -264,6 +342,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../../../Downloads/stars_blue.png</key>
+            <key type="filename">../../../Downloads/stars_pink.png</key>
+            <key type="filename">../../../Downloads/stars_red.png</key>
+            <key type="filename">../../../Downloads/stars_white.png</key>
+            <key type="filename">../../../Downloads/stars_yellow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>71,79,142,157</rect>
+                <key>scale9Paddings</key>
+                <rect>71,79,142,157</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Alpaca Pics/run2_black.png</key>
             <key type="filename">../Alpaca Pics/run2_blue.png</key>
             <key type="filename">../Alpaca Pics/run2_brown.png</key>
@@ -298,6 +393,17 @@
             <filename>../../../Downloads/frame.png</filename>
             <filename>../../../Downloads/rip-off menu/textBox.png</filename>
             <filename>../../../Downloads/rip-off menu/coin.png</filename>
+            <filename>../../../Downloads/stars_yellow.png</filename>
+            <filename>../../../Downloads/stars_white.png</filename>
+            <filename>../../../Downloads/stars_red.png</filename>
+            <filename>../../../Downloads/stars_pink.png</filename>
+            <filename>../../../Downloads/stars_blue.png</filename>
+            <filename>../../../Downloads/rainbow.png</filename>
+            <filename>../../../Downloads/dash_yellow.png</filename>
+            <filename>../../../Downloads/dash_pink.png</filename>
+            <filename>../../../Downloads/dash_red.png</filename>
+            <filename>../../../Downloads/dash_white.png</filename>
+            <filename>../../../Downloads/dash_blue.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

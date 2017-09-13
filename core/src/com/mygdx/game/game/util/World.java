@@ -61,7 +61,7 @@ public class World {
         enemies = new ArrayList<Enemy>();
         explosions = new ArrayList<Explosion>();
         worldSize = new Vector2(1000,1000);
-        pickup = assets.manager.get("sound/sfx/pickup.wav", Sound.class);
+        pickup = assets.manager.get(GameAssets.pickupPath, Sound.class);
 
         textBatch = new SpriteBatch();
 
@@ -124,7 +124,7 @@ public class World {
                         lastKilled = ((Enemy)e).number;
                     }
                     else if(e instanceof Bonus)
-                        pickup.setVolume(pickup.play(), 0.2f);
+                        pickup.play(0.2f * assets.getSoundVolume());
                     scorePopUps.add(new ScorePopUp(e.getKillScore(), player.getHitbox().getX(), player.getHitbox().getY() + player.getHitbox().getHeight() / 3 * 2, assets));
                     player.addScore(e.getKillScore());
                     e.kill();

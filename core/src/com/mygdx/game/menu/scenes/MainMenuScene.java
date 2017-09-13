@@ -4,13 +4,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.mygdx.game.AlpacaAttack;
+import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.background.MainMenuBackground;
+import com.mygdx.game.menu.shop.ShopItem;
 import com.mygdx.game.screen.EndScreen;
 import com.mygdx.game.screen.GameScreen;
 import com.mygdx.game.screen.MenuScreen;
@@ -20,12 +23,11 @@ import com.mygdx.game.screen.MenuScreen;
  */
 
 public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
-    /*public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
+    public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
     public static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/8;
-    private static final float BUTTON_PADDING = 30;*/
+    private static final float BUTTON_PADDING = BUTTON_HEIGHT/7;
 
     private BitmapFont font;
-
 
     private Game game;
 
@@ -38,8 +40,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
 
         Gdx.input.setInputProcessor(stage);
 
-
-        font = menuScreen.assets.manager.get("mainMenuButtonFont.ttf", BitmapFont.class);
+        font = menuScreen.assets.manager.get(MenuAssets.mainMenuButtonFont, BitmapFont.class);
         background = new MainMenuBackground(mScreen.assets);
 
         this.createButtons();
@@ -48,8 +49,8 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     private void createButtons(){
         TextButton play = new TextButton("Play", skin);
-        play.setSize(menuScreen.assets.MAIN_MENU_BUTTON_WIDTH, menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT);
-        play.setPosition(Gdx.graphics.getWidth()/2 - menuScreen.assets.MAIN_MENU_BUTTON_WIDTH/2, Gdx.graphics.getHeight()/2);
+        play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        play.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2, Gdx.graphics.getHeight()/2);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         play.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -57,6 +58,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                menuScreen.getValidateSound().play(1f * menuScreen.assets.getSoundVolume());
                 menuScreen.setScene(scene, MenuScreen.GAME);
             }
 
@@ -64,9 +66,9 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
         stage.addActor(play);
 
         TextButton shop = new TextButton("Shop", skin);
-        shop.setSize(menuScreen.assets.MAIN_MENU_BUTTON_WIDTH, menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT);
+        shop.setSize(BUTTON_WIDTH,BUTTON_HEIGHT);
         shop.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2
-                , play.getY() - menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT - menuScreen.assets.MAIN_MENU_BUTTON_PADDING);
+                , play.getY() - BUTTON_HEIGHT - BUTTON_PADDING);
         shop.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         shop.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -82,9 +84,9 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
 
 
         TextButton close = new TextButton("Exit", skin);
-        close.setSize(menuScreen.assets.MAIN_MENU_BUTTON_WIDTH, menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT);
-        close.setPosition(Gdx.graphics.getWidth()/2 - menuScreen.assets.MAIN_MENU_BUTTON_WIDTH/2
-                , shop.getY() - menuScreen.assets.MAIN_MENU_BUTTON_HEIGHT - menuScreen.assets.MAIN_MENU_BUTTON_PADDING);
+        close.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        close.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2
+                , shop.getY() - BUTTON_HEIGHT - BUTTON_PADDING);
         close.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         close.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -92,6 +94,7 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                menuScreen.getValidateSound().play(1f* menuScreen.assets.getSoundVolume());
                 Gdx.app.exit();
             }
 
@@ -104,7 +107,9 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
     public void render(SpriteBatch batch){
         stage.act(Gdx.graphics.getDeltaTime());
 
+        batch.begin();
         background.render(batch);
+        batch.end();
         stage.draw();
 
     }

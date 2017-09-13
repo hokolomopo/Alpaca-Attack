@@ -9,17 +9,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.menu.shop.ShopItem;
 import com.mygdx.game.menu.ui.MoneyTextBox;
 import com.mygdx.game.screen.MenuScreen;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 /**
  * Created by Adrien on 08-09-17.
@@ -29,12 +32,16 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     private Preferences prefs = Gdx.app.getPreferences("prefs");
 
-    /*private static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/6;
-    private static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/10;
-    private static final float BACK_BUTTON_PADDING = 30;
-    private static final float PADDING = 15;
+    public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/6;
+    public static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/10;
 
-    private static final float CELL_Y_POSITION = Gdx.graphics.getHeight()*0.06f;*/
+    private static final float MONEYBOX_WIDTH = Gdx.graphics.getWidth()/4;
+    private static final float MONEYBOX_HEIGHT = Gdx.graphics.getHeight()/10;
+
+    private static final float BACK_BUTTON_PADDING = Gdx.graphics.getHeight()/36f;
+    private static final float PADDING = Gdx.graphics.getHeight()/90f;
+
+    private static final float CELL_Y_POSITION = Gdx.graphics.getHeight()*0.06f;
 
     //private BitmapFont font = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(BUTTON_HEIGHT - BUTTON_HEIGHT/8));
     private ArrayList<ShopCell> shopCells = new ArrayList<ShopCell>();//Used to dispose of the shopcells
@@ -66,15 +73,15 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
     //Create a scrollable interface for the shop containing Shopcells
     private void setUpScrollPane(){
         table = new Table();
-        table.setHeight(menuScreen.assets.CELL_HEIGHT + 2*menuScreen.assets.SHOP_PADDING);
+        table.setHeight(ShopCell.CELL_HEIGHT + 2*PADDING);
         table.setWidth(Gdx.graphics.getWidth() *3/4f);
-        table.setPosition(Gdx.graphics.getWidth()*1/8f, menuScreen.assets.SHOP_CELL_Y_POSITION);
+        table.setPosition(Gdx.graphics.getWidth()*1/8f, CELL_Y_POSITION);
         table.align(Align.bottom);
 
         ScrollPane pane = new ScrollPane(table, skin);
-        pane.setHeight(menuScreen.assets.CELL_HEIGHT + 2*menuScreen.assets.SHOP_PADDING);
+        pane.setHeight(ShopCell.CELL_HEIGHT + 2*PADDING);
         pane.setWidth(Gdx.graphics.getWidth() *3/4f);
-        pane.setPosition(Gdx.graphics.getWidth()*1/8f, menuScreen.assets.SHOP_CELL_Y_POSITION);
+        pane.setPosition(Gdx.graphics.getWidth()*1/8f, CELL_Y_POSITION);
 
         stage.addActor(pane);
 
@@ -84,18 +91,18 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     private void setUpMoneyBox(){
         moneyCell = new MoneyTextBox(prefs.getInteger("money", 0), menuScreen.assets);
-        moneyCell.scale(0.7f);
-        moneyCell.setPosition(Gdx.graphics.getWidth() - moneyCell.getTotalWidth() - menuScreen.assets.SHOP_BACK_BUTTON_PADDING,
-                Gdx.graphics.getHeight() - moneyCell.getHeight() - menuScreen.assets.SHOP_BACK_BUTTON_PADDING);
+        moneyCell.setSize(MONEYBOX_WIDTH, MONEYBOX_HEIGHT);
+        moneyCell.setPosition(Gdx.graphics.getWidth() - moneyCell.getTotalWidth() - BACK_BUTTON_PADDING,
+                Gdx.graphics.getHeight() - moneyCell.getHeight() - BACK_BUTTON_PADDING);
         stage.addActor(moneyCell);
     }
 
     private void createBackButton(){
         TextButton back = new TextButton("Back", skin);
-        back.setSize(menuScreen.assets.SHOP_BUTTON_WIDTH, menuScreen.assets.SHOP_BUTTON_HEIGHT);
+        back.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         back.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
-        back.setPosition(menuScreen.assets.SHOP_BACK_BUTTON_PADDING
-                , Gdx.graphics.getHeight() - menuScreen.assets.SHOP_BUTTON_HEIGHT - menuScreen.assets.SHOP_BACK_BUTTON_PADDING);
+        back.setPosition(BACK_BUTTON_PADDING
+                , Gdx.graphics.getHeight() - BUTTON_HEIGHT - BACK_BUTTON_PADDING);
         back.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -115,33 +122,13 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     //Add all the shop elements in the table
     private void setUpTable(){
-        ShopCell white = new ShopCell(ShopItem.ALPACA_WHITE, menuScreen.assets);
-        table.add(white).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(white);
+        ArrayList<ShopItem> items = new ArrayList<ShopItem>(EnumSet.allOf(ShopItem.class));
+        for(ShopItem z : items){
+            ShopCell a = new ShopCell(z, menuScreen.assets);
+            table.add(a).pad(PADDING);
+            shopCells.add(a);
+        }
 
-        ShopCell red = new ShopCell(ShopItem.ALPACA_RED, menuScreen.assets);
-        table.add(red).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(red);
-
-        ShopCell blue = new ShopCell(ShopItem.ALPACA_BLUE, menuScreen.assets);
-        table.add(blue).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(blue);
-
-        ShopCell black = new ShopCell(ShopItem.ALPACA_BLACK, menuScreen.assets);
-        table.add(black).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(black);
-
-        ShopCell pink = new ShopCell(ShopItem.ALPACA_PINK, menuScreen.assets);
-        table.add(pink).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(pink);
-
-        ShopCell yellow = new ShopCell(ShopItem.ALPACA_YELLOW, menuScreen.assets);
-        table.add(yellow).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(yellow);
-
-        ShopCell brown = new ShopCell(ShopItem.ALPACA_BROWN, menuScreen.assets);
-        table.add(brown).pad(menuScreen.assets.SHOP_PADDING);
-        shopCells.add(brown);
     }
 
     @Override

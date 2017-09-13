@@ -1,20 +1,28 @@
 package com.mygdx.game.assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.menu.shop.ShopItem;
+
+import java.util.ArrayList;
 
 /**
  * Created by Adrien on 11-09-17.
@@ -22,28 +30,20 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class GameAssets implements  Assets {
     public AssetManager manager = new AssetManager();
+    private Array<ParticleEffect> particleEffects = new Array<ParticleEffect>();
 
-    private static final AssetDescriptor<TextureAtlas> spritesAtlas =
-            new AssetDescriptor<TextureAtlas>("sprites.txt", TextureAtlas.class);
+    public final static String explosionPath = "sound/sfx/explosion.mp3";
+    public final static String explosionAtlasPath = "explosion.txt";
+    public final static String spriteAtlasPath = "sprites.txt";
+    public final static String gameMusicPath = "sound/music/Funky-Chiptune.mp3";
+    public final static String jumpPath = "sound/sfx/jump.mp3";
+    public final static String pickupPath = "sound/sfx/pickup.mp3";
+    public final static String dashPath = "sound/sfx/dash.mp3";
 
-    private static final AssetDescriptor<TextureAtlas> explosionAtlas =
-            new AssetDescriptor<TextureAtlas>("explosion.txt", TextureAtlas.class);
+    public final static String floatingTextFont = "floatingTextFont.ttf";
+    public final static String uiScoreFont = "uiScoreFont.ttf";
 
-    private static final AssetDescriptor<Music> music =
-            new AssetDescriptor<Music>("sound/music/Funky-Chiptune.mp3", Music.class);
-
-    private static final AssetDescriptor<Sound> explosion =
-            new AssetDescriptor<Sound>("sound/sfx/explosion.wav", Sound.class);
-
-    private static final AssetDescriptor<Sound> jump =
-            new AssetDescriptor<Sound>("sound/sfx/jump.wav", Sound.class);
-
-    private static final AssetDescriptor<Sound> pickup =
-            new AssetDescriptor<Sound>("sound/sfx/pickup.wav", Sound.class);
-
-
-
-
+    public static String levelTiledMap = "ok.tmx";
 
     FreetypeFontLoader.FreeTypeFontLoaderParameter floatingTextFontParameter;
     FreetypeFontLoader.FreeTypeFontLoaderParameter uiScoreTextParameter;
@@ -69,20 +69,25 @@ public class GameAssets implements  Assets {
     }
     @Override
     public void load() {
-        manager.load(spritesAtlas);
-        manager.load(explosionAtlas);
-        manager.load(music);
-        manager.load(explosion);
-        manager.load(jump);
-        manager.load(pickup);
-        manager.load("floatingTextFont.ttf", BitmapFont.class, floatingTextFontParameter);
-        manager.load("uiScoreFont.ttf", BitmapFont.class, uiScoreTextParameter);
-        manager.load("ok.tmx", TiledMap.class);
+        manager.load(spriteAtlasPath, TextureAtlas.class);
+        manager.load(explosionAtlasPath, TextureAtlas.class);
+        manager.load(gameMusicPath, Music.class);
+        manager.load(explosionPath, Sound.class);
+        manager.load(jumpPath, Sound.class);
+        manager.load(pickupPath, Sound.class);
+        manager.load(dashPath, Sound.class);
+        manager.load(floatingTextFont, BitmapFont.class, floatingTextFontParameter);
+        manager.load(uiScoreFont , BitmapFont.class, uiScoreTextParameter);
+        manager.load(levelTiledMap, TiledMap.class);
+        this.loadPlayerDash();
+        this.loadPlayerDrag();
         //manager.finishLoading();
     }
 
     @Override
     public void dispose() {
+        for(ParticleEffect p : particleEffects)
+            p.dispose();
         manager.dispose();
     }
 
@@ -91,5 +96,92 @@ public class GameAssets implements  Assets {
         manager.update();
         return manager.getProgress();
     }
+
+    public ParticleEffect createBonusParticleEffect(){
+        ParticleEffect p = new ParticleEffect();
+        p.load(Gdx.files.internal("particles/blinkingFast"), Gdx.files.internal("particles/"));
+        particleEffects.add(p);
+        return p;
+    }
+
+    public ParticleEffect getPlayerDash(){
+        Preferences prefs = Gdx.app.getPreferences("prefs");
+        String drag = prefs.getString("equippedDash", "");
+        if(drag.equals(ShopItem.DASH_RAINBOW.getName()))
+            return  manager.get("particles/dash_rainbow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_BLUE.getName()))
+            return  manager.get("particles/dash_blue", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_RED.getName()))
+            return  manager.get("particles/dash_red", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_PINK.getName()))
+            return  manager.get("particles/dash_pink", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_YELLOW.getName()))
+            return  manager.get("particles/dash_yellow", ParticleEffect.class);
+
+        return null;
+    }
+
+    public void loadPlayerDash(){
+        Preferences prefs = Gdx.app.getPreferences("prefs");
+        String drag = prefs.getString("equippedDash", "");
+        if(drag.equals(ShopItem.DASH_RAINBOW.getName()))
+            manager.load("particles/dash_rainbow", ParticleEffect.class);
+        if(drag.equals(ShopItem.DASH_RAINBOW.getName()))
+            manager.load("particles/dash_rainbow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_BLUE.getName()))
+            manager.load("particles/dash_blue", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_RED.getName()))
+            manager.load("particles/dash_red", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_PINK.getName()))
+            manager.load("particles/dash_pink", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DASH_YELLOW.getName()))
+            manager.load("particles/dash_yellow", ParticleEffect.class);
+    }
+
+    public ParticleEffect getPlayerDrag(){
+        Preferences prefs = Gdx.app.getPreferences("prefs");
+        String drag = prefs.getString("equippedDrag", "");
+
+        if(drag.equals(ShopItem.DRAG_BLUE.getName()))
+            return  manager.get("particles/drag_blue", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_RED.getName()))
+            return  manager.get("particles/drag_red", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_YELLOW.getName()))
+            return  manager.get("particles/drag_yellow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_WHITE.getName()))
+            return  manager.get("particles/drag_white", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_PINK.getName()))
+            return  manager.get("particles/drag_pink", ParticleEffect.class);
+
+        return  null;
+    }
+
+    public ParticleEffect loadPlayerDrag(){
+        Preferences prefs = Gdx.app.getPreferences("prefs");
+        String drag = prefs.getString("equippedDrag", "");
+
+        if(drag.equals(ShopItem.DRAG_BLUE.getName()))
+            manager.load("particles/drag_blue", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_RED.getName()))
+            manager.load("particles/drag_red", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_YELLOW.getName()))
+            manager.load("particles/drag_yellow", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_WHITE.getName()))
+            manager.load("particles/drag_white", ParticleEffect.class);
+        else if(drag.equals(ShopItem.DRAG_PINK.getName()))
+            manager.load("particles/drag_pink", ParticleEffect.class);
+
+        return  null;
+    }
+
+    public float getSoundVolume(){
+        return Gdx.app.getPreferences("prefs").getFloat("soundVolume", 1f);
+    }
+
+    public float getMusicVolume(){
+        return Gdx.app.getPreferences("prefs").getFloat("musicVolume", 1f);
+    }
+
+
 
 }

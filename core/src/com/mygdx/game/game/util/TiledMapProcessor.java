@@ -35,7 +35,7 @@ public class TiledMapProcessor {
         world = w;
         assets =a;
 
-        tiledMap = a.manager.get("ok.tmx", TiledMap.class);
+        tiledMap = a.manager.get(assets.levelTiledMap, TiledMap.class);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, GameScreen.PIXEL_TO_METER);
 
         loadPlatforms();

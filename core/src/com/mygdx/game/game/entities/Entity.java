@@ -25,7 +25,7 @@ public abstract class Entity {
 
     }
     public Entity(GameAssets assets){
-        textureAtlas = assets.manager.get("sprites.txt", TextureAtlas.class);
+        textureAtlas = assets.manager.get(GameAssets.spriteAtlasPath, TextureAtlas.class);
     }
 
     public Entity(Rectangle rect, String atlasRegion, GameAssets assets){
