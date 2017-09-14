@@ -263,7 +263,7 @@ public class EndScreen implements Screen {
             gold.stop();
         }
         batch.begin();
-        background.draw(batch);
+        background.render(batch);
         batch.end();
         stage.draw();
     }

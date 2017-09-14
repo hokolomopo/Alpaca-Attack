@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.assets.GameAssets;
 import com.mygdx.game.game.util.Explosion;
-import com.mygdx.game.menu.shop.ShopItem;
+import com.mygdx.game.menu.enums.ShopItem;
 import com.mygdx.game.screen.GameScreen;
 
 /**

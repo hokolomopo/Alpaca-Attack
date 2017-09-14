@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.menu.scenes.MainMenuScene;
 import com.mygdx.game.menu.scenes.ShopScene;
+import com.mygdx.game.menu.ui.LevelCell;
 import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.screen.MenuScreen;
 
@@ -33,7 +34,8 @@ public class MenuAssets implements Assets {
 
     public AssetManager manager = new AssetManager();
 
-    public static final String menuAtlasPath = "menu/menu.txt";
+    public static final String menuAtlasPath = "menu/menuSmall.txt";
+    public static final String levelSelectAtlasPath = "menu/levels.txt";
     public static final String spriteAtlasPath = "sprites.txt";
     public static final String menuBackgroundPath = "background.png";
     public static final String menuSkinPath = "menu/flat-earth-ui.json";
@@ -46,6 +48,9 @@ public class MenuAssets implements Assets {
     public static final String mainMenuButtonFont = "mainMenuButtonFont.ttf";
     public static final String shopCellButtonFont = "shopCellButtonFont.ttf";
     public static final String shopCellFont = "shopCellFont.ttf";
+    public static final String levelCellButtonFont = "levelCellButtonFont.ttf";
+    public static final String levelCellTitleFont = "levelCellTitleFont.ttf";
+
 
     public static final String bundlePath = "properties/Menu";
 
@@ -53,6 +58,9 @@ public class MenuAssets implements Assets {
     FreeTypeFontLoaderParameter bigButtonFontParameter;
     FreeTypeFontLoaderParameter shopCellFontParameter;
     FreeTypeFontLoaderParameter shopCellButtonFontParameter;
+    FreeTypeFontLoaderParameter levelCellButtonFontParameter;
+    FreeTypeFontLoaderParameter levelCellTitleFontParameter;
+
 
 
     public MenuAssets(){
@@ -72,12 +80,21 @@ public class MenuAssets implements Assets {
         shopCellFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
         shopCellFontParameter.fontParameters.size = (int)(ShopCell.TITLE_FONT_SIZE);
 
+        levelCellButtonFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        levelCellButtonFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
+        levelCellButtonFontParameter.fontParameters.size = (int)(LevelCell.BUTTON_HEIGHT*0.9f);
+
+        levelCellTitleFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        levelCellTitleFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
+        levelCellTitleFontParameter.fontParameters.size = (int)(LevelCell.CELL_WIDTH*0.17f);
+
 
     }
     @Override
     public void load() {
         manager.load(spriteAtlasPath, TextureAtlas.class);
         manager.load(menuAtlasPath, TextureAtlas.class);
+        manager.load(levelSelectAtlasPath, TextureAtlas.class);
         manager.load(menuBackgroundPath, Texture.class);
         manager.load(menuSkinPath, Skin.class);
         manager.load(menuScreenMusicPath, Music.class);
@@ -88,10 +105,9 @@ public class MenuAssets implements Assets {
         manager.load(mainMenuButtonFont, BitmapFont.class, bigButtonFontParameter);
         manager.load(shopCellButtonFont, BitmapFont.class, shopCellButtonFontParameter);
         manager.load(shopCellFont, BitmapFont.class, shopCellFontParameter);
+        manager.load(levelCellButtonFont, BitmapFont.class, levelCellButtonFontParameter);
+        manager.load(levelCellTitleFont, BitmapFont.class, levelCellTitleFontParameter);
         manager.load(bundlePath, I18NBundle.class);
-
-
-        //manager.finishLoading();
     }
 
     @Override

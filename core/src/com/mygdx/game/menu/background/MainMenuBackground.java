@@ -15,7 +15,7 @@ import java.util.Random;
  * Created by Adrien on 06-09-17.
  */
 
-public class MainMenuBackground {
+public class MainMenuBackground implements Background{
     private Texture background;
     private Animation animation;
     private TextureAtlas textureAtlas;
@@ -40,6 +40,7 @@ public class MainMenuBackground {
         this.changeColor();
     }
 
+    @Override
     public void render(SpriteBatch batch) {
         alpacaX += ALPACA_SPEED;
         if (alpacaX >= Gdx.graphics.getWidth()) {
@@ -53,7 +54,7 @@ public class MainMenuBackground {
         batch.draw(animation.getKeyFrame(elapsedTime, true), alpacaX, 0, alpacaWidth, alpacaHeight);
     }
 
-    public void changeColor() {
+    private void changeColor() {
         Random r = new Random();
         switch (r.nextInt(7)) {
             case 0:
@@ -82,6 +83,7 @@ public class MainMenuBackground {
 
     }
 
+    @Override
     public void dispose() {
     }
 }

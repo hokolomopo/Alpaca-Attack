@@ -20,22 +20,21 @@ import com.mygdx.game.screen.LoadingScreen;
  */
 
 public abstract class MenuScene{
-    public final Skin skin;// = new Skin(Gdx.files.internal("menu/flat-earth-ui.json"));
+    public final Skin skin;
     public MenuScene scene;
 
-    protected Stage stage = new Stage(new ScreenViewport());
+    protected Stage stage;
 
     protected MenuScreen menuScreen;
 
-    public MenuScene(MenuAssets assets){
-        skin = assets.manager.get("menu/flat-earth-ui.json", Skin.class);
+    public MenuScene(MenuScreen menuScreen){
+        skin = menuScreen.assets.manager.get("menu/flat-earth-ui.json", Skin.class);
+        stage = menuScreen.stage;
     }
 
     public void dispose(){
-        stage.dispose();
+
     }
 
-    public Stage getStage(){return stage;}
-
-    public abstract void render(SpriteBatch batch);
+    public abstract void render();
 }

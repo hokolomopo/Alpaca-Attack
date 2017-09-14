@@ -2,23 +2,16 @@ package com.mygdx.game.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.assets.MenuAssets;
+import com.mygdx.game.menu.ui.BackToMainMenuButton;
 import com.mygdx.game.menu.ui.ShopCell;
-import com.mygdx.game.menu.shop.ShopItem;
+import com.mygdx.game.menu.enums.ShopItem;
 import com.mygdx.game.menu.ui.MoneyTextBox;
 import com.mygdx.game.screen.MenuScreen;
 
@@ -33,38 +26,30 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
 
     private Preferences prefs = Gdx.app.getPreferences("prefs");
 
-    public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/4;
-    public static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/10;
+    private static final float BACK_BUTTON_PADDING = Gdx.graphics.getHeight()/36f;
 
     private static final float MONEYBOX_WIDTH = Gdx.graphics.getWidth()/4;
     private static final float MONEYBOX_HEIGHT = Gdx.graphics.getHeight()/10;
 
-    private static final float BACK_BUTTON_PADDING = Gdx.graphics.getHeight()/36f;
     private static final float PADDING = Gdx.graphics.getHeight()/90f;
 
-    private static final float CELL_Y_POSITION = Gdx.graphics.getHeight()*0.06f;
-
-    //private BitmapFont font = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(BUTTON_HEIGHT - BUTTON_HEIGHT/8));
-    private ArrayList<ShopCell> shopCells = new ArrayList<ShopCell>();//Used to dispose of the shopcells
+    private static final float CELL_Y_POSITION = Gdx.graphics.getHeight()*0.12f;
 
     private Table table;
     private MoneyTextBox moneyCell;
 
-    private BitmapFont font;
-    private TextureAtlas atlas;
-    private TextureRegion background;
+    private TextureAtlas atlasFrame;
 
     public ShopScene(MenuScreen mScreen){
-        super(mScreen.assets);
+        super(mScreen);
         scene = this;
 
         menuScreen = mScreen;
 
-        font = menuScreen.assets.manager.get(MenuAssets.mainMenuButtonFont, BitmapFont.class);
-        atlas = menuScreen.assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class);
-        background = atlas.findRegion("shopBackground");
+        atlasFrame = menuScreen.assets.manager.get(MenuAssets.levelSelectAtlasPath, TextureAtlas.class);
 
-        createBackButton();
+        new BackToMainMenuButton(menuScreen);
+        new SoundButtonsScene(menuScreen);
 
         setUpMoneyBox();
         setUpScrollPane();
@@ -74,15 +59,21 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
     //Create a scrollable interface for the shop containing Shopcells
     private void setUpScrollPane(){
         table = new Table();
-        table.setHeight(ShopCell.CELL_HEIGHT + 2*PADDING);
+        /*table.setHeight(ShopCell.CELL_HEIGHT + 2*PADDING);
         table.setWidth(Gdx.graphics.getWidth() *3/4f);
-        table.setPosition(Gdx.graphics.getWidth()*1/8f, CELL_Y_POSITION);
+        table.setPosition(Gdx.graphics.getWidth()*1/8f, CELL_Y_POSITION);*/
         table.align(Align.bottom);
 
         ScrollPane pane = new ScrollPane(table, skin);
         pane.setHeight(ShopCell.CELL_HEIGHT + 2*PADDING);
         pane.setWidth(Gdx.graphics.getWidth() *3/4f);
         pane.setPosition(Gdx.graphics.getWidth()*1/8f, CELL_Y_POSITION);
+
+        Image frame = new Image(atlasFrame.findRegion("woodenFrame"));
+        frame.setSize(pane.getWidth() + PADDING*8, pane.getHeight() + PADDING*4);
+        frame.setPosition(pane.getX() - PADDING*4, pane.getY() - PADDING*2);
+        stage.addActor(frame);
+
 
         stage.addActor(pane);
 
@@ -98,62 +89,30 @@ public class ShopScene extends com.mygdx.game.menu.scenes.MenuScene {
         stage.addActor(moneyCell);
     }
 
-    private void createBackButton(){
-        TextButton back = new TextButton(menuScreen.bundle.get("back"), skin);
-        back.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        back.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
-        back.setPosition(BACK_BUTTON_PADDING
-                , Gdx.graphics.getHeight() - BUTTON_HEIGHT - BACK_BUTTON_PADDING);
-        back.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                menuScreen.setScene(scene, MenuScreen.MAIN_MENU);
-                super.touchUp(event, x, y, pointer, button);
-            }
-        });
-        stage.addActor(back);
-
-    }
-
-
     //Add all the shop elements in the table
     private void setUpTable(){
         ArrayList<ShopItem> items = new ArrayList<ShopItem>(EnumSet.allOf(ShopItem.class));
         for(ShopItem z : items){
             ShopCell a = new ShopCell(z, menuScreen.assets);
             table.add(a).pad(PADDING);
-            shopCells.add(a);
         }
 
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render() {
         //Check if we've bought something
         if(prefs.getInteger("money",0) != moneyCell.getAmount()){
             moneyCell.setAmount(prefs.getInteger("money",0));
         }
 
         stage.act();
-
-        batch.begin();
-        batch.draw(background,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
         stage.draw();
     }
 
     @Override
     public void dispose(){
-        for(ShopCell cell : shopCells)
-            cell.dispose();
-        shopCells.clear();
         moneyCell.dispose();
-        super.dispose();
     }
 
 }

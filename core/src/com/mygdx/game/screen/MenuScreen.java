@@ -9,13 +9,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.AlpacaAttack;
 import com.mygdx.game.assets.MenuAssets;
-import com.mygdx.game.menu.scenes.MainMenuScene;
-import com.mygdx.game.menu.scenes.MenuScene;
-import com.mygdx.game.menu.scenes.ShopScene;
+import com.mygdx.game.menu.background.Background;
+import com.mygdx.game.menu.background.MainMenuBackground;
+import com.mygdx.game.menu.background.ShopBackground;
+import com.mygdx.game.menu.scenes.*;
+import com.mygdx.game.menu.scenes.SoundButtonsScene;
 
 
 /**
@@ -38,8 +42,16 @@ public class MenuScreen implements Screen {
     public static final int MAIN_MENU = 0;
     public static final int SHOP = 1;
     public static final int GAME = 2;
+    public static final int LEVEL_SELECT = 3;
+
+    private static final int MAIN_MENU_BACKGROUND = -1;
+    private static final int SHOP_BACKGROUND = -2;
+
+    private int currentBackground = -1;
 
     private MenuScene scene;
+    private Background background;
+    public Stage stage = new Stage(new ScreenViewport());
 
     /*public  MenuScreen(Game g){
         this(g, new MenuAssets());
@@ -51,28 +63,44 @@ public class MenuScreen implements Screen {
         assets = a;
 
         music = assets.manager.get(MenuAssets.menuScreenMusicPath, Music.class);
-        music.setLooping(true);
         music.play();
         music.setVolume(assets.getMusicVolume());
+        music.setLooping(true);
 
         validateSound = assets.manager.get(MenuAssets.validateSoundPath, Sound.class);
         bundle = assets.manager.get(MenuAssets.bundlePath, I18NBundle.class);
 
+        background = new MainMenuBackground(assets);
         scene = new MainMenuScene(this);
-        Gdx.input.setInputProcessor(scene.getStage());
+
+        Gdx.input.setInputProcessor(stage);
 
     }
 
-    public void setScene(MenuScene old, int a){
-        old.dispose();
+    public void setScene(int a){
+        scene.dispose();
         switch(a){
             case MAIN_MENU :
+                stage.clear();
                 scene = new MainMenuScene(this);
-                Gdx.input.setInputProcessor(scene.getStage());
+                if(currentBackground != MAIN_MENU_BACKGROUND) {
+                    background.dispose();
+                    background = new MainMenuBackground(assets);
+                }
+                currentBackground = MAIN_MENU_BACKGROUND;
                 break;
             case SHOP :
+                stage.clear();
                 scene = new ShopScene(this);
-                Gdx.input.setInputProcessor(scene.getStage());
+                if(currentBackground != SHOP_BACKGROUND) {
+                    background.dispose();
+                    background = new ShopBackground(assets);
+                }
+                currentBackground = SHOP_BACKGROUND;
+                break;
+            case LEVEL_SELECT :
+                stage.clear();
+                scene = new SelectLevelScene(this);
                 break;
             case GAME :
                 this.dispose();
@@ -80,11 +108,13 @@ public class MenuScreen implements Screen {
                 break;
         }
     }
+
     @Override
     public void render(float delta) {
-
-        scene.render(batch);
-
+        batch.begin();
+        background.render(batch);
+        batch.end();
+        scene.render();
     }
 
     @Override
@@ -109,8 +139,10 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
         assets.dispose();
         batch.dispose();
+        background.dispose();
     }
 
     @Override

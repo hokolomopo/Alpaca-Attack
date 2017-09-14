@@ -2,17 +2,14 @@ package com.mygdx.game.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
@@ -20,10 +17,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.menu.shop.ShopItem;
+import com.mygdx.game.menu.enums.ShopItem;
 import com.mygdx.game.screen.GameScreen;
-
-import java.util.ArrayList;
 
 /**
  * Created by Adrien on 11-09-17.
@@ -44,7 +39,7 @@ public class GameAssets implements  Assets {
     public final static String floatingTextFont = "floatingTextFont.ttf";
     public final static String uiScoreFont = "uiScoreFont.ttf";
 
-    public static String levelTiledMap = "ok.tmx";
+    public static String levelTiledMap = "ok2.tmx";
 
     FreetypeFontLoader.FreeTypeFontLoaderParameter floatingTextFontParameter;
     FreetypeFontLoader.FreeTypeFontLoaderParameter uiScoreTextParameter;

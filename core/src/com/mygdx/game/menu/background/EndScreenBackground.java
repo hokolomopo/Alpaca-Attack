@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.assets.MenuAssets;
-import com.mygdx.game.menu.shop.ShopItem;
+import com.mygdx.game.menu.enums.ShopItem;
 
 /**
  * Created by Adrien on 11-09-17.
  */
 
-public class EndScreenBackground {
+public class EndScreenBackground implements Background{
 
     Texture background;
     JumpingBackgroundAlpaca leftAlpace;
@@ -58,9 +58,13 @@ public class EndScreenBackground {
         return "white";
     }
 
-    public void draw(SpriteBatch batch){
+    @Override
+    public void render(SpriteBatch batch){
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         leftAlpace.draw(batch);
         rightAlpaca.draw(batch);
     }
+
+    @Override
+    public void dispose(){}
 }

@@ -1,0 +1,40 @@
+levels.png
+size: 1000, 1705
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+level0
+  rotate: false
+  xy: 0, 0
+  size: 399, 598
+  orig: 399, 598
+  offset: 0, 0
+  index: -1
+level1
+  rotate: false
+  xy: 399, 0
+  size: 399, 598
+  orig: 399, 598
+  offset: 0, 0
+  index: -1
+level2
+  rotate: false
+  xy: 0, 598
+  size: 399, 598
+  orig: 399, 598
+  offset: 0, 0
+  index: -1
+level3
+  rotate: false
+  xy: 399, 598
+  size: 399, 598
+  orig: 399, 598
+  offset: 0, 0
+  index: -1
+woodenFrame
+  rotate: false
+  xy: 0, 1196
+  size: 1000, 509
+  orig: 1000, 509
+  offset: 0, 0
+  index: -1

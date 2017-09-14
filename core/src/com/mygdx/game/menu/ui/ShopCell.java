@@ -5,41 +5,43 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.MenuAssets;
-import com.mygdx.game.menu.shop.ShopItem;
-
-import java.awt.Menu;
+import com.mygdx.game.menu.enums.ShopItem;
 
 /**
  * Created by Adrien on 08-09-17.
  */
 
 public class ShopCell extends Actor {
-    private final TextureRegion card;// = MenuScreen.atlas.findRegion("cell");
-    private SpriteBatch b = new SpriteBatch();
+
     private static final Preferences prefs = Gdx.app.getPreferences("prefs");
 
     private final ShopItem item;
 
-    private Skin skin;
     private TextureRegion itemTexture;
-    private TextureRegion frame;// = MenuScreen.atlas.findRegion("frame");
+
+    private Skin skin;
     private TextButton button;
     private Label labelPrice;
     private Label title;
+    private Image itemImage;
+    private Image card;
+    private Image frame;
 
-    public final static float CELL_HEIGHT = 0.65f*Gdx.graphics.getHeight();
+    public final static float CELL_HEIGHT = 0.55f*Gdx.graphics.getHeight();
     public final static float CELL_WIDTH = 0.15f*Gdx.graphics.getWidth();
 
     private final static float OBJECT_FRAME_Y_RATIO = 0.8f;
@@ -72,13 +74,11 @@ public class ShopCell extends Actor {
 
         skin = assets.manager.get(MenuAssets.menuSkinPath, Skin.class);
         font = assets.manager.get(MenuAssets.shopCellFont, BitmapFont.class);
-        frame = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class).findRegion("frame");
-        card = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class).findRegion("cell");
         itemTexture = item.getTextureRegion(assets);
 
-        //Size = clickable size, so we take the size of the button
-        this.setWidth(BUTTON_WIDTH + 2* MARGIN);
-        this.setHeight(BUTTON_HEIGHT + 2* MARGIN);
+
+        this.setWidth(CELL_WIDTH);
+        this.setHeight(CELL_HEIGHT);
 
         //Base the size of the item on the shop from it's largest dimension
         if(itemTexture.getRegionHeight() > itemTexture.getRegionWidth()) {
@@ -102,6 +102,7 @@ public class ShopCell extends Actor {
         this.getOwned();
         this.getEquipped();
 
+        this.createImages();
         this.setUpBuyButton();
         this.setUpPriceLabel();
         this.setUpCellTitle();
@@ -110,6 +111,22 @@ public class ShopCell extends Actor {
 
     }
 
+    private void createImages(){
+
+        TextureRegion frameTexture = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class).findRegion("frame");
+        TextureRegion cardTexture = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class).findRegion("cell");
+
+        itemImage = new Image(new TextureRegionDrawable(itemTexture));
+        itemImage.setSize(itemWidth, itemHeight);
+
+        card = new Image(new TextureRegionDrawable(cardTexture));
+        card.setSize(CELL_WIDTH, CELL_HEIGHT);
+
+        frame = new Image(new TextureRegionDrawable(frameTexture));
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+
+    }
     private void createListener(){
         this.addListener(new InputListener(){
             @Override
@@ -149,6 +166,13 @@ public class ShopCell extends Actor {
     }
     private void getOwned(){
         owned = prefs.getBoolean("own"+item.getName(), false);
+    }
+
+    //Detect hit only on the button
+    @Override
+    public Actor hit(float x, float y, boolean touchable){
+        if (touchable && getTouchable() != Touchable.enabled) return null;
+        return x >= MARGIN && x < BUTTON_WIDTH + MARGIN && y >= MARGIN && y < BUTTON_HEIGHT + MARGIN ? this : null;
     }
 
     private void getEquipped(){
@@ -284,26 +308,18 @@ public class ShopCell extends Actor {
         button.setPosition(this.getX() + MARGIN, this.getY() + MARGIN);
         labelPrice.setPosition(this.getX() + MARGIN, this.getY() + 2* MARGIN + BUTTON_HEIGHT);
         frameY = this.getY() + CELL_HEIGHT*0.28f;
+        frame.setPosition(this.getX() + MARGIN, frameY);
+        itemImage.setPosition(this.getX() + CELL_WIDTH/2 - itemWidth/2, frameY + FRAME_HEIGHT/2 - itemHeight/2);
+        card.setPosition(this.getX(), this.getY());
 
-        batch.end();
 
-        b.setTransformMatrix(batch.getTransformMatrix());
-        b.begin();
-        b.draw(card, this.getX(), this.getY(), CELL_WIDTH, CELL_HEIGHT);
-        b.draw(frame, this.getX() + MARGIN, frameY, FRAME_WIDTH, FRAME_HEIGHT);
-        b.draw(itemTexture, this.getX() + CELL_WIDTH/2 - itemWidth/2, frameY + FRAME_HEIGHT/2 - itemHeight/2, itemWidth, itemHeight);
-        b.end();
-        batch.begin();
+        card.draw(batch, parentAlpha);
+        frame.draw(batch, parentAlpha);
         button.draw(batch, parentAlpha);
         title.draw(batch, parentAlpha);
         labelPrice.draw(batch, parentAlpha);
+        itemImage.draw(batch, parentAlpha);
     }
-
-    public void dispose(){
-
-        b.dispose();
-    }
-
 
 
 }

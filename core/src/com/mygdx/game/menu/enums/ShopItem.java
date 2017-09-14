@@ -1,4 +1,4 @@
-package com.mygdx.game.menu.shop;
+package com.mygdx.game.menu.enums;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -193,7 +193,7 @@ public enum ShopItem {
 
 
     public TextureRegion getTextureRegion(MenuAssets assets){
-         TextureAtlas atlas = assets.manager.get("menu/menu.txt", TextureAtlas.class);
+         TextureAtlas atlas = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class);
         switch(this){
             case ALPACA_RED :
                 return  atlas.findRegion("run2_red");
