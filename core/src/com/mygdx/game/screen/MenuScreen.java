@@ -5,21 +5,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.AlpacaAttack;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.background.Background;
 import com.mygdx.game.menu.background.MainMenuBackground;
 import com.mygdx.game.menu.background.ShopBackground;
-import com.mygdx.game.menu.scenes.*;
-import com.mygdx.game.menu.scenes.SoundButtonsScene;
+import com.mygdx.game.menu.enums.Levels;
+import com.mygdx.game.menu.scenes.MainMenuScene;
+import com.mygdx.game.menu.scenes.MenuScene;
+import com.mygdx.game.menu.scenes.SelectLevelScene;
+import com.mygdx.game.menu.scenes.ShopScene;
 
 
 /**
@@ -52,6 +50,7 @@ public class MenuScreen implements Screen {
     private MenuScene scene;
     private Background background;
     public Stage stage = new Stage(new ScreenViewport());
+    private Levels selectedLevel;
 
     /*public  MenuScreen(Game g){
         this(g, new MenuAssets());
@@ -104,9 +103,13 @@ public class MenuScreen implements Screen {
                 break;
             case GAME :
                 this.dispose();
-                game.setScreen(new LoadingScreen(game, LoadingScreen.GAME_SCREEN));
+                game.setScreen(new LoadingScreen(game, selectedLevel));
                 break;
         }
+    }
+
+    public void setSelectedLevel(Levels level){
+        selectedLevel = level;
     }
 
     @Override

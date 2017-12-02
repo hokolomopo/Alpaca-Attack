@@ -4,8 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -17,6 +15,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.Assets;
 import com.mygdx.game.assets.GameAssets;
 import com.mygdx.game.assets.MenuAssets;
+import com.mygdx.game.menu.enums.Levels;
 
 /**
  * Created by Adrien on 04-09-17.
@@ -45,25 +44,36 @@ public class LoadingScreen implements Screen {
     //For EndScreen
     private int score;
     private GameScreen gameScreen;
+    private Levels level;
 
-    public LoadingScreen(Game g, int screenType){
+    //Game Screen loader
+    public LoadingScreen(Game g, Levels level){
+        this.screenType = GAME_SCREEN;
+        game = g;
+        this.level = level;
+
         this.createLoadingBar();
         this.createText();
         this.loadBundle();
 
-        this.screenType = screenType;
+        assets = new GameAssets();
+
+        ((GameAssets)(assets)).load(level);
+    }
+
+    //Menu Screen loader
+    public LoadingScreen(Game g){
+        this.createLoadingBar();
+        this.createText();
+        this.loadBundle();
+
+        this.screenType = MENU_SCREEN;
         game = g;
-        switch(screenType){
-            case GAME_SCREEN :
-                assets = new GameAssets();
-                break;
-            case MENU_SCREEN :
-                assets = new MenuAssets();
-                break;
-        }
+        assets = new MenuAssets();
         assets.load();
     }
 
+    //End Screen loader
     public LoadingScreen(Game g, int argScore, GameScreen gmScreen){
         this.createLoadingBar();
         this.createText();
@@ -115,7 +125,7 @@ public class LoadingScreen implements Screen {
             this.dispose();
             switch(screenType){
                 case GAME_SCREEN :
-                    game.setScreen(new GameScreen(game, (GameAssets)assets));
+                    game.setScreen(new GameScreen(game, level, (GameAssets)assets));
                     break;
                 case MENU_SCREEN :
                     game.setScreen(new MenuScreen(game, (MenuAssets)assets));

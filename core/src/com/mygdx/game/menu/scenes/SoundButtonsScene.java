@@ -1,7 +1,6 @@
 package com.mygdx.game.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.screen.MenuScreen;
 
@@ -21,7 +19,7 @@ public class SoundButtonsScene {
     private static final float VOLUME_BUTTON_SIZE = Gdx.graphics.getHeight()/10;
     private static final float BUTTON_PADDING = Gdx.graphics.getHeight()/50;
 
-    private Stage stage = new Stage(new ScreenViewport());
+    private Stage stage;
 
     private MenuScreen menuScreen;
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,9 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.AlpacaAttack;
-import com.mygdx.game.assets.Assets;
 import com.mygdx.game.assets.MenuAssets;
-import com.mygdx.game.screen.MenuScreen;
 
 
 /**
@@ -23,9 +20,6 @@ import com.mygdx.game.screen.MenuScreen;
  */
 
 public class MoneyTextBox extends Actor {
-    private final static int FONT_SIZE = 80;
-
-
     private BitmapFont font;// = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), box.getRegionHeight()*8/10);
 
     private Label text;
@@ -38,7 +32,7 @@ public class MoneyTextBox extends Actor {
     public MoneyTextBox(int money, MenuAssets a){
         assets = a;
         amount = money;
-        font = assets.manager.get(MenuAssets.shopCellFont, BitmapFont.class);
+        font = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), 100);
         TextureAtlas atlas = assets.manager.get(MenuAssets.menuAtlasPath, TextureAtlas.class);
         TextureRegion boxTexture = atlas.findRegion("textBox");
         TextureRegion coinTexture = atlas.findRegion("coin");
@@ -46,7 +40,7 @@ public class MoneyTextBox extends Actor {
         coin = new Image(new TextureRegionDrawable(coinTexture));
         box = new Image(new TextureRegionDrawable(boxTexture));
 
-        text = new Label(Integer.toString(money)+" G", new Label.LabelStyle(font, Color.WHITE));
+        text = new Label(Integer.toString(money)+"$", new Label.LabelStyle(font, Color.WHITE));
         text.setSize(boxTexture.getRegionWidth(), boxTexture.getRegionHeight());
         text.setAlignment(Align.center);
 
@@ -74,13 +68,16 @@ public class MoneyTextBox extends Actor {
         coin.setSize(height*10/8f, height*10/8f);
         box.setSize(width, height);
         text.setSize(width, height);
+        font.dispose();
         font = AlpacaAttack.generateFont(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"), (int)(height*8/10));
         text.setStyle(new Label.LabelStyle(font, Color.WHITE));
     }
 
     public void setAmount(int s){
-        text.setText(Integer.toString(s)+" G");
-        amount = s;
+        if(amount != s) {
+            text.setText(Integer.toString(s) + "$");
+            amount = s;
+        }
     }
 
     public int getAmount(){return amount;}

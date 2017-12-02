@@ -1,9 +1,8 @@
 package com.mygdx.game.menu.enums;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.assets.MenuAssets;
 
@@ -12,7 +11,7 @@ import com.mygdx.game.assets.MenuAssets;
  */
 
 public enum ShopItem {
-    ALPACA_WHITE, ALPACA_RED, ALPACA_BLUE, ALPACA_YELLOW, ALPACA_PINK, ALPACA_BROWN, ALPACA_BLACK,
+    ALPACA_WHITE, ALPACA_YELLOW, ALPACA_BROWN, ALPACA_BLUE, ALPACA_RED, ALPACA_PINK, ALPACA_BLACK,
     DRAG_WHITE, DRAG_PINK, DRAG_YELLOW, DRAG_RED, DRAG_BLUE,
     DASH_WHITE, DASH_RED, DASH_YELLOW, DASH_BLUE, DASH_PINK, DASH_RAINBOW;
 
@@ -21,41 +20,41 @@ public enum ShopItem {
     public int getPrice(){
         switch(this){
             case ALPACA_RED :
-                return 2000;
-            case ALPACA_BLUE :
                 return 1500;
+            case ALPACA_BLUE :
+                return 1000;
             case ALPACA_WHITE :
                 return 0;
             case ALPACA_YELLOW :
-                return 2000;
-            case ALPACA_PINK :
-                return 3000;
-            case ALPACA_BROWN :
-                return 1500;
-            case ALPACA_BLACK :
-                return 2500;
-            case DRAG_BLUE:
-                return 1000;
-            case DRAG_RED:
-                return 1000;
-            case DRAG_PINK:
-                return 1000;
-            case DRAG_WHITE:
                 return 500;
+            case ALPACA_PINK :
+                return 1500;
+            case ALPACA_BROWN :
+                return 1000;
+            case ALPACA_BLACK :
+                return 1500;
+            case DRAG_BLUE:
+                return 500;
+            case DRAG_RED:
+                return 500;
+            case DRAG_PINK:
+                return 500;
+            case DRAG_WHITE:
+                return 250;
             case DRAG_YELLOW:
-                return 1000;
+                return 500;
             case DASH_RAINBOW:
-                return 3000;
+                return 2500;
             case DASH_BLUE:
-                return 1500;
-            case DASH_RED:
-                return 1500;
-            case DASH_PINK:
-                return 1500;
-            case DASH_WHITE:
                 return 1000;
+            case DASH_RED:
+                return 1000;
+            case DASH_PINK:
+                return 1000;
+            case DASH_WHITE:
+                return 500;
             case DASH_YELLOW:
-                return 1500;
+                return 1000;
 
         }
         return 0;

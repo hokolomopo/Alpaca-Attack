@@ -33,16 +33,17 @@ public class EndScreen implements Screen {
 
     private final float TIME_FOR_ANIMATION = 3; //Time to wait before teh animation score => money starts
     private final float TIME_FOR_ANIMATION_SPEEDUP = 2; //Time to wait before teh animation score => money speed up
-    private final float POINT_TO_MONEY_RATIO = 1/50f; //Ratio to convert points to money
     private final float MARGIN = Gdx.graphics.getHeight()/12;
     private float BUTTON_HEIGHT = Gdx.graphics.getHeight()/8;
     private float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
+    private float FIRST_BUTTON_Y = Gdx.graphics.getHeight()/3;
+
     private Stage stage;
     private Game game;
     private BitmapFont font;
     private int finalScore;
     private int highScore;
-    private int moneyAmount;
+    private float moneyAmount;
 
     private float screenTimer = 0; //Duration since the screen was launched
     private float animationTimer = 0; //Duration since the animation score => money started
@@ -50,6 +51,8 @@ public class EndScreen implements Screen {
     private boolean endAnimationNow = false; //True = force animation end and convert everything
     private boolean animationEnded = false;//True when animation is ended
     private boolean animationJustStarted = false;
+
+    private float pointToMoneyRatio; //Ratio to convert points to money
 
     private Label score;
     private MoneyTextBox money;
@@ -77,13 +80,12 @@ public class EndScreen implements Screen {
         game = g;
         finalScore = argScore;
         gameScreen = gmScreen;
-        highScore = prefs.getInteger("highScore", 0);
+        highScore = prefs.getInteger("highScore"+gmScreen.getLevel().getName(), 0);
         batch = new SpriteBatch();
 
+        pointToMoneyRatio = 1/gameScreen.getLevel().getGoldToPointRatio();
+
         assets = a;
-        //assets.load();
-
-
         this.loadAssets();
 
         background = new EndScreenBackground(assets);
@@ -91,7 +93,7 @@ public class EndScreen implements Screen {
         //Update the highScore
         if(highScore < finalScore){
             highScore = finalScore;
-            prefs.putInteger("highScore", finalScore).flush();
+            prefs.putInteger("highScore"+gmScreen.getLevel().getName(), finalScore).flush();
         }
 
         stage = new Stage(new ScreenViewport());
@@ -148,7 +150,7 @@ public class EndScreen implements Screen {
     private void initializeMoneyBox(){
         moneyAmount = prefs.getInteger("money", 0);
 
-        money= new MoneyTextBox(moneyAmount, assets);
+        money= new MoneyTextBox((int)moneyAmount, assets);
         money.setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
         money.setPosition(Gdx.graphics.getWidth() - money.getTotalWidth() - MARGIN, Gdx.graphics.getHeight() - money.getHeight() - MARGIN);
         stage.addActor(money);
@@ -158,7 +160,7 @@ public class EndScreen implements Screen {
         TextButton play = new TextButton(bundle.get("replay"), skin);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, score.getY() - BUTTON_HEIGHT*2);
+        play.setPosition(Gdx.graphics.getWidth()/2 - play.getWidth()/2, FIRST_BUTTON_Y);
         play.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -174,12 +176,11 @@ public class EndScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.input.setInputProcessor(gameScreen);
-                prefs.putInteger("money", moneyAmount).flush();
+                prefs.putInteger("money", (int)moneyAmount).flush();
                 thisScreen.dispose();
                 game.setScreen(gameScreen);
             }
         });
-
         stage.addActor(play);
 
         TextButton quit = new TextButton(bundle.get("quit"), skin);
@@ -199,7 +200,7 @@ public class EndScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                prefs.putInteger("money", moneyAmount).flush();
+                prefs.putInteger("money", (int)moneyAmount).flush();
                 gameScreen.dispose();
                 thisScreen.disposeWithoutAssets();
                 game.setScreen(new MenuScreen(game, assets));
@@ -222,7 +223,7 @@ public class EndScreen implements Screen {
         //Deduct score points and add money
         if (finalScore >= deductedPoints) {
             finalScore -= deductedPoints;
-            moneyAmount += deductedPoints * POINT_TO_MONEY_RATIO;
+            moneyAmount += deductedPoints * pointToMoneyRatio;
             updateTexts();
         }
         else {
@@ -230,7 +231,7 @@ public class EndScreen implements Screen {
         }
 
         if(endAnimationNow && !animationEnded){
-            moneyAmount += finalScore * POINT_TO_MONEY_RATIO;
+            moneyAmount += finalScore * pointToMoneyRatio;
             finalScore = 0;
             updateTexts();
             animationEnded = true;
@@ -240,7 +241,7 @@ public class EndScreen implements Screen {
     //Update the score and money labels with the current values of score and money
     public void updateTexts(){
         score.setText("Score:\n" + Integer.toString(finalScore));
-        money.setAmount(moneyAmount);
+        money.setAmount((int)moneyAmount);
     }
 
     @Override

@@ -1,194 +1,194 @@
 menu.png
-size: 2015, 1639
+size: 1008, 1480
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 cell
   rotate: false
-  xy: 1775, 251
-  size: 170, 434
-  orig: 170, 434
+  xy: 180, 842
+  size: 100, 255
+  orig: 100, 255
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 305, 685
-  size: 290, 291
-  orig: 290, 291
+  xy: 650, 0
+  size: 150, 151
+  orig: 150, 151
   offset: 0, 0
   index: -1
 dash_blue
   rotate: false
-  xy: 180, 251
+  xy: 560, 155
   size: 267, 185
   orig: 267, 185
   offset: 0, 0
   index: -1
 dash_pink
   rotate: false
-  xy: 719, 251
+  xy: 554, 340
   size: 274, 204
   orig: 274, 204
   offset: 0, 0
   index: -1
 dash_red
   rotate: false
-  xy: 993, 251
+  xy: 272, 340
   size: 282, 201
   orig: 282, 201
   offset: 0, 0
   index: -1
 dash_white
   rotate: false
-  xy: 0, 685
+  xy: 280, 842
   size: 305, 258
   orig: 305, 258
   offset: 0, 0
   index: -1
 dash_yellow
   rotate: false
-  xy: 447, 251
+  xy: 0, 340
   size: 272, 199
   orig: 272, 199
   offset: 0, 0
   index: -1
 frame
   rotate: false
-  xy: 400, 999
-  size: 400, 600
-  orig: 400, 600
+  xy: 0, 1142
+  size: 200, 300
+  orig: 200, 300
   offset: 0, 0
   index: -1
 music_off
   rotate: false
-  xy: 400, 0
-  size: 200, 200
-  orig: 200, 200
+  xy: 550, 0
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 music_on
   rotate: false
-  xy: 200, 0
-  size: 200, 200
-  orig: 200, 200
+  xy: 250, 0
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 rainbow
   rotate: false
-  xy: 0, 999
-  size: 400, 400
-  orig: 400, 400
+  xy: 585, 843
+  size: 300, 298
+  orig: 300, 298
   offset: 0, 0
   index: -1
 run2_black
   rotate: false
-  xy: 980, 0
+  xy: 540, 591
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_blue
   rotate: false
-  xy: 1160, 0
+  xy: 360, 591
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_brown
   rotate: false
-  xy: 0, 251
+  xy: 0, 591
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_pink
   rotate: false
-  xy: 1700, 0
+  xy: 720, 591
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_red
   rotate: false
-  xy: 1340, 0
-  size: 180, 251
+  xy: 0, 842
+  size: 179, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_white
   rotate: false
-  xy: 800, 0
+  xy: 180, 591
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 run2_yellow
   rotate: false
-  xy: 1520, 0
+  xy: 828, 340
   size: 180, 251
   orig: 180, 251
   offset: 0, 0
   index: -1
 shopBackground
   rotate: false
-  xy: 800, 999
-  size: 1136, 640
-  orig: 1136, 640
+  xy: 200, 1142
+  size: 600, 338
+  orig: 600, 338
   offset: 0, 0
   index: -1
 sound_off
   rotate: false
-  xy: 0, 0
-  size: 200, 200
-  orig: 200, 200
+  xy: 450, 0
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 sound_on
   rotate: false
-  xy: 600, 0
-  size: 200, 200
-  orig: 200, 200
+  xy: 350, 0
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
 stars_blue
   rotate: false
-  xy: 1447, 685
-  size: 284, 314
-  orig: 284, 314
+  xy: 800, 0
+  size: 140, 155
+  orig: 140, 155
   offset: 0, 0
   index: -1
 stars_pink
   rotate: false
-  xy: 1731, 685
-  size: 284, 314
-  orig: 284, 314
+  xy: 0, 155
+  size: 140, 155
+  orig: 140, 155
   offset: 0, 0
   index: -1
 stars_red
   rotate: false
-  xy: 1163, 685
-  size: 284, 314
-  orig: 284, 314
+  xy: 140, 155
+  size: 140, 155
+  orig: 140, 155
   offset: 0, 0
   index: -1
 stars_white
   rotate: false
-  xy: 879, 685
-  size: 284, 314
-  orig: 284, 314
+  xy: 280, 155
+  size: 140, 155
+  orig: 140, 155
   offset: 0, 0
   index: -1
 stars_yellow
   rotate: false
-  xy: 595, 685
-  size: 284, 314
-  orig: 284, 314
+  xy: 420, 155
+  size: 140, 155
+  orig: 140, 155
   offset: 0, 0
   index: -1
 textBox
   rotate: false
-  xy: 1275, 251
-  size: 500, 127
-  orig: 500, 127
+  xy: 0, 0
+  size: 250, 64
+  orig: 250, 64
   offset: 0, 0
   index: -1

@@ -282,7 +282,7 @@ public class ShopCell extends Actor {
         if(owned)
             labelString = bundle.get("owned");
         else
-            labelString = item.getPrice()+"G";
+            labelString = item.getPrice()+"$";
 
         labelPrice = new Label(labelString, new Label.LabelStyle(font, Color.BLACK));
         labelPrice.setSize(CELL_WIDTH - 2*MARGIN, TITLE_FONT_SIZE);

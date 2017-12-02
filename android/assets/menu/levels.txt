@@ -1,39 +1,39 @@
 levels.png
-size: 1000, 1705
+size: 1000, 1013
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-level0
+candyland
   rotate: false
   xy: 0, 0
-  size: 399, 598
-  orig: 399, 598
+  size: 393, 252
+  orig: 393, 252
   offset: 0, 0
   index: -1
-level1
+forest
   rotate: false
-  xy: 399, 0
-  size: 399, 598
-  orig: 399, 598
+  xy: 393, 0
+  size: 393, 252
+  orig: 393, 252
   offset: 0, 0
   index: -1
-level2
+grasslands
   rotate: false
-  xy: 0, 598
-  size: 399, 598
-  orig: 399, 598
+  xy: 0, 252
+  size: 393, 252
+  orig: 393, 252
   offset: 0, 0
   index: -1
-level3
+tutorial
   rotate: false
-  xy: 399, 598
-  size: 399, 598
-  orig: 399, 598
+  xy: 393, 252
+  size: 393, 252
+  orig: 393, 252
   offset: 0, 0
   index: -1
 woodenFrame
   rotate: false
-  xy: 0, 1196
+  xy: 0, 504
   size: 1000, 509
   orig: 1000, 509
   offset: 0, 0

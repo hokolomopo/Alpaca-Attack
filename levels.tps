@@ -199,19 +199,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../../Downloads/Alpaca attack/level0.png</key>
-            <key type="filename">../../../Downloads/Alpaca attack/level1.png</key>
-            <key type="filename">../../../Downloads/Alpaca attack/level2.png</key>
-            <key type="filename">../../../Downloads/Alpaca attack/level3.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/candyland.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/forest.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/grasslands.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/tutorial.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>100,150,200,299</rect>
+                <rect>98,63,197,126</rect>
                 <key>scale9Paddings</key>
-                <rect>100,150,200,299</rect>
+                <rect>98,63,197,126</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -231,11 +231,11 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../../Downloads/Alpaca attack/level1.png</filename>
-            <filename>../../../Downloads/Alpaca attack/level3.png</filename>
-            <filename>../../../Downloads/Alpaca attack/level2.png</filename>
-            <filename>../../../Downloads/Alpaca attack/level0.png</filename>
             <filename>../../../Downloads/Alpaca attack/woodenFrame.png</filename>
+            <filename>../../../Downloads/Alpaca attack/grasslands.png</filename>
+            <filename>../../../Downloads/Alpaca attack/tutorial.png</filename>
+            <filename>../../../Downloads/Alpaca attack/candyland.png</filename>
+            <filename>../../../Downloads/Alpaca attack/forest.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

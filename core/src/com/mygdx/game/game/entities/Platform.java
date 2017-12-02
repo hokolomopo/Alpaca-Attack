@@ -15,7 +15,7 @@ public class Platform extends Entity{
 
     @Override
     public void draw(SpriteBatch batch){
-        sprite.draw(batch);
+
     }
 
 }

@@ -7,17 +7,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Sort;
 import com.mygdx.game.assets.GameAssets;
 import com.mygdx.game.game.entities.Bonus;
 import com.mygdx.game.game.entities.Enemy;
 import com.mygdx.game.game.entities.Entity;
 import com.mygdx.game.game.entities.MovableEntity;
 import com.mygdx.game.game.entities.Player;
+import com.mygdx.game.game.entities.TextEvent;
 import com.mygdx.game.game.entities.WallEnemy;
+import com.mygdx.game.menu.enums.Levels;
 import com.mygdx.game.screen.GameScreen;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 /**
@@ -25,42 +27,46 @@ import java.util.Comparator;
  */
 
 public class World {
+    private GameScreen gameScreen;
+    private GameAssets assets;
+
     private Vector2 worldSize;
     private Player player;
-    private ArrayList<MovableEntity> movableEntities;
-    private ArrayList<Enemy> enemies;
-    private ArrayList<Entity> staticEntities;
-    private ArrayList<ScorePopUp> scorePopUps;
-    private ArrayList<Explosion> explosions;
+    private Array<MovableEntity> movableEntities;
+    private Array<Enemy> enemies;
+    private Array<Entity> staticEntities;
+    private Array<ScorePopUp> scorePopUps;
+    private Array<Explosion> explosions;
+    private Array<TextEvent> textEvents;
 
     private SpriteBatch textBatch;
-    private OrthographicCamera textCam;
     private Sound pickup;
 
     private float g;
     private float normalG;
 
     private int lastKilled = -2;
-    private GameAssets assets;
     private float travelledDistance = 0;
 
     //distance that the player has to move before accelerationg
-    private static float DISTANCE_BETWEEN_PLAYER_ACCELERATION = 1000* GameScreen.PIXEL_TO_METER;
+    private static final float DISTANCE_BETWEEN_PLAYER_ACCELERATION = 1000* GameScreen.PIXEL_TO_METER;
 
     /*
     TODO : Reset : Rectangles instead of enemies
      */
 
-    public World(Player p, float gravity, GameAssets a){
-        assets = a;
+    public World(Player p, float gravity, GameScreen gmScreen){
+        gameScreen = gmScreen;
+        assets = gmScreen.assets;
         player = p;
         normalG = 2*gravity;
         g = normalG;
-        movableEntities = new ArrayList<MovableEntity>();
-        staticEntities = new ArrayList<Entity>();
-        scorePopUps = new ArrayList<ScorePopUp>();
-        enemies = new ArrayList<Enemy>();
-        explosions = new ArrayList<Explosion>();
+        movableEntities = new Array<MovableEntity>();
+        staticEntities = new Array<Entity>();
+        scorePopUps = new Array<ScorePopUp>();
+        enemies = new Array<Enemy>();
+        explosions = new Array<Explosion>();
+        textEvents = new Array<TextEvent>();
         worldSize = new Vector2(1000,1000);
         pickup = assets.manager.get(GameAssets.pickupPath, Sound.class);
 
@@ -68,6 +74,11 @@ public class World {
 
 
     }
+
+    public void addTextEvent(TextEvent e){
+        textEvents.add(e);
+    }
+
     public void addMovableEntity(MovableEntity e){
         movableEntities.add(e);
         if(e instanceof Enemy)
@@ -91,22 +102,19 @@ public class World {
         for(MovableEntity e : movableEntities){
             e.update();
         }
-        for(int i = 0;i < explosions.size();i++)
+        for(int i = 0;i < explosions.size;i++)
             if(explosions.get(i).isDead())
-                explosions.remove(i);
+                explosions.removeIndex(i);
 
-        for(int i = 0;i < scorePopUps.size();i++) {
+        for(int i = 0;i < scorePopUps.size;i++) {
             scorePopUps.get(i).update();
             if(scorePopUps.get(i).isDead){
-                scorePopUps.remove(i);
+                scorePopUps.removeIndex(i);
             }
 
         }
         player.update();
 
-        textCam = new OrthographicCamera();
-
-        //for(Entity e: staticEntities) System.out.println("Hitbox" + e.getHitbox().getX()+ " "+ e.getHitbox().getHeight() +"  "+ e.getHitbox().getWidth());
     }
 
     private void detectCollisions() {
@@ -118,7 +126,7 @@ public class World {
                 }
                 else {
                     if(e instanceof Enemy){
-                        explosions.add(new Explosion(e.getX() + e.getHitbox().width/2, e.getY()+e.getHitbox().height/2, assets));
+                        explosions.add(new Explosion(e.getX() + e.getHitbox().width/2, e.getY()+e.getHitbox().height/2, e.getHitbox().getWidth()*1.5f, assets));
                         if(((Enemy) e).number == lastKilled+1)
                             ((Enemy)e).addKillScore();
                         else
@@ -127,9 +135,17 @@ public class World {
                     }
                     else if(e instanceof Bonus)
                         pickup.play(0.2f * assets.getSoundVolume());
-                    scorePopUps.add(new ScorePopUp(e.getKillScore(), player.getHitbox().getX(), player.getHitbox().getY() + player.getHitbox().getHeight() / 3 * 2, assets));
+                    scorePopUps.add(new ScorePopUp(e.getKillScore(), player.getHitbox().getX() + player.getHitbox().getWidth()
+                            , player.getHitbox().getY() + player.getHitbox().getHeight() / 3 * 2, assets));
                     player.addScore(e.getKillScore());
                     e.kill();
+                }
+            }
+        }
+        for(TextEvent event : textEvents){
+            if(!event.isActivated()){
+                if(event.getHitbox().overlaps(player.getHitbox())){
+                    gameScreen.ui.activateEvent(event.getString());
                 }
             }
         }
@@ -143,11 +159,11 @@ public class World {
         if(player.getSpeed().x != 0){
             //Increment player speed
             travelledDistance += player.getSpeed().x;
-            if(travelledDistance > DISTANCE_BETWEEN_PLAYER_ACCELERATION){
+            if(travelledDistance > DISTANCE_BETWEEN_PLAYER_ACCELERATION && gameScreen.getLevel() != Levels.TUTORIAL){
                 player.incrementSpeed();
                 travelledDistance = 0;
             }
-            player.addScore((int)player.getSpeed().x);
+            player.addScore(player.getSpeed().x);
             player.move(player.getSpeed().x, 0);
             for(Entity e : staticEntities){
                 if(e.getHitbox().overlaps(player.getHitbox())){
@@ -223,10 +239,13 @@ public class World {
             travelledDistance = 0;
             enemies.get(0).resetKillScore();
             lastKilled = -2;
+            if(gameScreen.getLevel() == Levels.TUTORIAL)
+                for(TextEvent e : textEvents)
+                    e.reset();
         }
         else{
             //Find the closest enemy behind the player
-            Enemy tmp = new WallEnemy(new Rectangle(0,0,0,0), assets);
+            Enemy tmp = new WallEnemy(new Rectangle(0,0,0,0), assets, gameScreen.getLevel());
             for(Enemy e : enemies){
                 if(e.getX() < player.getX() && e.getX() > tmp.getX())
                     tmp = e;
@@ -253,13 +272,14 @@ public class World {
     }
 
     public  void sortEnemies(){
-        Collections.sort(enemies, new Comparator<Enemy>() {
+        Sort s = new Sort();
+        s.sort(enemies, new Comparator<Enemy>() {
             @Override
             public int compare(Enemy a, Enemy b) {
                 return (int)(a.getHitbox().getX() - b.getHitbox().getX());
             }
         });
-        for(int i = 0;i < enemies.size();i++)
+        for(int i = 0;i < enemies.size;i++)
             enemies.get(i).number = i;
     }
 

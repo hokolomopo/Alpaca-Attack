@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.screen.MenuScreen;
 
@@ -18,6 +19,9 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
     public static final float BUTTON_WIDTH = Gdx.graphics.getWidth()/3;
     public static final float BUTTON_HEIGHT = Gdx.graphics.getHeight()/8;
     private static final float BUTTON_PADDING = BUTTON_HEIGHT/7;
+    private static final float FIRST_BUTTON_Y_POSITION = Gdx.graphics.getHeight()/2.5f;
+    private static final float TITLE_Y = Gdx.graphics.getHeight()*0.55f;
+    public static final float TITLE_FONT_SIZE = Gdx.graphics.getWidth()/8;
 
     private BitmapFont font;
 
@@ -32,14 +36,24 @@ public class MainMenuScene extends com.mygdx.game.menu.scenes.MenuScene {
         font = menuScreen.assets.manager.get(MenuAssets.mainMenuButtonFont, BitmapFont.class);
 
         new SoundButtonsScene(menuScreen);
+        this.createTitleLabel();
         this.createButtons();
 
+    }
+
+    private void createTitleLabel(){
+        BitmapFont titleFont = menuScreen.assets.manager.get(MenuAssets.titleScreenTitleFont, BitmapFont.class);
+        Label title = new Label("Alpaca Attack", new Label.LabelStyle(titleFont, Color.BLACK));
+        title.setPosition(0, TITLE_Y);
+        title.setWidth(Gdx.graphics.getWidth());
+        title.setAlignment(Align.center);
+        stage.addActor(title);
     }
 
     private void createButtons(){
         TextButton play = new TextButton(menuScreen.bundle.get("play"), skin);
         play.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        play.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2, Gdx.graphics.getHeight()/2);
+        play.setPosition(Gdx.graphics.getWidth()/2 - BUTTON_WIDTH/2, FIRST_BUTTON_Y_POSITION);
         play.getLabel().setStyle(new Label.LabelStyle(font, Color.WHITE));
         play.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

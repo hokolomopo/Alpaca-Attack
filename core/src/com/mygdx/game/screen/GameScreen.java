@@ -2,19 +2,19 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.assets.GameAssets;
-import com.mygdx.game.game.entities.Bonus;
+import com.mygdx.game.game.entities.Player;
 import com.mygdx.game.game.util.TiledMapProcessor;
 import com.mygdx.game.game.util.UserInterface;
 import com.mygdx.game.game.util.World;
-import com.mygdx.game.game.entities.Player;
+import com.mygdx.game.menu.enums.Levels;
 
 /**
  * Created by Adrien on 02-09-17.
@@ -26,9 +26,9 @@ public class GameScreen implements Screen, InputProcessor{
     private OrthographicCamera camera;
 
     private Player player;
-    private World world;
-    private TiledMapProcessor background;
-    private UserInterface ui;
+    public World world;
+    public TiledMapProcessor background;
+    public UserInterface ui;
     private Music music;
 
     public static final float PIXEL_TO_METER = 0.5f;
@@ -36,20 +36,18 @@ public class GameScreen implements Screen, InputProcessor{
 
     private float elapsedTime = 0;
     private Game game;
-    private GameAssets assets;
+    public GameAssets assets;
+    private Levels level;
 
-    /*public GameScreen(Game g){
-        this(g, new GameAssets());
-    }*/
 
-    public GameScreen(Game g, GameAssets a){
+    public GameScreen(Game g, Levels level, GameAssets a){
         Gdx.input.setInputProcessor(this);
 
         game = g;
+        this.level = level;
         assets = a;
-        //assets.load();
 
-            music = assets.manager.get(GameAssets.gameMusicPath, Music.class);
+        music = assets.manager.get(level.getMusicPath(), Music.class);
         music.setLooping(true);
         music.setVolume(assets.getMusicVolume());
 
@@ -65,11 +63,11 @@ public class GameScreen implements Screen, InputProcessor{
         camera.update();
 
 
-        ui = new UserInterface(camera, player, assets);
+        ui = new UserInterface(player, this);
 
-        world = new World(player, 10 * PIXEL_TO_METER, assets);
+        world = new World(player, 10 * PIXEL_TO_METER, this);
 
-        background = new TiledMapProcessor(world, assets);
+        background = new TiledMapProcessor(this);
 
     }
 
@@ -84,6 +82,8 @@ public class GameScreen implements Screen, InputProcessor{
 
     }
 
+    public Levels getLevel(){ return level;}
+
     @Override
     public void render(float delta) {
 
@@ -95,7 +95,7 @@ public class GameScreen implements Screen, InputProcessor{
             player.kill();
 
         if(player.isDead){
-            int score = (player.getScore());
+            int score = (int)(player.getScore());
             this.reset();
             music.stop();
             game.setScreen(new LoadingScreen(game, score, this));
@@ -149,11 +149,23 @@ public class GameScreen implements Screen, InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
+        if(Input.Keys.Z == keycode)
+            player.dash();
+        if(Input.Keys.SPACE == keycode) {
+            player.jump();
+            world.reduceGravity();
+        }
+
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+
+        if(Input.Keys.SPACE == keycode) {
+            world.resetGravity();
+        }
         return false;
     }
 

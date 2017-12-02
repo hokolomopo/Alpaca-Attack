@@ -76,7 +76,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>0</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -104,7 +104,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -167,7 +167,7 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <true/>
+        <false/>
         <key>trimSpriteNames</key>
         <false/>
         <key>prependSmartFolderName</key>
@@ -181,13 +181,13 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>1</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -199,6 +199,34 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../../../Downloads/Alpaca attack/Transparent PNG/pinkStone.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/Transparent PNG/pinkStoneDead.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>120,118,240,236</rect>
+                <key>scale9Paddings</key>
+                <rect>120,118,240,236</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../../Downloads/Alpaca attack/skull_game_obstacle/skullObstacle.png</key>
+            <key type="filename">../../../Downloads/Alpaca attack/skull_game_obstacle/skullObstacleDead.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>108,105,216,210</rect>
+                <key>scale9Paddings</key>
+                <rect>108,105,216,210</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../../../Downloads/dashButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -328,6 +356,10 @@
             <filename>../Alpaca Pics/run1_blue.png</filename>
             <filename>../Alpaca Pics/run1_brown.png</filename>
             <filename>../Alpaca Pics/run1_black.png</filename>
+            <filename>../../../Downloads/Alpaca attack/Transparent PNG/pinkStoneDead.png</filename>
+            <filename>../../../Downloads/Alpaca attack/Transparent PNG/pinkStone.png</filename>
+            <filename>../../../Downloads/Alpaca attack/skull_game_obstacle/skullObstacleDead.png</filename>
+            <filename>../../../Downloads/Alpaca attack/skull_game_obstacle/skullObstacle.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

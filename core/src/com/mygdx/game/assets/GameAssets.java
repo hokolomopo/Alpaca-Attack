@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +16,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.I18NBundle;
+import com.mygdx.game.menu.enums.Levels;
 import com.mygdx.game.menu.enums.ShopItem;
 import com.mygdx.game.screen.GameScreen;
 
@@ -29,9 +30,8 @@ public class GameAssets implements  Assets {
     private Array<ParticleEffect> particleEffects = new Array<ParticleEffect>();
 
     public final static String explosionPath = "sound/sfx/explosion.mp3";
-    public final static String explosionAtlasPath = "explosion.txt";
-    public final static String spriteAtlasPath = "sprites.txt";
-    public final static String gameMusicPath = "sound/music/Funky-Chiptune.mp3";
+    public final static String explosionAtlasPath = "sprites/explosion.txt";
+    public final static String spriteAtlasPath = "sprites/sprites.txt";
     public final static String jumpPath = "sound/sfx/jump.mp3";
     public final static String pickupPath = "sound/sfx/pickup.mp3";
     public final static String dashPath = "sound/sfx/dash.mp3";
@@ -39,7 +39,7 @@ public class GameAssets implements  Assets {
     public final static String floatingTextFont = "floatingTextFont.ttf";
     public final static String uiScoreFont = "uiScoreFont.ttf";
 
-    public static String levelTiledMap = "ok2.tmx";
+    public static final String bundlePath = "properties/Game";
 
     FreetypeFontLoader.FreeTypeFontLoaderParameter floatingTextFontParameter;
     FreetypeFontLoader.FreeTypeFontLoaderParameter uiScoreTextParameter;
@@ -54,8 +54,7 @@ public class GameAssets implements  Assets {
 
         floatingTextFontParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         floatingTextFontParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
-        floatingTextFontParameter.fontParameters.size = ((int)(180 * GameScreen.PIXEL_TO_METER));
-        floatingTextFontParameter.fontParameters.color = Color.BLACK;
+        floatingTextFontParameter.fontParameters.size = ((int)(60 * GameScreen.PIXEL_TO_METER));
 
         uiScoreTextParameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         uiScoreTextParameter.fontFileName = "ttf/BeTrueToYourSchool-Regular.ttf";
@@ -64,20 +63,24 @@ public class GameAssets implements  Assets {
 
     }
     @Override
-    public void load() {
+    public void load(){
         manager.load(spriteAtlasPath, TextureAtlas.class);
         manager.load(explosionAtlasPath, TextureAtlas.class);
-        manager.load(gameMusicPath, Music.class);
         manager.load(explosionPath, Sound.class);
         manager.load(jumpPath, Sound.class);
         manager.load(pickupPath, Sound.class);
         manager.load(dashPath, Sound.class);
         manager.load(floatingTextFont, BitmapFont.class, floatingTextFontParameter);
         manager.load(uiScoreFont , BitmapFont.class, uiScoreTextParameter);
-        manager.load(levelTiledMap, TiledMap.class);
+        manager.load(bundlePath, I18NBundle.class);
+
         this.loadPlayerDash();
         this.loadPlayerDrag();
-        //manager.finishLoading();
+    }
+    public void load(Levels level) {
+        this.load();
+        manager.load(level.getFilePath(), TiledMap.class);
+        manager.load(level.getMusicPath(), Music.class);
     }
 
     @Override
@@ -95,7 +98,7 @@ public class GameAssets implements  Assets {
 
     public ParticleEffect createBonusParticleEffect(){
         ParticleEffect p = new ParticleEffect();
-        p.load(Gdx.files.internal("particles/blinkingFast"), Gdx.files.internal("particles/"));
+        p.load(Gdx.files.internal("particles/stardust"), Gdx.files.internal("particles/"));
         particleEffects.add(p);
         return p;
     }

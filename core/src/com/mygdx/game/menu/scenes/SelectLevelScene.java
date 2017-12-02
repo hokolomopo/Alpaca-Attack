@@ -5,13 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.assets.MenuAssets;
 import com.mygdx.game.menu.enums.Levels;
-import com.mygdx.game.menu.enums.ShopItem;
 import com.mygdx.game.menu.ui.BackToMainMenuButton;
 import com.mygdx.game.menu.ui.LevelCell;
-import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.screen.MenuScreen;
 
 import java.util.ArrayList;
@@ -42,8 +39,6 @@ public class SelectLevelScene extends MenuScene {
         this.setFrame();
 
         stage.addActor(pane);
-
-
     }
 
     private void setFrame(){

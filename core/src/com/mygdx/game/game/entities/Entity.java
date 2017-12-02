@@ -1,11 +1,9 @@
 package com.mygdx.game.game.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.assets.GameAssets;
@@ -35,9 +33,13 @@ public abstract class Entity {
         hitbox = new Rectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getWidth() * (size.y/size.x));
 
         sprite = new Sprite(textureAtlas.findRegion(atlasRegion));
+
+        this.setSprite();
+    }
+
+    protected void setSprite(){
         sprite.setPosition(hitbox.getX(),hitbox.getY());
         sprite.setSize(hitbox.getWidth(),hitbox.getHeight());
-
     }
 
 

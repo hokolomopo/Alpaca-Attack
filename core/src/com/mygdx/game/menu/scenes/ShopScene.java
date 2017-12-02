@@ -2,17 +2,16 @@ package com.mygdx.game.menu.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.assets.MenuAssets;
-import com.mygdx.game.menu.ui.BackToMainMenuButton;
-import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.menu.enums.ShopItem;
+import com.mygdx.game.menu.ui.BackToMainMenuButton;
 import com.mygdx.game.menu.ui.MoneyTextBox;
+import com.mygdx.game.menu.ui.ShopCell;
 import com.mygdx.game.screen.MenuScreen;
 
 import java.util.ArrayList;

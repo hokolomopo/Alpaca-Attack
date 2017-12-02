@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.assets.GameAssets;
-import com.mygdx.game.screen.GameScreen;
 
 /**
  * Created by Adrien on 07-09-17.
  */
 
 public class Explosion {
-    private TextureAtlas atlas;// = new TextureAtlas("explosion.txt");
+    private TextureAtlas atlas;
     private static final float FRAME_DURATION = 1/10f;
     private Animation explosion;
     private Sound sound;
@@ -32,18 +31,18 @@ public class Explosion {
                 atlas.findRegion("explosion5"), atlas.findRegion("explosion6"), atlas.findRegion("explosion7"), atlas.findRegion("explosion8"), atlas.findRegion("explosion9"));
 
         sound = assets.manager.get(GameAssets.explosionPath, Sound.class);
-        sound.play(0.4f * assets.getSoundVolume());
+        sound.play(0.6f * assets.getSoundVolume());
     }
 
-    public Explosion(float argX, float argY, GameAssets assets){
+    public Explosion(float argX, float argY, float width, GameAssets assets){
         this(assets);
 
         x = argX;
         y = argY;
 
 
-        width = 200 * GameScreen.PIXEL_TO_METER;
-        height = width * ((float)atlas.findRegion("explosion5").getRegionHeight() / (float)atlas.findRegion("explosion5").getRegionWidth());
+        this.width = width;
+        height = this.width * ((float)atlas.findRegion("explosion5").getRegionHeight() / (float)atlas.findRegion("explosion5").getRegionWidth());
     }
 
     public void render(SpriteBatch batch){

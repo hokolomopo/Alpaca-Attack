@@ -10,9 +10,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.assets.GameAssets;
 import com.mygdx.game.screen.GameScreen;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 /**
  * Created by Adrien on 01-09-17.
  */

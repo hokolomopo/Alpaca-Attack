@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.assets.MenuAssets;
 
-import java.sql.Time;
 import java.util.Random;
 
 /**

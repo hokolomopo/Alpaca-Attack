@@ -38,7 +38,7 @@ public class Player extends AnimatedMovableEntity {
     private float dashTimer = 0;
     private float deadTimer = 0;
     private int jumpLeft = 2;
-    private int score = 0;
+    private float score = 0;
 
     private float initialX;
     private float initialY;
@@ -146,7 +146,7 @@ public class Player extends AnimatedMovableEntity {
         if(boostEffect != null) {
             boostEffect.update(Gdx.graphics.getDeltaTime());
             for (ParticleEmitter e : boostEffect.getEmitters())
-                e.setPosition(hitbox.getX() + hitbox.getWidth(), hitbox.getY());
+                e.setPosition(hitbox.getX() + hitbox.getWidth()/3, hitbox.getY()+hitbox.getHeight()/10);
             boostEffect.draw(batch);
         }
 
@@ -158,11 +158,6 @@ public class Player extends AnimatedMovableEntity {
         if(explosion !=  null)
             explosion.render(batch);
 
-
-
-
-
-
     }
 
     public void dash(){
@@ -173,7 +168,6 @@ public class Player extends AnimatedMovableEntity {
             if(boostEffect != null)
                 boostEffect.start();
 
-            dashSound.play(0.2f * assets.getSoundVolume());
             isDashing = true;
             speed.x = currentXSpeed*PLAYER_DASH_SPEED_MULTIPLICATOR;
             speed.y = 0;
@@ -182,21 +176,19 @@ public class Player extends AnimatedMovableEntity {
     }
 
     public void jump(){
-        //gallop.pause(gallopID);
-        if(!isDying)
+        if(jumpLeft > 0 && !isDying) {
             jumpSound.play(0.2f * assets.getSoundVolume());
-        if(jumpLeft > 0) {
             speed.y = JUMP_SPEED;
             isJumping = true;
             jumpLeft--;
         }
     }
 
-    public int getScore(){
+    public float getScore(){
         return score;
     }
 
-    public void addScore(int a){
+    public void addScore(float a){
         score += a;
     }
 
@@ -209,7 +201,7 @@ public class Player extends AnimatedMovableEntity {
         if(!isDying) {
             speed.x = 0;
             speed.y = 0;
-            explosion = new Explosion(hitbox.x + hitbox.width / 2, hitbox.y + hitbox.height / 2, assets);
+            explosion = new Explosion(hitbox.x + hitbox.width / 2, hitbox.y + hitbox.height / 2,hitbox.height*2, assets);
             isDying = true;
             jumpLeft = 1;
             this.jump();
