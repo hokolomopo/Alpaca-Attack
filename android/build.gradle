@@ -1,4 +1,10 @@
 android {
+    signingConfigs {
+        release {
+            keyAlias 'AlpacaAttackKey'
+            storeFile file('C:/Users/Adrien/OneDrive/AndroidStudio/android_key.jks')
+        }
+    }
     buildToolsVersion "26.0.1"
     compileSdkVersion 21
     sourceSets {
@@ -15,13 +21,25 @@ android {
         instrumentTest.setRoot('tests')
     }
     defaultConfig {
-        applicationId "com.mygdx.game"
+        applicationId "com.mygdx.alpacaattack"
         minSdkVersion 8
         targetSdkVersion 26
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
+            debuggable false
+            minifyEnabled false
+        }
     }
 }
 // called every time gradle gets executed, takes the native dependencies of
@@ -69,7 +87,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/com.mygdx.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mygdx.game/AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
@@ -123,5 +141,6 @@ idea {
         }
     }
 }
+
 dependencies {
 }
