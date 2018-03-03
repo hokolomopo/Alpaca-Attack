@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 01-09-17.
@@ -25,7 +25,7 @@ public class Bonus extends MovableEntity{
     private ParticleEffect effect;
     private Array<ParticleEmitter> emiters;
 
-    public Bonus(float x, float y, GameAssets assets){
+    public Bonus(float x, float y, MenuAssets assets){
         super(new Rectangle(x,y,BONUS_SIZE,BONUS_SIZE), "star", assets);
 
         effect = assets.createBonusParticleEffect();

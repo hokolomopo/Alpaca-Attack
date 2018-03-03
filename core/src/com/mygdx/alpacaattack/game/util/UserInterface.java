@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.game.entities.Player;
 import com.mygdx.alpacaattack.menu.enums.Levels;
 
@@ -42,8 +42,8 @@ public class UserInterface implements InputProcessor{
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        textureAtlas = gmSreen.assets.manager.get(GameAssets.spriteAtlasPath, TextureAtlas.class);
-        font = gmSreen.assets.manager.get(GameAssets.uiScoreFont, BitmapFont.class);
+        textureAtlas = gmSreen.assets.manager.get(MenuAssets.spriteAtlasPath, TextureAtlas.class);
+        font = gmSreen.assets.manager.get(MenuAssets.uiScoreFont, BitmapFont.class);
 
         player = p;
 

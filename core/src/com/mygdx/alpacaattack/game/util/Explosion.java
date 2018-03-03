@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 07-09-17.
@@ -25,16 +25,16 @@ public class Explosion {
     private float elapsedTime = 0;
     private boolean isDead = false;
 
-    public Explosion(GameAssets assets){
-        atlas = assets.manager.get(GameAssets.explosionAtlasPath, TextureAtlas.class);
+    public Explosion(MenuAssets assets){
+        atlas = assets.manager.get(MenuAssets.explosionAtlasPath, TextureAtlas.class);
         explosion = new Animation(FRAME_DURATION, atlas.findRegion("explosion1"), atlas.findRegion("explosion2"), atlas.findRegion("explosion3"), atlas.findRegion("explosion4"),
                 atlas.findRegion("explosion5"), atlas.findRegion("explosion6"), atlas.findRegion("explosion7"), atlas.findRegion("explosion8"), atlas.findRegion("explosion9"));
 
-        sound = assets.manager.get(GameAssets.explosionPath, Sound.class);
+        sound = assets.manager.get(MenuAssets.explosionPath, Sound.class);
         sound.play(0.6f * assets.getSoundVolume());
     }
 
-    public Explosion(float argX, float argY, float width, GameAssets assets){
+    public Explosion(float argX, float argY, float width, MenuAssets assets){
         this(assets);
 
         x = argX;

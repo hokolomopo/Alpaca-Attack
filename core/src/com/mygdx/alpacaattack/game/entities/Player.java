@@ -47,20 +47,20 @@ public class Player extends AnimatedMovableEntity {
 
     private String color = "white";
 
-    private com.mygdx.alpacaattack.assets.GameAssets assets;
+    private com.mygdx.alpacaattack.assets.MenuAssets assets;
     private ParticleEffect boostEffect;
     private ParticleEffect dragEffect;
 
 
     private final static float SIZE_MULTIPLIER = 0.5f;
 
-    public Player(float x, float y, com.mygdx.alpacaattack.assets.GameAssets a){
+    public Player(float x, float y, com.mygdx.alpacaattack.assets.MenuAssets a){
         super(a);
         assets = a;
 
         //Load sounds
-        jumpSound = assets.manager.get(com.mygdx.alpacaattack.assets.GameAssets.jumpPath, Sound.class);
-        dashSound = assets.manager.get(com.mygdx.alpacaattack.assets.GameAssets.dashPath, Sound.class);
+        jumpSound = assets.manager.get(com.mygdx.alpacaattack.assets.MenuAssets.jumpPath, Sound.class);
+        dashSound = assets.manager.get(com.mygdx.alpacaattack.assets.MenuAssets.dashPath, Sound.class);
         boostEffect = assets.getPlayerDash();
         dragEffect = assets.getPlayerDrag();
 

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 04-09-17.
@@ -23,8 +23,8 @@ public class ScorePopUp {
     public boolean isDead;
 
 
-    public ScorePopUp(int score, float argX, float argY, GameAssets assets){
-        text = assets.manager.get(GameAssets.floatingTextFont, BitmapFont.class);
+    public ScorePopUp(int score, float argX, float argY, MenuAssets assets){
+        text = assets.manager.get(MenuAssets.floatingTextFont, BitmapFont.class);
         text.setColor(Color.WHITE);
         x = argX;
         y = argY;

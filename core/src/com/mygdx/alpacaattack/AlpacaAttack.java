@@ -8,11 +8,13 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.mygdx.alpacaattack.assets.Assets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.menu.enums.ShopItem;
 
 public class AlpacaAttack extends Game {
 
-	public AssetManager manager = new AssetManager();
+	public MenuAssets assets;
 
 	@Override
 	public void create () {

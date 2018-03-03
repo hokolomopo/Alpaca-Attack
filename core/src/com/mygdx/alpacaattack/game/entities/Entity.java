@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 31-08-17.
@@ -22,11 +22,11 @@ public abstract class Entity {
     public Entity(){
 
     }
-    public Entity(GameAssets assets){
-        textureAtlas = assets.manager.get(GameAssets.spriteAtlasPath, TextureAtlas.class);
+    public Entity(MenuAssets assets){
+        textureAtlas = assets.manager.get(MenuAssets.spriteAtlasPath, TextureAtlas.class);
     }
 
-    public Entity(Rectangle rect, String atlasRegion, GameAssets assets){
+    public Entity(Rectangle rect, String atlasRegion, MenuAssets assets){
         this(assets);
         Vector2 size = new Vector2(textureAtlas.findRegion(atlasRegion).getRegionWidth(), textureAtlas.findRegion(atlasRegion).getRegionHeight());
 

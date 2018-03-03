@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.alpacaattack.AlpacaAttack;
 import com.mygdx.alpacaattack.menu.background.Background;
 import com.mygdx.alpacaattack.menu.background.MainMenuBackground;
 import com.mygdx.alpacaattack.menu.background.ShopBackground;
@@ -22,7 +23,7 @@ import com.mygdx.alpacaattack.menu.scenes.MenuScene;
  */
 
 public class MenuScreen implements Screen {
-    private Game game;
+    private AlpacaAttack game;
     public Music music;
 
     public com.mygdx.alpacaattack.assets.MenuAssets assets;
@@ -49,14 +50,14 @@ public class MenuScreen implements Screen {
     public Stage stage = new Stage(new ScreenViewport());
     private Levels selectedLevel;
 
-    /*public  MenuScreen(Game g){
+    /*public  MenuScreen(AlpacaAttack g){
         this(g, new MenuAssets());
     }*/
 
-    public MenuScreen(Game g, com.mygdx.alpacaattack.assets.MenuAssets a){
+    public MenuScreen(AlpacaAttack g){
 
         game = g;
-        assets = a;
+        assets = g.assets;
 
         music = assets.manager.get(com.mygdx.alpacaattack.assets.MenuAssets.menuScreenMusicPath, Music.class);
         music.play();
@@ -140,7 +141,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        assets.dispose();
         batch.dispose();
         background.dispose();
     }

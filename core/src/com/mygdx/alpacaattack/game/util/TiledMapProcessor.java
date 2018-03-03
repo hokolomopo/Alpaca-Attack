@@ -24,7 +24,7 @@ public class TiledMapProcessor {
     public final float MAP_HEIGHT;
 
     private World world;
-    com.mygdx.alpacaattack.assets.GameAssets assets;
+    com.mygdx.alpacaattack.assets.MenuAssets assets;
     com.mygdx.alpacaattack.screen.GameScreen gameScreen;
 
     public TiledMapProcessor(com.mygdx.alpacaattack.screen.GameScreen gmScreen){
@@ -113,7 +113,7 @@ public class TiledMapProcessor {
         for(MapObject o : textEvents) {
             Rectangle rect = ((RectangleMapObject)o).getRectangle();
             rect.setPosition(rect.getX()* com.mygdx.alpacaattack.screen.GameScreen.PIXEL_TO_METER, rect.getY()* com.mygdx.alpacaattack.screen.GameScreen.PIXEL_TO_METER);
-            String s = assets.manager.get(com.mygdx.alpacaattack.assets.GameAssets.bundlePath, I18NBundle.class).get("tutorial"+i++);
+            String s = assets.manager.get(com.mygdx.alpacaattack.assets.MenuAssets.bundlePath, I18NBundle.class).get("tutorial"+i++);
             world.addTextEvent(new com.mygdx.alpacaattack.game.entities.TextEvent(rect.getX(), MAP_HEIGHT, s));
         }
 

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.game.entities.Bonus;
 import com.mygdx.alpacaattack.game.entities.Enemy;
 import com.mygdx.alpacaattack.game.entities.Player;
@@ -25,7 +25,7 @@ import java.util.Comparator;
 
 public class World {
     private com.mygdx.alpacaattack.screen.GameScreen gameScreen;
-    private GameAssets assets;
+    private MenuAssets assets;
 
     private Vector2 worldSize;
     private Player player;
@@ -65,7 +65,7 @@ public class World {
         explosions = new Array<Explosion>();
         textEvents = new Array<TextEvent>();
         worldSize = new Vector2(1000,1000);
-        pickup = assets.manager.get(GameAssets.pickupPath, Sound.class);
+        pickup = assets.manager.get(MenuAssets.pickupPath, Sound.class);
 
         textBatch = new SpriteBatch();
 

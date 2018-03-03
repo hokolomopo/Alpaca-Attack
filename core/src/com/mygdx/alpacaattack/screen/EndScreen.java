@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.alpacaattack.AlpacaAttack;
 import com.mygdx.alpacaattack.menu.scenes.MainMenuScene;
 import com.mygdx.alpacaattack.menu.ui.MoneyTextBox;
 
@@ -37,7 +38,7 @@ public class EndScreen implements Screen {
     private float FIRST_BUTTON_Y = Gdx.graphics.getHeight()/3;
 
     private Stage stage;
-    private Game game;
+    private AlpacaAttack game;
     private BitmapFont font;
     private int finalScore;
     private int highScore;
@@ -68,11 +69,11 @@ public class EndScreen implements Screen {
     private com.mygdx.alpacaattack.menu.background.EndScreenBackground background;
     private SpriteBatch batch;
 
-    /*public EndScreen(Game g, int argScore, GameScreen gmScreen) {
+    /*public EndScreen(AlpacaAttack g, int argScore, GameScreen gmScreen) {
         this(g, argScore, gmScreen, new MenuAssets());
     }*/
 
-    public EndScreen(Game g, int argScore, GameScreen gmScreen, com.mygdx.alpacaattack.assets.MenuAssets a){
+    public EndScreen(AlpacaAttack g, int argScore, GameScreen gmScreen){
 
         thisScreen = this;
         game = g;
@@ -83,7 +84,7 @@ public class EndScreen implements Screen {
 
         pointToMoneyRatio = 1/gameScreen.getLevel().getGoldToPointRatio();
 
-        assets = a;
+        assets = g.assets;
         this.loadAssets();
 
         background = new com.mygdx.alpacaattack.menu.background.EndScreenBackground(assets);
@@ -199,9 +200,10 @@ public class EndScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 prefs.putInteger("money", (int)moneyAmount).flush();
+                assets.unloadLevel(gameScreen.getLevel());
                 gameScreen.dispose();
-                thisScreen.disposeWithoutAssets();
-                game.setScreen(new MenuScreen(game, assets));
+                thisScreen.dispose();
+                game.setScreen(new MenuScreen(game));
             }
         });
         stage.addActor(quit);
@@ -289,12 +291,6 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
-        assets.dispose();
-        this.disposeWithoutAssets();
-    }
-
-    //Dispose everything but teh assets, use it wehn giving the assets to another screen instead of reloading everything
-    public void disposeWithoutAssets(){
         money.dispose();
         stage.dispose();
         batch.dispose();

@@ -2,7 +2,7 @@ package com.mygdx.alpacaattack.game.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.menu.enums.Levels;
 
 /**
@@ -16,7 +16,7 @@ public class WallEnemy extends Enemy {
     private String aliveRegion;
     private String deadRegion;
 
-    public WallEnemy(Rectangle rect, GameAssets assets, Levels level){
+    public WallEnemy(Rectangle rect, MenuAssets assets, Levels level){
         super(rect, getTextureString(level),assets);
 
         this.initializeTextures(level);

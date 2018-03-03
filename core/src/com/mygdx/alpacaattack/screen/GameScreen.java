@@ -9,7 +9,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.AlpacaAttack;
+import com.mygdx.alpacaattack.assets.MenuAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.game.entities.Player;
 import com.mygdx.alpacaattack.game.util.TiledMapProcessor;
 import com.mygdx.alpacaattack.game.util.UserInterface;
@@ -34,17 +36,17 @@ public class GameScreen implements Screen, InputProcessor{
     public static final float PIXEL_TO_METER = 0.5f;
     private static final float PLAYER_INITIAL_LOC = 600 * PIXEL_TO_METER;
 
-    private Game game;
-    public GameAssets assets;
+    private AlpacaAttack game;
+    public MenuAssets assets;
     private Levels level;
 
 
-    public GameScreen(Game g, Levels level, GameAssets a){
+    public GameScreen(AlpacaAttack g, Levels level){
         Gdx.input.setInputProcessor(this);
 
         game = g;
         this.level = level;
-        assets = a;
+        assets = g.assets;
 
         music = assets.manager.get(level.getMusicPath(), Music.class);
         music.setLooping(true);
@@ -97,7 +99,7 @@ public class GameScreen implements Screen, InputProcessor{
             int score = (int)(player.getScore());
             this.reset();
             music.stop();
-            game.setScreen(new LoadingScreen(game, score, this));
+            game.setScreen(new EndScreen(game, score, this));
         }
 
         background.render(camera, player);
@@ -141,7 +143,6 @@ public class GameScreen implements Screen, InputProcessor{
         ui.dispose();
         background.dispose();
         world.dispose();
-        assets.dispose();
         batch.dispose();
         shapeRenderer.dispose();
     }

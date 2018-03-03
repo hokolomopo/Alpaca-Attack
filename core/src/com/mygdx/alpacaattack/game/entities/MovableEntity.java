@@ -2,7 +2,7 @@ package com.mygdx.alpacaattack.game.entities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 31-08-17.
@@ -15,11 +15,11 @@ public abstract class MovableEntity extends Entity implements Destroyable {
 
     protected float weight = 0;
 
-    public MovableEntity(GameAssets assets){
+    public MovableEntity(MenuAssets assets){
         super(assets);
     }
 
-    public MovableEntity(Rectangle rect, String atlasRegion, GameAssets assets){
+    public MovableEntity(Rectangle rect, String atlasRegion, MenuAssets assets){
         super(rect, atlasRegion, assets);
     }
 

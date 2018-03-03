@@ -3,7 +3,7 @@ package com.mygdx.alpacaattack.game.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 
 /**
  * Created by Adrien on 31-08-17.
@@ -15,7 +15,7 @@ public abstract class AnimatedMovableEntity extends MovableEntity {
 
     protected float elapsedTime = 0;
 
-    protected AnimatedMovableEntity(GameAssets assets){
+    protected AnimatedMovableEntity(MenuAssets assets){
         super(assets);
     }
 

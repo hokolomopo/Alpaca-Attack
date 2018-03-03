@@ -12,8 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.mygdx.alpacaattack.AlpacaAttack;
 import com.mygdx.alpacaattack.assets.Assets;
-import com.mygdx.alpacaattack.assets.GameAssets;
+import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.assets.MenuAssets;
 import com.mygdx.alpacaattack.menu.enums.Levels;
 
@@ -22,8 +23,7 @@ import com.mygdx.alpacaattack.menu.enums.Levels;
  */
 
 public class LoadingScreen implements Screen {
-    private Game game;
-    Assets assets;
+    private AlpacaAttack game;
 
     private BitmapFont font;
     private int FONT_SIZE = Gdx.graphics.getHeight()/8;
@@ -47,7 +47,7 @@ public class LoadingScreen implements Screen {
     private Levels level;
 
     //Game Screen loader
-    public LoadingScreen(Game g, Levels level){
+    public LoadingScreen(AlpacaAttack g, Levels level){
         this.screenType = GAME_SCREEN;
         game = g;
         this.level = level;
@@ -55,26 +55,26 @@ public class LoadingScreen implements Screen {
         this.createLoadingBar();
         this.createText();
         this.loadBundle();
-
-        assets = new GameAssets();
-
-        ((GameAssets)(assets)).load(level);
+        g.assets.load(level);
     }
 
     //Menu Screen loader
-    public LoadingScreen(Game g){
+    public LoadingScreen(AlpacaAttack g){
         this.createLoadingBar();
         this.createText();
         this.loadBundle();
 
         this.screenType = MENU_SCREEN;
         game = g;
-        assets = new MenuAssets();
-        assets.load();
+
+        if(g.assets.loaded == false) {
+            g.assets = new MenuAssets();
+            g.assets.load();
+        }
     }
 
     //End Screen loader
-    public LoadingScreen(Game g, int argScore, GameScreen gmScreen){
+    public LoadingScreen(AlpacaAttack g, int argScore, GameScreen gmScreen){
         this.createLoadingBar();
         this.createText();
         this.loadBundle();
@@ -84,13 +84,12 @@ public class LoadingScreen implements Screen {
         score = argScore;
         gameScreen = gmScreen;
 
-        assets = new MenuAssets();
-        assets.load();
     }
 
     private void loadBundle(){
         bundle = I18NBundle.createBundle(Gdx.files.internal("properties/Loading"));
     }
+
     private void createText(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ttf/BeTrueToYourSchool-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -114,7 +113,7 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        progress = assets.update();
+        progress = ((AlpacaAttack)game).assets.update();
         loadingBar.setValue(progress);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -125,13 +124,13 @@ public class LoadingScreen implements Screen {
             this.dispose();
             switch(screenType){
                 case GAME_SCREEN :
-                    game.setScreen(new GameScreen(game, level, (GameAssets)assets));
+                    game.setScreen(new GameScreen(game, level));
                     break;
                 case MENU_SCREEN :
-                    game.setScreen(new com.mygdx.alpacaattack.screen.MenuScreen(game, (MenuAssets)assets));
+                    game.setScreen(new com.mygdx.alpacaattack.screen.MenuScreen(game));
                     break;
                 case END_SCREEN :
-                    game.setScreen(new com.mygdx.alpacaattack.screen.EndScreen(game, score, gameScreen, (MenuAssets)assets));
+                    game.setScreen(new com.mygdx.alpacaattack.screen.EndScreen(game, score, gameScreen));
                     break;
             }
         }
