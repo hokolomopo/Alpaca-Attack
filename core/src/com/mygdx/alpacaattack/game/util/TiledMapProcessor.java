@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.mygdx.alpacaattack.menu.enums.Levels;
 
 /**
  * Created by Adrien on 31-08-17.
@@ -22,6 +23,8 @@ public class TiledMapProcessor {
 
     public final float MAP_WIDHT;
     public final float MAP_HEIGHT;
+
+    private boolean stopMovingCamera = false;
 
     private World world;
     com.mygdx.alpacaattack.assets.MenuAssets assets;
@@ -52,17 +55,25 @@ public class TiledMapProcessor {
 
     public void render(OrthographicCamera camera, com.mygdx.alpacaattack.game.entities.Player player){
 
-        //Dont move the camera at the very start
-        if(player.getX()  >= camera.viewportWidth/4)
+        //Don't move the camera at the very start
+        if((player.getX()  >= camera.viewportWidth/4 ) && !stopMovingCamera)
             camera.position.set(player.getX() + camera.viewportWidth/4, camera.position.y, 0);
-        /*if(player.getX() + player.getHitbox().getWidth()/2 >= camera.viewportWidth/2)
-            camera.position.set(player.getX() + player.getHitbox().getWidth()/2, camera.position.y, 0);*/
 
         //Teleport back when you are at half of the map to give the impression of infinite scrolling
         if(camera.position.x > MAP_WIDHT/2 + camera.viewportWidth/2 ){
-            world.reset(false);
-            camera.translate(-MAP_WIDHT/2 , 0);
-            player.setPosition(player.getX()- MAP_WIDHT/2, player.getY());
+            //Not in tutoriel : TP the player back
+            if(gameScreen.getLevel() != Levels.TUTORIAL) {
+                world.reset(false);
+                camera.translate(-MAP_WIDHT / 2, 0);
+                player.setPosition(player.getX() - MAP_WIDHT / 2, player.getY());
+            }
+            //In tutoriel, strop moving the camera and kill the player if he left the screen
+            else {
+                stopMovingCamera = true;
+                if (player.getX() > MAP_WIDHT / 2 + camera.viewportWidth + 3*player.getHitbox().getWidth()) {
+                    player.kill();
+                }
+            }
         }
 
         //Make sure that the camera doesn't display anything out-of-map
